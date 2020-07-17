@@ -1,0 +1,6 @@
+/.gradle/
+
+### Eclipse ###
+.metadata
+bin/
+tmp/

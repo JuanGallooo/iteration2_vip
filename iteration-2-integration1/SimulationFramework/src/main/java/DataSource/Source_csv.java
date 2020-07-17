@@ -1,0 +1,95 @@
+package DataSource;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+import SystemState.FactoryInterfaces.IStop;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Source_csv implements IDateSource {
+
+	private File sourceFile;
+	private String split;
+	private int currentPosition;
+
+	public Source_csv(File sourceFile, String split) {
+		this.sourceFile = sourceFile;
+		this.split = split;
+		this.currentPosition = 1;
+	}
+
+	@Override
+	public String[] getHeaders() {
+
+		String[] columns = null;
+		BufferedReader br;
+
+		try {
+
+			br = new BufferedReader(new FileReader(sourceFile));
+			String line = br.readLine();
+			columns = line.split(split);
+			br.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return columns;
+	}
+
+	@Override
+	public HashMap<String, String> fetchNextRow(Date initialDate, Date finalDate, long line,long planVerionID) throws Exception {
+
+		BufferedReader br;
+		String line2 = "";
+
+		String[] row = null;
+		String[] headers = getHeaders();
+		HashMap<String, String> data = new HashMap<String, String>();
+
+		try {
+
+			br = new BufferedReader(new FileReader(sourceFile));
+
+			for (int i = 0; i <= currentPosition; i++) {
+				line2 = br.readLine();
+			}
+
+			br.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (line2 == null || line2.equals("")) {
+
+			throw new Exception("CSV source is already empty");
+
+		} else {
+
+			row = line2.split(split);
+
+			for (int i = 0; i < row.length; i++) {
+				data.put(headers[i], row[i]);
+			}
+
+			currentPosition++;
+			return data;
+		}
+
+	}
+
+	@Override
+	public boolean jdbTestConnection() {
+		return false;
+		
+	}
+
+}
