@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
 
@@ -13,6 +16,7 @@ import lombok.NonNull;
 
 @Data
 @Entity
+@Table(name="PLANVERSIONS")
 @BatchSize(size=25)
 public class SITMPlanVersion implements IPlanVersion,Serializable  {
 

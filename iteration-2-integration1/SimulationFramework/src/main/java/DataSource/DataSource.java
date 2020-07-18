@@ -2,19 +2,17 @@ package DataSource;
 
 import java.io.File;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Plane;
+import org.springframework.stereotype.Service;
 
 import SystemState.FactoryInterfaces.ICalendar;
 import SystemState.FactoryInterfaces.IPlanVersion;
 import SystemState.FactoryInterfaces.IStop;
-import SystemState.SITMFactory.SITMPlanVersion;
-
-import java.sql.*;
 
 public class DataSource implements IDateSource, Serializable{
 

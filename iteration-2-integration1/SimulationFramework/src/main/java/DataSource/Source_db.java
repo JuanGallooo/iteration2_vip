@@ -5,22 +5,28 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import DataSource.Persistence.ISITMCalendarDao;
+import DataSource.Persistence.ISITMOperationalTravelsDao;
+import DataSource.Persistence.ISITMPlanVersionDao;
+import DataSource.Persistence.ISITMStopDao;
 import SystemState.FactoryInterfaces.ICalendar;
 import SystemState.FactoryInterfaces.IPlanVersion;
 import SystemState.FactoryInterfaces.IStop;
-import SystemState.Persistence.ISITMCalendarDao;
-import SystemState.Persistence.ISITMOperationalTravelsDao;
-import SystemState.Persistence.ISITMPlanVersionDao;
-import SystemState.Persistence.ISITMStopDao;
-import SystemState.Persistence.SITMPlanVersionDao;
 import SystemState.SITMFactory.SITMCalendar;
 import SystemState.SITMFactory.SITMPlanVersion;
 import SystemState.SITMFactory.SITMStop;
 
+
+@Service
 public class Source_db {
 	
 	private ISITMStopDao stopsDao;
-	private ISITMPlanVersionDao planVersionsDao = new SITMPlanVersionDao();
+	
+	@Autowired
+	private ISITMPlanVersionDao planVersionsDao;
 	private ISITMCalendarDao calendarDao;
 	private ISITMOperationalTravelsDao operationalTravelsDao;
 	public String[] getHeaders() {

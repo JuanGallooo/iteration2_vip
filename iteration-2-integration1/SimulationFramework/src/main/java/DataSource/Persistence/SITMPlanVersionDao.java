@@ -1,4 +1,4 @@
-package SystemState.Persistence;
+package DataSource.Persistence;
 
 import java.util.Date;
 import java.util.List;
@@ -6,12 +6,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
 import SystemState.SITMFactory.SITMPlanVersion;
 
 @Repository
+@Transactional
 public class SITMPlanVersionDao implements ISITMPlanVersionDao {
 
 	@PersistenceContext

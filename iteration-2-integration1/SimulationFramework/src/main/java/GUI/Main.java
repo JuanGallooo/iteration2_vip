@@ -1,7 +1,12 @@
 package GUI;
 
-import java.io.File;
 import java.io.IOException;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 import GUI.controller.GUIController;
 import Simulation.SimController;
@@ -11,8 +16,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
+@SpringBootApplication
+@ComponentScan("DataSource")
 public class Main extends Application {
 
 	@Override
@@ -42,6 +48,7 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		SpringApplication.run(Main.class, args);
 		launch(args);
 	}
 }
