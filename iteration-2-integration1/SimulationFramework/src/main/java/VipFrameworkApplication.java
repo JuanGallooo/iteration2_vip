@@ -1,4 +1,4 @@
-package demo;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -13,9 +13,9 @@ import DataSource.Persistence.PlanVersionRepository;
 import SystemState.SITMFactory.SITMPlanVersion;
 
 @SpringBootApplication
-@ComponentScan("DataSource")
+//@ComponentScan("com.simulationFramework.DataSource")
 @EnableJpaRepositories
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class VipFrameworkApplication {
 	
 	private PlanVersionRepository plansVersionRepository;

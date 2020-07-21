@@ -1,32 +1,45 @@
 package SystemState.SITMFactory;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQuery;
-import javax.persistence.PersistenceContext;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
 
 import SystemState.FactoryInterfaces.IPlanVersion;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
 @Entity
 @Table(name="PLANVERSIONS")
 @BatchSize(size=25)
+@Getter @Setter @ToString
 public class SITMPlanVersion implements IPlanVersion,Serializable  {
 
 	private static final long serialVersionUID = 1L;
 	
-	@NonNull
+	@Id
+	@Column(name="PLANVERSIONID")
 	private long planVersionid;
-	@NonNull
+
+	@Column(name="ACTIVATIONDATE")
 	private Date activationDate;
-	@NonNull
+
+	@Column(name="CREATIONDATE")
 	private Date creationDate;
+
+	public SITMPlanVersion(long planVersionid, Date activationDate, Date creationDate) {
+		super();
+		this.planVersionid = planVersionid;
+		this.activationDate = activationDate;
+		this.creationDate = creationDate;
+	}
+	
+	
 
 }

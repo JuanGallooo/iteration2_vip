@@ -8,12 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import DataSource.Persistence.ISITMCalendarDao;
-import DataSource.Persistence.ISITMOperationalTravelsDao;
-import DataSource.Persistence.ISITMPlanVersionDao;
-import DataSource.Persistence.ISITMStopDao;
+//import DataSource.Persistence.ISITMCalendarDao;
+//import DataSource.Persistence.ISITMOperationalTravelsDao;
+//import DataSource.Persistence.ISITMStopDao;
+import DataSource.Persistence.PlanVersionRepository;
 import SystemState.FactoryInterfaces.ICalendar;
-import SystemState.FactoryInterfaces.IPlanVersion;
 import SystemState.FactoryInterfaces.IStop;
 import SystemState.SITMFactory.SITMCalendar;
 import SystemState.SITMFactory.SITMPlanVersion;
@@ -23,12 +22,12 @@ import SystemState.SITMFactory.SITMStop;
 @Service
 public class Source_db {
 	
-	private ISITMStopDao stopsDao;
+//	private ISITMStopDao stopsDao;
 	
 	@Autowired
-	private ISITMPlanVersionDao planVersionsDao;
-	private ISITMCalendarDao calendarDao;
-	private ISITMOperationalTravelsDao operationalTravelsDao;
+	private PlanVersionRepository planVersionsDao;
+//	private ISITMCalendarDao calendarDao;
+//	private ISITMOperationalTravelsDao operationalTravelsDao;
 	public String[] getHeaders() {
 		String[] headers= new String[26];
 		headers[0]="OPERTRAVELID";
@@ -64,7 +63,7 @@ public class Source_db {
 		HashMap<String, String> data = new HashMap<String, String>();
 		String[] headers = getHeaders();
 		String[] row= new String[26];
-		row= operationalTravelsDao.getOperationalTravelBydateByLineByPlanVersion(initialDate,finalDate,line,planVerionID);
+//		row= operationalTravelsDao.getOperationalTravelBydateByLineByPlanVersion(initialDate,finalDate,line,planVerionID);
 		for (int i = 0; i < headers.length; i++) {
 			data.put(headers[i], row[i]);
 			
@@ -79,21 +78,21 @@ public class Source_db {
 	 */
 	public ArrayList<IStop> getStopsByLine(long lineId, long planVersionId) {
 //		SITMStop
-		List<SITMStop> lista= stopsDao.findAllStopsFromLine(planVersionId, lineId);
-		ArrayList<IStop> arr = new ArrayList<IStop>(lista);
-		return arr;
+//		List<SITMStop> lista= stopsDao.findAllStopsFromLine(planVersionId, lineId);
+//		ArrayList<IStop> arr = new ArrayList<IStop>(lista);
+//		return arr;
+		return null;
 	}
 
-	public ArrayList<IPlanVersion> getPlanVerions() {
-		List<SITMPlanVersion> lista= planVersionsDao.findAll();
-		ArrayList<IPlanVersion> arr = new ArrayList<IPlanVersion>(lista);
-		return arr;
+	public Iterable<SITMPlanVersion> getPlanVerions() {
+		return planVersionsDao.findAll();
 	}
 
 	public ArrayList<ICalendar> getDatesByPlanVersion(long planVersionID) {
-		List<SITMCalendar> lista= calendarDao.findDatesByPlanversion(planVersionID);
-		ArrayList<ICalendar> arr = new ArrayList<ICalendar>(lista);
-		return arr;
+//		List<SITMCalendar> lista= calendarDao.findDatesByPlanversion(planVersionID);
+//		ArrayList<ICalendar> arr = new ArrayList<ICalendar>(lista);
+//		return arr;
+		return null;
 	}
 
 }

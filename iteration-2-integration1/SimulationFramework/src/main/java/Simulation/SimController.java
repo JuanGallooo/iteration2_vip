@@ -14,6 +14,7 @@ import Simulation.SimState.VariableController;
 import SystemState.TargetSystem;
 import SystemState.FactoryInterfaces.ICalendar;
 import SystemState.FactoryInterfaces.IPlanVersion;
+import SystemState.SITMFactory.SITMPlanVersion;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -95,7 +96,7 @@ public class SimController implements SubjectOberver {
 	public ArrayList<ICalendar> getDateByPlanVersion(long planVersionID){
 		return dataSource.getDateByPlanVersion(planVersionID);
 	}
-	public ArrayList<IPlanVersion> getPlanVersions(){
+	public Iterable<SITMPlanVersion>  getPlanVersions(){
 		return dataSource.getPlanVersions();
 	}
 	public void initTargetSystem() {

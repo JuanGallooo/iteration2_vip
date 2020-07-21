@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import SystemState.FactoryInterfaces.AbstractModelFactory;
 import SystemState.FactoryInterfaces.IArc;
@@ -93,7 +93,7 @@ public class ConcreteSITMFactory implements AbstractModelFactory {
 					if (!columns[5].isEmpty()) {
 						gPSY = Double.parseDouble(columns[5])/10000000;
 					}
-					if (!columns[6].isEmpty() && !columns[6].equals("#¡CAMPO!")) {
+					if (!columns[6].isEmpty() && !columns[6].equals("#ï¿½CAMPO!")) {
 						String origi=columns[6].replace(".", "");
 						StringBuffer str=new StringBuffer(origi);
 						str.insert(3, ".");

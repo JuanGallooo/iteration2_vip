@@ -17,6 +17,7 @@ import SimulationProject.SPController;
 import SystemState.FactoryInterfaces.IBus;
 import SystemState.FactoryInterfaces.IPlanVersion;
 import SystemState.FactoryInterfaces.IStop;
+import SystemState.SITMFactory.SITMPlanVersion;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -283,7 +284,7 @@ public class GUIController implements Observer {
 		return fxmlLoader;
 	}
 
-	public ArrayList<IPlanVersion> getPlanversion() {
+	public Iterable<SITMPlanVersion>  getPlanversion() {
 		
 		return simController.getPlanVersions();
 		

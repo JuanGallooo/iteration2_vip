@@ -215,24 +215,16 @@ public class NewProController {
 		stage.close();
 	}
 	
-	public void loadPlanVersionIds(ArrayList<IPlanVersion> planversionIds) {
+	public void loadPlanVersionIds(Iterable<SITMPlanVersion>  planversionIds) {
 		
-		ArrayList<SITMPlanVersion> listPlanversion = new ArrayList<>();
-		SITMPlanVersion plan = null;
-		
-		for (int i = 0; i < planversionIds.size(); i++) {
-			
-			plan = (SITMPlanVersion) planversionIds.get(i);
-			listPlanversion.add(plan);
+		for (SITMPlanVersion plan :  planversionIds) {
 			
 			CheckBox check = new CheckBox();
-			check.setUserData(listPlanversion.get(i));
-			check.setText(listPlanversion.get(i).getPlanVersionid()+"");
+			check.setUserData(plan);
+			check.setText(plan.getPlanVersionid()+"");
 			lvPlanversionIds.getItems().add(check);
 
 		}
-
-		
 	}
 
 	public void start() throws IOException {

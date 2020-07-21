@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import SystemState.FactoryInterfaces.ICalendar;
 import SystemState.FactoryInterfaces.IPlanVersion;
 import SystemState.FactoryInterfaces.IStop;
+import SystemState.SITMFactory.SITMPlanVersion;
 
 public class DataSource implements IDateSource, Serializable{
 
@@ -96,10 +97,8 @@ public class DataSource implements IDateSource, Serializable{
 		return paradas;
 	}
 
-	public ArrayList<IPlanVersion> getPlanVersions() {
-		ArrayList<IPlanVersion> planVersions= new ArrayList<>();
-		planVersions= source_db.getPlanVerions();
-		return planVersions;
+	public Iterable<SITMPlanVersion> getPlanVersions() {
+		return source_db.getPlanVerions();
 	}
 
 	public ArrayList<ICalendar> getDateByPlanVersion(long planVersionID) {
