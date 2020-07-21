@@ -1,14 +1,9 @@
 package DataSource.Persistence;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import SystemState.SITMFactory.SITMLine;
 
-public interface ISITMLineDao {
-
-	public void save(SITMLine sitmLine);
-	public void update(SITMLine sitmLine);
-	public void remove(SITMLine sitmLine);
-	public SITMLine findById(long id);
-	public List<SITMLine> findAll();
-}
+@Repository
+public interface LineRepository extends CrudRepository<SITMLine, Long> {}

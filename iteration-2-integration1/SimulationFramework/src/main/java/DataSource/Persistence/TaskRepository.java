@@ -1,15 +1,9 @@
 package DataSource.Persistence;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import SystemState.SITMFactory.SITMTask;
 
-public interface ISITMTaskDao {
-
-	public void save(SITMTask sitmTask);
-	public void update(SITMTask sitmTask);
-	public void remove(SITMTask sitmTask);
-	public SITMTask findById(long id);
-	public List<SITMTask> findAll();
-	
-}
+@Repository
+public interface TaskRepository extends CrudRepository<SITMTask, Long> {}

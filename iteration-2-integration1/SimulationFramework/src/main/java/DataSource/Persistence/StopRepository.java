@@ -1,16 +1,9 @@
 package DataSource.Persistence;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import SystemState.SITMFactory.SITMStop;
 
-public interface ISITMStopDao {
-
-	public void save(SITMStop sitmStop);
-	public void update(SITMStop sitmStop);
-	public void remove(SITMStop sitmStop);
-	public SITMStop findById(long id);
-	public List<SITMStop> findAll();
-	List<SITMStop> findAllStopsFromLine(long planversionID, long LINEID);
-	
-}
+@Repository
+public interface StopRepository extends CrudRepository<SITMStop, Long> {}

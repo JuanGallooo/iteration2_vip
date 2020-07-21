@@ -1,14 +1,9 @@
 package DataSource.Persistence;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import SystemState.SITMFactory.SITMArc;
 
-public interface ISITMArcDao {
-
-	public void save(SITMArc sitmArc);
-	public void update(SITMArc sitmArc);
-	public void remove(SITMArc sitmArc);
-	public SITMArc findById(long id);
-	public List<SITMArc> findAll();
-}
+@Repository
+public interface ArcRepository extends CrudRepository<SITMArc, Long> {}
