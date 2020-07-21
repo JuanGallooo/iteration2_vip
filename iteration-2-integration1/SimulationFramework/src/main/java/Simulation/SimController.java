@@ -14,7 +14,9 @@ import Simulation.SimState.VariableController;
 import SystemState.TargetSystem;
 import SystemState.FactoryInterfaces.ICalendar;
 import SystemState.FactoryInterfaces.IPlanVersion;
+import SystemState.SITMFactory.SITMCalendar;
 import SystemState.SITMFactory.SITMPlanVersion;
+import SystemState.SITMFactory.SITMStop;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,16 +38,18 @@ public class SimController implements SubjectOberver {
 	private ExecutionThread executionThread;
 
 	// variables
-	private long lineId;
+	private long lineID;
 	private volatile int speed;
 	private long planVersionID;
+
 	private Date iniDate;
 	private Date finalDate;
 
 	public SimController() {
 
 		// set default variables
-		lineId = 140;
+		lineID = 140;
+		planVersionID = 185;
 		speed = Clock.NORMAL;
 
 		// upload system state
@@ -62,50 +66,30 @@ public class SimController implements SubjectOberver {
 		eventProvirderController = new EventProviderController();
 		eventProcessorController = new EventProcessorController();
 	}
-	public SimController(boolean oracle) {
-		
-		dataSource= new DataSource();
-		if(dataSource.jdbTestConnection()) {
-			// set default variables
-			lineId = 3142;
-			planVersionID= 185;
-			iniDate= new Date();
-			finalDate= new Date();
-			
-			speed = Clock.NORMAL;
 
-			// upload system state
-			initTargetSystem();
+	public Iterable<SITMCalendar> getDateByPlanVersion(long planVersionID) {
+		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
+	}
 
-			// clock configuration
-			clock = new Clock();
-			clock.setClockMode(Clock.DISCRET);
-			clock.setClockRate(Clock.ONE_TO_FIVE);
+	public Iterable<SITMPlanVersion> getPlanVersions() {
+		return dataSource.findAllPlanVersions();
+	}
 
-			// initialize relationships
-			variables = new VariableController();
-			executionThread = new ExecutionThread(this);
-			eventProvirderController = new EventProviderController();
-			eventProvirderController.setDataSource(dataSource);
-			eventProcessorController = new EventProcessorController();
-		}
-		else {
-			System.out.println("=======> simulation can't be started");
-		}
-	}
-	public ArrayList<ICalendar> getDateByPlanVersion(long planVersionID){
-		return dataSource.getDateByPlanVersion(planVersionID);
-	}
-	public Iterable<SITMPlanVersion>  getPlanVersions(){
-		return dataSource.getPlanVersions();
-	}
 	public void initTargetSystem() {
 		this.targetSystem = new TargetSystem();
 	}
 
-	public void initDS(File sourceFile, String split) {
+	public void initialize_SCV(File sourceFile, String split) {
 		dataSource = new DataSource(sourceFile, split);
 		eventProvirderController.setDataSource(dataSource);
+	}
+
+	public void initializeDB() {
+		iniDate = new Date();
+		finalDate = new Date();
+		dataSource = new DataSource();
+		eventProvirderController.setDataSource(dataSource);
+
 	}
 
 	public void initVariables(String[] headers) {
@@ -137,13 +121,12 @@ public class SimController implements SubjectOberver {
 	}
 
 	public void setLineId(long lineId) {
-		this.lineId = lineId;
+		this.lineID = lineId;
 		System.out.println("=======> filter to line " + lineId);
-		if(dataSource.getType().equals(DataSource.FILE_CSV)) {
+		if (dataSource.getType().equals(DataSource.FILE_CSV)) {
 			observer.updateStops(targetSystem.filterStopsByLineId(lineId));
-		}
-		else {
-			observer.updateStops(dataSource.getStopsBylineDB(lineId, planVersionID));
+		} else {
+			//observer.updateStops(dataSource.findAllStopsByLine(planVersionID, lineID));
 		}
 	}
 
@@ -188,20 +171,23 @@ public class SimController implements SubjectOberver {
 	}
 
 	public ArrayList<Event> getNextEvents() throws Exception {
-		return eventProvirderController.getNextEvent(clock.getClockRate(), lineId, iniDate, finalDate, lineId,planVersionID);
+		return eventProvirderController.getNextEvent(clock.getClockRate(), lineID, iniDate, finalDate, lineID,
+				planVersionID);
 	}
 
 	@Override
 	public void subscribe(Observer observer) {
 		this.observer = observer;
 	}
+
 	public void setPlanVersionID(long planVersionID) {
 		this.planVersionID = planVersionID;
 	}
+
 	public long getPlanVersionID() {
 		return this.planVersionID;
 	}
-	
+
 }
 
 @Getter
@@ -239,8 +225,9 @@ class ExecutionThread extends Thread {
 									simController.getTargetSystem());
 
 						}
-						
-						simController.getObserver().updateBuses(simController.getTargetSystem().filterBusesByLineId(simController.getLineId()));
+
+						simController.getObserver().updateBuses(
+								simController.getTargetSystem().filterBusesByLineId(simController.getLineID()));
 						simController.getObserver().updateVariables(simController.getVariables().getAllVariables());
 
 						sleep(simController.getSpeed());

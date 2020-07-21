@@ -326,7 +326,7 @@ public class GUIController implements Observer {
 
 	public void loadDataSource(String path, String separator) {
 		File dataSource = new File(path);
-		simController.initDS(dataSource, separator);
+		simController.initialize_SCV(dataSource, separator);
 	}
 
 	public File[] loadProjects() {

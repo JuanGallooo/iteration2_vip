@@ -1,19 +1,19 @@
 package DataSource;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import DataSource.Persistence.CalendarRepository;
 //import DataSource.Persistence.ISITMCalendarDao;
 //import DataSource.Persistence.ISITMOperationalTravelsDao;
 //import DataSource.Persistence.ISITMStopDao;
 import DataSource.Persistence.PlanVersionRepository;
-import SystemState.FactoryInterfaces.ICalendar;
-import SystemState.FactoryInterfaces.IStop;
+import DataSource.Persistence.StopRepository;
 import SystemState.SITMFactory.SITMCalendar;
 import SystemState.SITMFactory.SITMPlanVersion;
 import SystemState.SITMFactory.SITMStop;
@@ -22,12 +22,32 @@ import SystemState.SITMFactory.SITMStop;
 @Service
 public class Source_db {
 	
-//	private ISITMStopDao stopsDao;
+	private static final String dbURL = "jdbc:oracle:thin:@192.168.161.43:1521:liason";
+	private static final String USER_NAME ="metrocali";
+	private static final String USER_PASSWORD ="metrocali";
 	
 	@Autowired
-	private PlanVersionRepository planVersionsDao;
-//	private ISITMCalendarDao calendarDao;
-//	private ISITMOperationalTravelsDao operationalTravelsDao;
+	private PlanVersionRepository planVersionRepository;
+	
+	@Autowired
+	private StopRepository stopRepository;
+	
+	@Autowired
+	private CalendarRepository calendarRepository;
+
+	public boolean jdbTestConnection() {
+		try {
+			Connection connection= DriverManager.getConnection(dbURL,USER_NAME,USER_PASSWORD);
+			System.out.println("Connection Succesfull !!");
+			connection.close();
+			return true;
+		} catch (Exception e) {
+			System.out.println("Error connection DB!");
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public String[] getHeaders() {
 		String[] headers= new String[26];
 		headers[0]="OPERTRAVELID";
@@ -60,39 +80,28 @@ public class Source_db {
 	}
 
 	public HashMap<String, String> fetchNextRow(Date initialDate, Date finalDate, long line,long planVerionID) {
+		
 		HashMap<String, String> data = new HashMap<String, String>();
+		
 		String[] headers = getHeaders();
-		String[] row= new String[26];
-//		row= operationalTravelsDao.getOperationalTravelBydateByLineByPlanVersion(initialDate,finalDate,line,planVerionID);
+
 		for (int i = 0; i < headers.length; i++) {
-			data.put(headers[i], row[i]);
+			data.put(headers[i], "");
 			
 		}
 		return data;
 	}
-
-	/**
-	 * Show all stops from planversionID and LINEID
-	 * @param lineId
-	 * @return
-	 */
-	public ArrayList<IStop> getStopsByLine(long lineId, long planVersionId) {
-//		SITMStop
-//		List<SITMStop> lista= stopsDao.findAllStopsFromLine(planVersionId, lineId);
-//		ArrayList<IStop> arr = new ArrayList<IStop>(lista);
-//		return arr;
-		return null;
+	
+	public Iterable<SITMPlanVersion> findAllPlanVersions() {
+		return planVersionRepository.findAll();
 	}
 
-	public Iterable<SITMPlanVersion> getPlanVerions() {
-		return planVersionsDao.findAll();
+	public Iterable<SITMStop> findAllStopsByLine(long planVersionID,long lineID) {
+		return stopRepository.findAllStopsByLine(planVersionID, lineID);
 	}
 
-	public ArrayList<ICalendar> getDatesByPlanVersion(long planVersionID) {
-//		List<SITMCalendar> lista= calendarDao.findDatesByPlanversion(planVersionID);
-//		ArrayList<ICalendar> arr = new ArrayList<ICalendar>(lista);
-//		return arr;
-		return null;
+	public Iterable<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
+		return calendarRepository.findAllCalendarsByPlanVersion(planVersionID);
 	}
 
 }

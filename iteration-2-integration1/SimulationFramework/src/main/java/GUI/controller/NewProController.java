@@ -159,7 +159,8 @@ public class NewProController {
 				
 			} else if(chOracle.isSelected()){
 				containerView.setCenter(oracleView);
-				sc = new SimController(true);
+				sc = new SimController();
+				sc.initializeDB();
 				guiController.setSimController(sc);
 				sc.subscribe(guiController);
 				loadPlanVersionIds(guiController.getPlanversion());

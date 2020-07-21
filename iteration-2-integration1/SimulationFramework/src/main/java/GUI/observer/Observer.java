@@ -10,7 +10,7 @@ public interface Observer {
 
 	public void updateVariables(ArrayList<Variable> variables);
 
-	public void updateStops(ArrayList<IStop> stops);
+	public void updateStops(ArrayList<IStop> arrayList);
 
 	public void updateBuses(ArrayList<IBus> bus);
 
