@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="Data" prefHeight="308.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulationFramework.GUI.controller.NewProController">
+   <children>
+      <Label layoutX="16.0" layoutY="28.0" text="Data Range">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="78.0" text="Start date: ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="121.0" text="Ending date: ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dtStartDate" layoutX="104.0" layoutY="76.0" />
+      <DatePicker fx:id="dtEndingDate" layoutX="104.0" layoutY="118.0" />
+   </children>
+</AnchorPane>

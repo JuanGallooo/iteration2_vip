@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="795.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulationFramework.GUI.controller.GUIController">
+   <center>
+      <SplitPane fx:id="spViews" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar layoutY="2.0" prefHeight="27.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Project">
+                  <items>
+                    	<MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#miNewAction" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem fx:id="miSave" mnemonicParsing="false" onAction="#miSaveAction" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Properties" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Target System">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
+                     </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Configuration">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Animation Speed">
+                          <items>
+                            <MenuItem fx:id="miSlow" mnemonicParsing="false" onAction="#miSlowAction" text="Slow" />
+                              <MenuItem fx:id="miNormal" mnemonicParsing="false" onAction="#miNormalAction" text="Normal" />
+                              <MenuItem fx:id="miFast" mnemonicParsing="false" onAction="#miFastAction" text="Fast" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Read Speed">
+                          <items>
+                            <MenuItem fx:id="mi1to1" mnemonicParsing="false" onAction="#mi1to1Action" text="Read 1 second in 1 second " />
+                              <MenuItem fx:id="mi1to5" mnemonicParsing="false" onAction="#mi1to5Action" text="Read 1 second in 5 seconds " />
+                              <MenuItem fx:id="mi1to10" mnemonicParsing="false" onAction="#mi1to10Action" text="Read 1 second in 10 seconds" />
+                              <MenuItem fx:id="mi1to30" mnemonicParsing="false" onAction="#mi1to30Action" text="Read 1 second in 30 seconds" />
+                              <MenuItem fx:id="mi1to60" mnemonicParsing="false" onAction="#mi1to60Action" text="Read 1 second in 60 seconds" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Variables">
+                          <items>
+                              <Menu mnemonicParsing="false" text="Independent">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="DataSource" />
+                                </items>
+                              </Menu>
+                            <MenuItem mnemonicParsing="false" text="Dependent" />
+                              <MenuItem mnemonicParsing="false" text="Event Generator" />
+                              <MenuItem mnemonicParsing="false" text="Relationship (Var-Event)" />
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
+                <Menu mnemonicParsing="false" text="Execution">
+                  <items>
+                    <MenuItem fx:id="miStart" mnemonicParsing="false" onAction="#miStartAction" text="Start" />
+                        <MenuItem fx:id="miPause" mnemonicParsing="false" onAction="#miPauseAction" text="Pause" />
+                        <MenuItem fx:id="miResume" mnemonicParsing="false" onAction="#miResumeAction" text="Resume" />
+                        <MenuItem fx:id="miStop" mnemonicParsing="false" onAction="#miStopAction" text="Stop" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="View">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Zoom" />
+                        <Menu mnemonicParsing="false" text="Show Views">
+                          <items>
+                            <MenuItem fx:id="miProjectExplorer" mnemonicParsing="false" onAction="#mShowViews" text="Project Explorer" />
+                              <MenuItem fx:id="miMap" mnemonicParsing="false" onAction="#mShowViews" text="Map" />
+                              <MenuItem fx:id="miVariablesStatistics" mnemonicParsing="false" onAction="#mShowViews" text="Varaibles and Statistics" />
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Analysis">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Statistics Report" />
+                        <MenuItem mnemonicParsing="false" text="Operation Report" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Tools" />
+              </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>
