@@ -13,13 +13,11 @@ import org.springframework.stereotype.Service;
 import SystemState.FactoryInterfaces.ICalendar;
 import SystemState.FactoryInterfaces.IPlanVersion;
 import SystemState.FactoryInterfaces.IStop;
+import SystemState.SITMFactory.SITMCalendar;
 import SystemState.SITMFactory.SITMPlanVersion;
+import SystemState.SITMFactory.SITMStop;
 
 public class DataSource implements IDateSource, Serializable{
-
-	private static final String dbURL = "jdbc:oracle:thin:@192.168.161.43:1521:liason";
-	private static final String USER_NAME ="metrocali";
-	private static final String USER_PASSWORD ="metrocali";
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,9 +37,9 @@ public class DataSource implements IDateSource, Serializable{
 	public DataSource() {
 		this.type = DATA_BASE;
 		source_db = new Source_db();
+		source_db.jdbTestConnection();
 	}
 
-	
 	
 	@Override 
 	public String[] getHeaders() {
@@ -71,19 +69,7 @@ public class DataSource implements IDateSource, Serializable{
 		return null;
 	}
 
-	@Override
-	public boolean jdbTestConnection() {
-		try {
-			Connection connection= DriverManager.getConnection(dbURL,USER_NAME,USER_PASSWORD);
-			System.out.println("Connection Succesfull !!");
-			connection.close();
-			return true;
-		} catch (Exception e) {
-			System.out.println("Error connection DB!");
-			e.printStackTrace();
-			return false;
-		}
-	}
+	
 	public String getType() {
 		return type;
 	}
@@ -91,20 +77,18 @@ public class DataSource implements IDateSource, Serializable{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public ArrayList<IStop> getStopsBylineDB(long lineId, long planVersionId){
-		ArrayList<IStop> paradas= new ArrayList<>();
-		paradas= source_db.getStopsByLine(lineId,planVersionId);
-		return paradas;
+	
+
+	public Iterable<SITMPlanVersion> findAllPlanVersions() {
+		return source_db.findAllPlanVersions();
 	}
 
-	public Iterable<SITMPlanVersion> getPlanVersions() {
-		return source_db.getPlanVerions();
+	public Iterable<SITMStop> findAllStopsByLine(long planVersionID,long lineID) {
+		return source_db.findAllStopsByLine(planVersionID, lineID);
 	}
 
-	public ArrayList<ICalendar> getDateByPlanVersion(long planVersionID) {
-		ArrayList<ICalendar> planVersions= new ArrayList<>();
-		planVersions= source_db.getDatesByPlanVersion(planVersionID);
-		return planVersions;
+	public Iterable<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
+		return source_db.findAllCalendarsByPlanVersion(planVersionID);
 	}
 
 

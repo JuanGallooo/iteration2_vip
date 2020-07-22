@@ -86,10 +86,4 @@ public class Source_csv implements IDateSource {
 
 	}
 
-	@Override
-	public boolean jdbTestConnection() {
-		return false;
-		
-	}
-
 }
