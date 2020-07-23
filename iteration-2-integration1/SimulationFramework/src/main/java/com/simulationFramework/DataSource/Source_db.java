@@ -94,11 +94,13 @@ public class Source_db {
 	}
 
 	public Iterable<SITMStop> findAllStopsByLine(long planVersionID,long lineID) {
-		return stopRepository.findAllStopsByLine(planVersionID, lineID);
+		//return stopRepository.findAllStopsbyLineID(planVersionID, lineID);
+		return null;
 	}
 
 	public Iterable<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
-		return calendarRepository.findAllCalendarsByPlanVersion(planVersionID);
+		//return calendarRepository.findAllCalendarsbyPlanVersionID(planVersionID);
+		return null;
 	}
 
 }
