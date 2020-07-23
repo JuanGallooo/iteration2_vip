@@ -37,6 +37,9 @@ public class SITMLine implements ILine,Serializable  {
 	@Column(name="PLANVERSIONID")
 	private long planVersionID;
 	
+	public SITMLine () {
+		super();
+	}
 
 	public SITMLine(long lineID, String shortName, String description, long planVersionID) {
 		super();

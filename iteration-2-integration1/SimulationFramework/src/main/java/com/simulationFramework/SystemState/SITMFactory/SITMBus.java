@@ -46,6 +46,10 @@ public class SITMBus implements IBus,Serializable  {
 	
 	private long lineId;
 
+	public SITMBus () {
+		super();
+	}
+	
 	public SITMBus(long busID, long busNumber, String identification, long busTypeID, long planVersionID) {
 		super();
 		this.busID = busID;

@@ -38,6 +38,10 @@ public class SITMCalendar implements ICalendar,Serializable  {
 	@Column(name="PLANVERSIONID")
 	private long planVersionID;
 
+	public SITMCalendar () {
+		super();
+	}
+	
 	public SITMCalendar(long calendarID, Date operationDay, String scheduleTypeID, long planVersionID) {
 		super();
 		this.calendarID = calendarID;

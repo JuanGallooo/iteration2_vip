@@ -52,6 +52,10 @@ public class SITMLineStop implements ILineStop,Serializable{
 	@Column(name="LINEVARIANTTYPE")
 	private long lineVariantType;
 
+	public SITMLineStop () {
+		super();
+	}
+	
 	public SITMLineStop(long lineStopID, long stopsequence, long orientation, long lineID, long stopID,
 			long planVersionID, long lineVariant, Date registerDate, long lineVariantType) {
 		super();

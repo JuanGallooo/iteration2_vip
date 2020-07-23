@@ -58,6 +58,10 @@ public class SITMTrip implements ITrip,Serializable {
 	
 	@Column(name="ENDSTOPID")
 	private long endStopID;
+	
+	public SITMTrip () {
+		super();
+	}
 
 	public SITMTrip(long tripID, long scheduleTypeID, long tripSequence, String startTime, String description,
 			boolean orientation, long planVersionID, String taskID, long lineID, long startStopID, long endStopID) {

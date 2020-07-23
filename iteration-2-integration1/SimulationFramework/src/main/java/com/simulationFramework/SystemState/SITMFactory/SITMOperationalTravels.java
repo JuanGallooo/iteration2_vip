@@ -98,6 +98,10 @@ public class SITMOperationalTravels {
 	
 	@Column(name="TIMEDIFF")
 	private long timeDiff;
+	
+	public SITMOperationalTravels () {
+		super();
+	}
 
 	public SITMOperationalTravels(long opertravelID, long busID, long laststopID, String gPS_X, String gPS_Y,
 			long deviationTime, long odometervalue, long lineID, long taskID, long tripID, long rightcourse,

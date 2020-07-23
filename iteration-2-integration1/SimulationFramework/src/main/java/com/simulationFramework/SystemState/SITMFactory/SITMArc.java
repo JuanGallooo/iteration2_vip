@@ -43,6 +43,11 @@ public class SITMArc implements IArc,Serializable {
 	@Column(name="PLANVERSIONID")
 	private long planVersionID;
 
+
+	public SITMArc() {
+		super();
+	}	
+	
 	public SITMArc(long arcID, long starPoint, long endPoint, String description, String arcLength,
 			long planVersionID) {
 		super();
@@ -53,6 +58,10 @@ public class SITMArc implements IArc,Serializable {
 		this.arcLength = arcLength;
 		this.planVersionID = planVersionID;
 	}
+
+
+
+	
 	
 	
 

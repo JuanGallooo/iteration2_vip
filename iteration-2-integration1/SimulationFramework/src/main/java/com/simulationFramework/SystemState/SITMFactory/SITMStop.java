@@ -48,6 +48,10 @@ public class SITMStop implements IStop,Serializable  {
 	
 	@Column(name="PLANVERSIONID")
 	private long planVersionID;
+	
+	public SITMStop () {
+		super();
+	}
 
 	public SITMStop(long stopID, String shortName, String longName, double gPSX, double gPSY, double decimalLongitude,
 			double decimalLatitude, long planVersionID) {

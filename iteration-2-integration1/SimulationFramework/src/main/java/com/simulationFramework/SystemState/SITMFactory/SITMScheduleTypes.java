@@ -37,6 +37,10 @@ public class SITMScheduleTypes implements IScheduleTypes,Serializable  {
 	@Column(name="PLANVERSIONID")
 	private long planVersionID;
 
+	public SITMScheduleTypes () {
+		super();
+	}
+	
 	public SITMScheduleTypes(long scheduleTypeID, String shortName, String description, long planVersionID) {
 		super();
 		this.scheduleTypeID = scheduleTypeID;

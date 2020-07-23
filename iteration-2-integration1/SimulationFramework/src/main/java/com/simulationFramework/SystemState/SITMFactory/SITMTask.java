@@ -37,6 +37,10 @@ public class SITMTask implements ITask,Serializable  {
 	@Column(name="PLANVERSIONID")
 	private long planVersionID;
 
+	public SITMTask () {
+		super();
+	}
+	
 	public SITMTask(long taskID, long scheduleTypeID, long lineID, long planVersionID) {
 		super();
 		this.taskID = taskID;

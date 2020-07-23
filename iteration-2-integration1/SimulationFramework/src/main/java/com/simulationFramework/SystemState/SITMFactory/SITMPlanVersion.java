@@ -34,6 +34,10 @@ public class SITMPlanVersion implements IPlanVersion,Serializable  {
 	@Column(name="CREATIONDATE")
 	private Date creationDate;
 
+	public SITMPlanVersion () {
+		super();
+	}
+	
 	public SITMPlanVersion(long planVersionID, Date activationDate, Date creationDate) {
 		super();
 		this.planVersionID = planVersionID;
