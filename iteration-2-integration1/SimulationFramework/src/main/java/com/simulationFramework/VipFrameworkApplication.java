@@ -4,16 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
+import com.simulationFramework.GUI.Main_GUI;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 
 @SpringBootApplication
-@ComponentScan("Persistence")
 @EnableJpaRepositories
-//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class VipFrameworkApplication {
 	
 	
@@ -30,7 +28,7 @@ public class VipFrameworkApplication {
 		
 		VipFrameworkApplication ep = ctx.getBean(VipFrameworkApplication.class);
 		ep.test();
-		
+		ep.launchScreen(args);
 	}
 
 	public void test() {
@@ -39,5 +37,8 @@ public class VipFrameworkApplication {
 		}
 	}
 
-
+	public void launchScreen(String[] args) {
+		Main_GUI gui = new Main_GUI();
+		gui.launchScreen(args);
+	}
 }

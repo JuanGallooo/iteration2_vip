@@ -407,6 +407,7 @@ public class ConcreteSITMFactory implements AbstractModelFactory {
 		return lineStops;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private Date createDate(String input) {
 		
 		String[] fecha = input.split("-");

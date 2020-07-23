@@ -21,11 +21,11 @@ import javafx.stage.Stage;
 
 @SpringBootApplication
 @ComponentScan("DataSource")
-public class Main extends Application {
+public class Main_GUI extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(GUIController.VIEW_ADDRESS+"GUIView.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(Main_GUI.class.getResource(GUIController.VIEW_ADDRESS+"GUIView.fxml"));
 		Scene scene = new Scene(fxmlLoader.load());
 
 		primaryStage.setTitle("Simulator");
@@ -38,19 +38,9 @@ public class Main extends Application {
 		});
 
 		GUIController guiController = fxmlLoader.getController();
-		SPController spcontroller = new SPController();
-		SimController simController = new SimController();
-		
-		
-		simController.subscribe(guiController);
-		guiController.setStage(primaryStage);
-		guiController.setSpController(spcontroller);
-		
-		
 	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
+	
+	public void launchScreen(String[] args) {
 		launch(args);
 	}
 }

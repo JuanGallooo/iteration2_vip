@@ -2,17 +2,9 @@ package com.simulationFramework.DataSource;
 
 import java.io.File;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.springframework.stereotype.Service;
-
-import com.simulationFramework.SystemState.FactoryInerfaces.ICalendar;
-import com.simulationFramework.SystemState.FactoryInerfaces.IPlanVersion;
-import com.simulationFramework.SystemState.FactoryInerfaces.IStop;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
@@ -26,6 +18,7 @@ public class DataSource implements IDateSource, Serializable{
 	public final static String DATA_BASE = "DataBase";
 
 	private String type;
+	
 	private Source_db source_db;
 	private Source_csv source_csv;
 	
