@@ -2,34 +2,50 @@ package com.simulationFramework.SystemState.SITMFactory;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
 
 import com.simulationFramework.SystemState.FactoryInerfaces.ILine;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+
 @Entity
+@Table(name="LINES")
 @BatchSize(size=25)
+@Getter @Setter @ToString
 public class SITMLine implements ILine,Serializable  {
 
 	private static final long serialVersionUID = 1L;
 	
-	@NonNull
-	private long lineid;
-	@NonNull
+	@Id
+	@Column(name="LINEID")
+	private long lineID;
+	
+	@Column(name="SHORTNAME")
 	private String shortName;
-	@NonNull
+	
+	@Column(name="DESCRIPTION")
 	private String description;
-	@NonNull
+	
+	@Column(name="PLANVERSIONID")
 	private long planVersionID;
 	
-	@Override
-	public String toString() {
-		return shortName+" "+description; 
+
+	public SITMLine(long lineID, String shortName, String description, long planVersionID) {
+		super();
+		this.lineID = lineID;
+		this.shortName = shortName;
+		this.description = description;
+		this.planVersionID = planVersionID;
 	}
+	
+	
 
 }

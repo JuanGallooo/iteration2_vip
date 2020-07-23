@@ -107,8 +107,7 @@ public class ConcreteSITMFactory implements AbstractModelFactory {
 						decimalLactitude = Double.parseDouble(str.toString());
 					}
 					if (columns[1].equals(planVersionID + "")) {
-						stops.add(new SITMStop(longName, gPSX, gPSY, decimalLongitude, decimalLactitude, planVersionID,
-								stopId, shortName));
+						stops.add(new SITMStop(stopId, shortName, longName, gPSX, gPSY, decimalLongitude, decimalLactitude, stopId));
 					}
 				}
 				} catch (Exception e) {
@@ -182,12 +181,13 @@ public class ConcreteSITMFactory implements AbstractModelFactory {
 
 					long busId = Long.parseLong(columns[0]);
 					long busNumber = 0;
+					long busTypeId = Long.parseLong(columns[3]);
 
 					if (!columns[0].isEmpty())
 						busNumber = Long.parseLong(columns[1]);
 					String identification = columns[2];
 					if (columns[4].equals(planVersionID + "")) {
-						buses.add(new SITMBus(busId, busNumber, identification, planVersionID));
+						buses.add(new SITMBus(busId, busNumber, identification, busTypeId, busNumber));
 					}
 				}
 

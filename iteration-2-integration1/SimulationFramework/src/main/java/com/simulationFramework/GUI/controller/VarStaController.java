@@ -65,7 +65,7 @@ public class VarStaController {
 			}
 		}
 		
-		mainController.getSimController().setLineId(list.get(0).getLineid());
+		mainController.getSimController().setLineId(list.get(0).getLineID());
 		mainController.reloadMap();
 		
 	}
