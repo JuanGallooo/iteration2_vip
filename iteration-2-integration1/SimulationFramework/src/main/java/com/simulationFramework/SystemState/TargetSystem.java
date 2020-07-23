@@ -58,7 +58,7 @@ public class TargetSystem implements Serializable {
 
 		for (int i = 0; i < buses.size(); i++) {
 
-			if (((SITMBus) buses.get(i)).getBusId() == idBus) {
+			if (((SITMBus) buses.get(i)).getBusID() == idBus) {
 				((SITMBus) buses.get(i)).setLatitude(latitude);
 				((SITMBus) buses.get(i)).setLongitude(longitude);
 			}
@@ -71,11 +71,11 @@ public class TargetSystem implements Serializable {
 		for (int i = 0; i < lineStops.size(); i++) {
 			SITMLineStop lineStop = (SITMLineStop) lineStops.get(i);
 
-			if (lineStop.getLineid() == lineId) {
+			if (lineStop.getLineID() == lineId) {
 
 				for (int j = 0; j < stops.size(); j++) {
 					SITMStop stop = (SITMStop) stops.get(j);
-					if (stop.getStopId() == lineStop.getStopid()) {
+					if (stop.getStopID() == lineStop.getStopID()) {
 						stopsByLine.add(stop);
 					}
 				}
@@ -103,7 +103,7 @@ public class TargetSystem implements Serializable {
 
 		for (int i = 0; i < buses.size(); i++) {
 			SITMBus bus = (SITMBus) buses.get(i);
-			if (bus.getBusId() == busId) {
+			if (bus.getBusID() == busId) {
 				bus.setLineId(lineId);
 			}
 

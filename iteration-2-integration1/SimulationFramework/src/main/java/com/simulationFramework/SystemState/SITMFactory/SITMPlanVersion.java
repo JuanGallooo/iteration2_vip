@@ -26,7 +26,7 @@ public class SITMPlanVersion implements IPlanVersion,Serializable  {
 	
 	@Id
 	@Column(name="PLANVERSIONID")
-	private long planVersionid;
+	private long planVersionID;
 
 	@Column(name="ACTIVATIONDATE")
 	private Date activationDate;
@@ -34,9 +34,9 @@ public class SITMPlanVersion implements IPlanVersion,Serializable  {
 	@Column(name="CREATIONDATE")
 	private Date creationDate;
 
-	public SITMPlanVersion(long planVersionid, Date activationDate, Date creationDate) {
+	public SITMPlanVersion(long planVersionID, Date activationDate, Date creationDate) {
 		super();
-		this.planVersionid = planVersionid;
+		this.planVersionID = planVersionID;
 		this.activationDate = activationDate;
 		this.creationDate = creationDate;
 	}

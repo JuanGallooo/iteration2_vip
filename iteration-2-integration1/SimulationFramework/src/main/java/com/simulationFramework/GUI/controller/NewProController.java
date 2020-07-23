@@ -223,7 +223,7 @@ public class NewProController {
 			
 			CheckBox check = new CheckBox();
 			check.setUserData(plan);
-			check.setText(plan.getPlanVersionid()+"");
+			check.setText(plan.getPlanVersionID()+"");
 			lvPlanversionIds.getItems().add(check);
 
 		}

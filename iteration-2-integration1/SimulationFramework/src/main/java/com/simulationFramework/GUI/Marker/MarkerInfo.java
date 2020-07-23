@@ -56,7 +56,7 @@ public class MarkerInfo implements AdapterInfoMarkers {
 			SITMStop concreteStop = (SITMStop) stop;
 			
 			if(concreteStop.getDecimalLatitude()!=0 && concreteStop.getDecimalLongitude()!=0) {
-				this.addMarkerStop(concreteStop.getStopId(),concreteStop.getDecimalLatitude(), concreteStop.getDecimalLongitude());
+				this.addMarkerStop(concreteStop.getStopID(),concreteStop.getDecimalLatitude(), concreteStop.getDecimalLongitude());
 			}
 		}
 		wJ.write(typeStop,pathStop,markersStops);
@@ -71,7 +71,7 @@ public class MarkerInfo implements AdapterInfoMarkers {
 
 			if (concreteBus.getLatitude() != 0 && concreteBus.getLongitude() != 0) {
 				
-				this.addMarkerBus(concreteBus.getBusId(), concreteBus.getLatitude(), concreteBus.getLongitude());
+				this.addMarkerBus(concreteBus.getBusID(), concreteBus.getLatitude(), concreteBus.getLongitude());
 			}
 		}
 		
