@@ -38,7 +38,7 @@ import lombok.Data;
 @Data
 public class GUIController implements Observer {
 
-	public static final String VIEW_ADDRESS = "/com.simulationFramework/GUI/view/";
+	public static final String VIEW_ADDRESS = "/com/simulationFramework/GUI/view/";
 
 	private Stage stage;
 
