@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
@@ -15,7 +16,8 @@ import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 import lombok.Getter;
 
 @Getter
-public class DataSource implements IDateSource, Serializable{
+@Component
+public class DataSource2 implements IDateSource, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -29,12 +31,12 @@ public class DataSource implements IDateSource, Serializable{
 	public Source_db source_db;
 	public Source_csv source_csv;
 	
-	public DataSource(File sourceFile, String split) {
+	public DataSource2(File sourceFile, String split) {
 		this.type = FILE_CSV;
 		source_csv = new Source_csv(sourceFile, split);
 	}
 
-	public DataSource() {
+	public DataSource2() {
 		this.type = DATA_BASE;
 		//source_db = new Source_db();
 		//source_db.jdbTestConnection();

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
-import com.simulationFramework.DataSource.DataSource;
+import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.DataSource.Source_db;
 import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
 import com.simulationFramework.GUI.Main_GUI;
@@ -48,18 +48,20 @@ public class VipFrameworkApplication extends Application{
     public void init() throws Exception {
         springContext = SpringApplication.run(VipFrameworkApplication.class);
         
-        DataSource ds = new DataSource();
-        System.out.println(ds.getSource_db().getHeaders());
-        //Source_db ep = springContext.getBean(Source_db.class);
-        //Source_db ep = new Source_db(); 
-		//System.out.println(ep.findAllPlanVersions());
+        //System.out.println(ds.getSource_db().getHeaders());
+        Source_db ep = springContext.getBean(Source_db.class);
+        //DataSource ds = new Datasource();
+        //Source_db ep = ds.getSource_db();
+		System.out.println(ep.findAllPlanVersions());
         
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(springContext::getBean);
     }
+	
 	public VipFrameworkApplication() {
 		
 	}
+
 	public static void main(String[] args) {
 		
 //		ConfigurableApplicationContext ctx = SpringApplication.run(VipFrameworkApplication.class, args);
@@ -94,12 +96,13 @@ public class VipFrameworkApplication extends Application{
 		});
 		GUIController guiController = fxmlLoader.getController();
 		SPController spcontroller = new SPController();
-		SimController simController = new SimController();
+		SimController simController = springContext.getBean(SimController.class);
 		
 		
 		simController.subscribe(guiController);
 		guiController.setStage(primaryStage);
 		guiController.setSpController(spcontroller);
+		guiController.setSimController(simController);
 
 //		GUIController guiController = fxmlLoader.getController();
 	}

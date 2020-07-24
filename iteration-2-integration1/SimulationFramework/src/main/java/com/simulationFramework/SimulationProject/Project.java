@@ -2,7 +2,7 @@ package com.simulationFramework.SimulationProject;
 
 import java.io.Serializable;
 
-import com.simulationFramework.DataSource.DataSource;
+import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.Simulation.Clock;
 import com.simulationFramework.Simulation.SimState.VariableController;
 import com.simulationFramework.SystemState.TargetSystem;
@@ -21,7 +21,7 @@ public class Project implements Serializable{
 	@NonNull
 	private Long id;
 		
-	private DataSource dataSource;
+	private DataSource2 dataSource;
 	private TargetSystem targetSystem;
 	private Clock clock;
 	private VariableController variables;

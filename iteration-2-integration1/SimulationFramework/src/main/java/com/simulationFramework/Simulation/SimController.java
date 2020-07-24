@@ -4,7 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.simulationFramework.DataSource.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.GUI.Observer.Observer;
 import com.simulationFramework.GUI.Observer.SubjectOberver;
 import com.simulationFramework.Simulation.Event.Event;
@@ -19,11 +22,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
+@Service
 public class SimController implements SubjectOberver {
 
 	// external packages
 	private Observer observer;
-	private DataSource dataSource;
+	private DataSource2 dataSource;
 	private TargetSystem targetSystem;
 
 	// simulation package
@@ -43,8 +47,10 @@ public class SimController implements SubjectOberver {
 	private Date iniDate;
 	private Date finalDate;
 
-	public SimController() {
+	@Autowired
+	public SimController(DataSource2 dataSource) {
 
+		this.dataSource=dataSource;
 		// set default variables
 		lineID = 140;
 		planVersionID = 185;
@@ -78,14 +84,14 @@ public class SimController implements SubjectOberver {
 	}
 
 	public void initialize_SCV(File sourceFile, String split) {
-		dataSource = new DataSource(sourceFile, split);
+		dataSource = new DataSource2(sourceFile, split);
 		eventProvirderController.setDataSource(dataSource);
 	}
 
 	public void initializeDB() {
 		iniDate = new Date();
 		finalDate = new Date();
-		dataSource = new DataSource();
+		dataSource = new DataSource2();
 		eventProvirderController.setDataSource(dataSource);
 
 	}
@@ -121,7 +127,7 @@ public class SimController implements SubjectOberver {
 	public void setLineId(long lineId) {
 		this.lineID = lineId;
 		System.out.println("=======> filter to line " + lineId);
-		if (dataSource.getType().equals(DataSource.FILE_CSV)) {
+		if (dataSource.getType().equals(DataSource2.FILE_CSV)) {
 			observer.updateStops(targetSystem.filterStopsByLineId(lineId));
 		} else {
 			//observer.updateStops(dataSource.findAllStopsByLine(planVersionID, lineID));

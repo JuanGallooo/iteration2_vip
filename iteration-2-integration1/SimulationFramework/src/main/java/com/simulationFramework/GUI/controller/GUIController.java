@@ -52,6 +52,7 @@ public class GUIController implements Observer {
 
 	private VarStaController varStaController;
 
+	
 	private SimController simController;
 
 	@FXML

@@ -3,7 +3,7 @@ package com.simulationFramework.Simulation.Event.EventProvider;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.simulationFramework.DataSource.DataSource;
+import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.Simulation.Event.Event;
 
 public class EventProviderController {
@@ -28,7 +28,7 @@ public class EventProviderController {
 		return events;
 	}
 
-	public void setDataSource(DataSource dataSource) { 
+	public void setDataSource(DataSource2 dataSource) { 
 		eventFecher.setDataSource(dataSource);
 	}
 

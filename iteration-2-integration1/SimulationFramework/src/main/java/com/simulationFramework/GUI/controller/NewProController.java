@@ -154,16 +154,16 @@ public class NewProController {
 			
 			if (chCSV.isSelected()) {
 				containerView.setCenter(dataView);
-				sc = new SimController();
-				guiController.setSimController(sc);
-				sc.subscribe(guiController);
+				//sc = new SimController();
+				//guiController.setSimController(sc);
+				//sc.subscribe(guiController);
 				
 			} else if(chOracle.isSelected()){
 				containerView.setCenter(oracleView);
-				sc = new SimController();
-				sc.initializeDB();
-				guiController.setSimController(sc);
-				sc.subscribe(guiController);
+				//sc = new SimController();
+				//sc.initializeDB();
+				//guiController.setSimController(sc);
+				//sc.subscribe(guiController);
 				loadPlanVersionIds(guiController.getPlanversion());
 			}
 			

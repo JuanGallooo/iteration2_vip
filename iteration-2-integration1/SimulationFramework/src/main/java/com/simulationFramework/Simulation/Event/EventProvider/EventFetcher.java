@@ -3,7 +3,7 @@ package com.simulationFramework.Simulation.Event.EventProvider;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.simulationFramework.DataSource.DataSource;
+import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.Simulation.Event.Event;
 import com.simulationFramework.Simulation.Event.EventType;
 
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class EventFetcher {
 
-	private DataSource dataSource;
+	private DataSource2 dataSource;
 	
 	public Event fetch(Date initialDate, Date finalDate, long line,long planVerionID) throws Exception {
 		
