@@ -23,14 +23,21 @@ public class Source_db {
 	private static final String USER_NAME ="metrocali";
 	private static final String USER_PASSWORD ="metrocali";
 	
-	@Autowired
 	private PlanVersionRepository planVersionRepository;
 	
-	@Autowired
 	private StopRepository stopRepository;
 	
-	@Autowired
 	private CalendarRepository calendarRepository;
+	
+	
+	@Autowired
+	public Source_db(PlanVersionRepository planVersionRepository, StopRepository stopRepository,
+			CalendarRepository calendarRepository) {
+		super();
+		this.planVersionRepository = planVersionRepository;
+		this.stopRepository = stopRepository;
+		this.calendarRepository = calendarRepository;
+	}
 
 	public boolean jdbTestConnection() {
 		try {
