@@ -1,34 +1,71 @@
 package com.simulationFramework;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
+import com.simulationFramework.DataSource.DataSource;
+import com.simulationFramework.DataSource.Source_db;
 import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
 import com.simulationFramework.GUI.Main_GUI;
+import com.simulationFramework.GUI.controller.GUIController;
+import com.simulationFramework.Simulation.SimController;
+import com.simulationFramework.SimulationProject.SPController;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 @SpringBootApplication
 @EnableJpaRepositories
-public class VipFrameworkApplication {
+@ComponentScan("com.simulationFramework")
+public class VipFrameworkApplication extends Application{
 	
-	
+    private ConfigurableApplicationContext springContext;
+    private Parent rootNode;
+    private FXMLLoader fxmlLoader;
+    
 	private PlanVersionRepository plansVersionRepository;
+	
 	
 	@Autowired
 	public VipFrameworkApplication(PlanVersionRepository plansVersionRepository) {
 		this.plansVersionRepository = plansVersionRepository;
 	}
-	
+	@Override
+    public void init() throws Exception {
+        springContext = SpringApplication.run(VipFrameworkApplication.class);
+        //DataSource ds = new DataSource();
+        //Source_db ep = springContext.getBean(Source_db.class);
+        Source_db ep = new Source_db(); 
+		System.out.println(ep.findAllPlanVersions());
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setControllerFactory(springContext::getBean);
+    }
+	public VipFrameworkApplication() {
+		
+	}
 	public static void main(String[] args) {
 		
-		ConfigurableApplicationContext ctx = SpringApplication.run(VipFrameworkApplication.class, args);
+//		ConfigurableApplicationContext ctx = SpringApplication.run(VipFrameworkApplication.class, args);
 		
-		VipFrameworkApplication ep = ctx.getBean(VipFrameworkApplication.class);
-		ep.test();
-		ep.launchScreen(args);
+//		VipFrameworkApplication ep = ctx.getBean(VipFrameworkApplication.class);
+		//ep.test();
+		//Application.launch(Main_GUI.class,args);
+		launch(args);
+//		ep.launchScreen(args,ctx);
 	}
 
 	public void test() {
@@ -36,9 +73,40 @@ public class VipFrameworkApplication {
 			System.out.println(planVersion);
 		}
 	}
+	@Override
+	public void start(Stage primaryStage) throws IOException {
+//		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+		String path = new File("/src/main/java/GUI/view/GUIView.fxml").getAbsolutePath();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(GUIController.VIEW_ADDRESS+"GUIView.fxml"));
+//		fxmlLoader.setController(new MainController(path));
+		rootNode = fxmlLoader.load();
+		primaryStage.setTitle("Simulator");
+		Scene scene = new Scene(rootNode);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+		primaryStage.setOnCloseRequest(e->{
+				Platform.exit();
+				System.exit(0);
+		});
+		GUIController guiController = fxmlLoader.getController();
+		SPController spcontroller = new SPController();
+		SimController simController = new SimController();
+		
+		
+		simController.subscribe(guiController);
+		guiController.setStage(primaryStage);
+		guiController.setSpController(spcontroller);
 
-	public void launchScreen(String[] args) {
-		Main_GUI gui = new Main_GUI();
-		gui.launchScreen(args);
+//		GUIController guiController = fxmlLoader.getController();
 	}
+	@Override
+    public void stop() {
+        springContext.stop();
+    }
+
+//	public void launchScreen(String[] args,ConfigurableApplicationContext ctx ) {
+//		Main_GUI gui = new Main_GUI();
+//		gui.launchScreen(args,ctx);
+//	}
 }

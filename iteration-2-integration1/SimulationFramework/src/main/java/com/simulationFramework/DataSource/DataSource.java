@@ -5,10 +5,16 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
+import lombok.Getter;
+
+@Getter
 public class DataSource implements IDateSource, Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -19,8 +25,9 @@ public class DataSource implements IDateSource, Serializable{
 
 	private String type;
 	
-	private Source_db source_db;
-	private Source_csv source_csv;
+	@Autowired
+	public Source_db source_db;
+	public Source_csv source_csv;
 	
 	public DataSource(File sourceFile, String split) {
 		this.type = FILE_CSV;
@@ -29,8 +36,8 @@ public class DataSource implements IDateSource, Serializable{
 
 	public DataSource() {
 		this.type = DATA_BASE;
-		source_db = new Source_db();
-		source_db.jdbTestConnection();
+		//source_db = new Source_db();
+		//source_db.jdbTestConnection();
 	}
 
 	
