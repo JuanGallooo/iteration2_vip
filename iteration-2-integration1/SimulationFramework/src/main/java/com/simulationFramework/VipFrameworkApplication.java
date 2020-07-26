@@ -1,21 +1,15 @@
 package com.simulationFramework;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Repository;
 
-import com.simulationFramework.DataSource.DataSource2;
-import com.simulationFramework.DataSource.Source_db;
 import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
-import com.simulationFramework.GUI.Main_GUI;
 import com.simulationFramework.GUI.controller.GUIController;
 import com.simulationFramework.Simulation.SimController;
 import com.simulationFramework.SimulationProject.SPController;

@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;

@@ -22,7 +22,6 @@ public class WriterJson {
 	public void write(String type, String path,List<MarkerFactory> markers) throws JSONException {
 		
 		JSONArray buses =  new JSONArray();
-		JSONObject obj = new JSONObject();
 		
 		for (MarkerFactory marker : markers) {
 			JSONObject myObject = new JSONObject();

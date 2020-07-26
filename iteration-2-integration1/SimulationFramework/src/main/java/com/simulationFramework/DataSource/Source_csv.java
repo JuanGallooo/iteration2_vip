@@ -3,11 +3,8 @@ package com.simulationFramework.DataSource;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
-import com.simulationFramework.SystemState.FactoryInerfaces.IStop;
 
 import lombok.Getter;
 import lombok.Setter;

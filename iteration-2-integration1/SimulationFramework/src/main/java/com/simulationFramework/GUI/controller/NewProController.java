@@ -149,12 +149,11 @@ public class NewProController {
 		if (containerView.getCenter() == formView) {
 
 			butBack.setDisable(false);
-
-			SimController sc = null;
 			
 			if (chCSV.isSelected()) {
 				containerView.setCenter(dataView);
 			} else if(chOracle.isSelected()){
+				containerView.setCenter(oracleView);
 				loadPlanVersionIds(guiController.getPlanversion());
 			}
 			
