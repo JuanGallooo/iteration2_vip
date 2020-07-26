@@ -100,7 +100,7 @@ public class Source_db {
 
 	public Iterable<SITMStop> findAllStopsByLine(long planVersionID,long lineID) {
 		//return stopRepository.findAllStopsbyLineID(planVersionID, lineID);
-		return null;
+		return stopRepository.findAll();
 	}
 
 	public Iterable<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {

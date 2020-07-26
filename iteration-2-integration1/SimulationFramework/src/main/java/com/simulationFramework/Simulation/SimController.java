@@ -51,7 +51,7 @@ public class SimController implements SubjectOberver {
 	public SimController(DataSource2 dataSource) {
 
 		this.dataSource=dataSource;
-		System.out.println(dataSource.findAllCalendarsByPlanVersion(10));
+
 		// set default variables
 		lineID = 140;
 		planVersionID = 185;

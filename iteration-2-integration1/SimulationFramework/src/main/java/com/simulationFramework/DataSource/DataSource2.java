@@ -38,8 +38,6 @@ public class DataSource2 implements IDateSource, Serializable{
 
 	public DataSource2() {
 		this.type = DATA_BASE;
-		//source_db = new Source_db();
-		//source_db.jdbTestConnection();
 	}
 
 	

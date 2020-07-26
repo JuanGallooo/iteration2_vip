@@ -47,13 +47,6 @@ public class VipFrameworkApplication extends Application{
 	@Override
     public void init() throws Exception {
         springContext = SpringApplication.run(VipFrameworkApplication.class);
-        
-        //System.out.println(ds.getSource_db().getHeaders());
-        Source_db ep = springContext.getBean(Source_db.class);
-        //DataSource ds = new Datasource();
-        //Source_db ep = ds.getSource_db();
-		System.out.println(ep.findAllPlanVersions());
-        
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(springContext::getBean);
     }
