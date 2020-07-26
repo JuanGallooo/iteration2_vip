@@ -63,14 +63,7 @@ public class VipFrameworkApplication extends Application{
 	}
 
 	public static void main(String[] args) {
-		
-//		ConfigurableApplicationContext ctx = SpringApplication.run(VipFrameworkApplication.class, args);
-		
-//		VipFrameworkApplication ep = ctx.getBean(VipFrameworkApplication.class);
-		//ep.test();
-		//Application.launch(Main_GUI.class,args);
 		launch(args);
-//		ep.launchScreen(args,ctx);
 	}
 
 	public void test() {
@@ -80,10 +73,7 @@ public class VipFrameworkApplication extends Application{
 	}
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-//		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
-		String path = new File("/src/main/java/GUI/view/GUIView.fxml").getAbsolutePath();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(GUIController.VIEW_ADDRESS+"GUIView.fxml"));
-//		fxmlLoader.setController(new MainController(path));
 		rootNode = fxmlLoader.load();
 		primaryStage.setTitle("Simulator");
 		Scene scene = new Scene(rootNode);
@@ -104,15 +94,9 @@ public class VipFrameworkApplication extends Application{
 		guiController.setSpController(spcontroller);
 		guiController.setSimController(simController);
 
-//		GUIController guiController = fxmlLoader.getController();
 	}
 	@Override
     public void stop() {
         springContext.stop();
     }
-
-//	public void launchScreen(String[] args,ConfigurableApplicationContext ctx ) {
-//		Main_GUI gui = new Main_GUI();
-//		gui.launchScreen(args,ctx);
-//	}
 }
