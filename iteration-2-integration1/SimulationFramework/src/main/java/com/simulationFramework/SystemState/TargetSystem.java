@@ -85,8 +85,8 @@ public class TargetSystem implements Serializable {
 		return stopsByLine;
 	}
 
-	public ArrayList<IBus> filterBusesByLineId(long lineId) {
-		ArrayList<IBus> busesByLine = new ArrayList<>();
+	public ArrayList<SITMBus> filterBusesByLineId(long lineId) {
+		ArrayList<SITMBus> busesByLine = new ArrayList<>();
 
 		for (int i = 0; i < buses.size(); i++) {
 			SITMBus bus = (SITMBus) buses.get(i);

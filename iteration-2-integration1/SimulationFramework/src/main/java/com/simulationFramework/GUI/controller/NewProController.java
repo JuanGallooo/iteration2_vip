@@ -181,7 +181,8 @@ public class NewProController {
 					planVersioId=Long.parseLong(i.getText());
 				}
 			}
-			Iterable<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion(planVersioId);
+			guiController.getSimController().setPlanVersionID(planVersioId);
+			Iterable<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion();
 			
 			SITMCalendar initialDate = calendar.iterator().next();
 			SITMCalendar lastDate = null;

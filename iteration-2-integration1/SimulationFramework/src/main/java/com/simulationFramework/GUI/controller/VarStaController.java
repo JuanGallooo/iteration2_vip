@@ -70,7 +70,7 @@ public class VarStaController {
 		
 	}
 
-	public void loadLines(ArrayList<ILine> lines) {
+	public void loadLines(ArrayList<SITMLine> lines) {
 
 		for (int i = 0; i < lines.size(); i++) {
 

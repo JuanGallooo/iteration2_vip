@@ -48,12 +48,11 @@ public class MarkerInfo implements AdapterInfoMarkers {
 		markersStops.add(new MarkerFactoryImp(id,imgStop, lat, lng));
 	}
 
-	public void saveStops(List<IStop> datos) throws JSONException {
+	public void saveStops(List<SITMStop> datos) throws JSONException {
 
 		deleteStops();
 		
-		for (IStop stop : datos) {
-			SITMStop concreteStop = (SITMStop) stop;
+		for (SITMStop concreteStop : datos) {
 			
 			if(concreteStop.getDecimalLatitude()!=0 && concreteStop.getDecimalLongitude()!=0) {
 				this.addMarkerStop(concreteStop.getStopID(),concreteStop.getDecimalLatitude(), concreteStop.getDecimalLongitude());
@@ -62,7 +61,7 @@ public class MarkerInfo implements AdapterInfoMarkers {
 		wJ.write(typeStop,pathStop,markersStops);
 	}
 
-	public void saveBus(List<IBus> datos) throws JSONException {
+	public void saveBus(List<SITMBus> datos) throws JSONException {
 		
 		deleteBuses();
 		

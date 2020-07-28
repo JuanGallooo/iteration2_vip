@@ -16,6 +16,7 @@ import com.simulationFramework.Simulation.Event.EventProvider.EventProviderContr
 import com.simulationFramework.Simulation.SimState.VariableController;
 import com.simulationFramework.SystemState.TargetSystem;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
+import com.simulationFramework.SystemState.SITMFactory.SITMLine;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 
 import lombok.Getter;
@@ -71,12 +72,16 @@ public class SimController implements SubjectOberver {
 		eventProcessorController = new EventProcessorController();
 	}
 
-	public Iterable<SITMPlanVersion> getPlanVersions() {
+	public ArrayList<SITMPlanVersion> getPlanVersions() {
 		return dataSource.findAllPlanVersions();
 	}
 	
-	public Iterable<SITMCalendar> getDateByPlanVersion(long planVersionID) {
+	public ArrayList<SITMCalendar> getDateByPlanVersion() {
 		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
+	}
+	
+	public ArrayList<SITMLine> getLinesByPlanVersion() {
+		return dataSource.findAllLinesByPlanVersion(planVersionID);
 	}
 
 	public void initTargetSystem() {
@@ -121,7 +126,7 @@ public class SimController implements SubjectOberver {
 		System.out.println("=======> simulation stoped");
 	}
 
-	public void setLineId(long planversionId,long lineId) {
+	public void setLineId(long lineId) {
 		this.lineID = lineId;
 		System.out.println("=======> filter to line " + lineId);
 		observer.updateStops(dataSource.findAllStopsByLine(planVersionID, lineId));

@@ -17,7 +17,9 @@ import com.simulationFramework.SimulationProject.SPController;
 import com.simulationFramework.SystemState.FactoryInerfaces.IBus;
 import com.simulationFramework.SystemState.FactoryInerfaces.IPlanVersion;
 import com.simulationFramework.SystemState.FactoryInerfaces.IStop;
+import com.simulationFramework.SystemState.SITMFactory.SITMBus;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
+import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -292,16 +294,6 @@ public class GUIController implements Observer {
 		
 	}
 	
-	public Date getStartDate() {
-		//Change to good method
-		return simController.getIniDate();
-	}
-	
-	public Date getEdingDate() {
-		//Change to good method
-		return simController.getFinalDate();
-	}
-	
 
 	public void finishNewProject(String[] pAttributes, ArrayList<CheckBox> selectedVariables) throws IOException {
 
@@ -319,7 +311,7 @@ public class GUIController implements Observer {
 		if (varStaController != null) {
 			simController.initVariables(headers);
 			varStaController.loadVariables(variables);
-			varStaController.loadLines();
+			varStaController.loadLines(simController.getLinesByPlanVersion());
 		}
 
 		Long id = System.nanoTime();
@@ -366,16 +358,7 @@ public class GUIController implements Observer {
 	}
 
 	@Override
-	public void updateStops(ArrayList<IStop> stops) {
-		try {
-			mapController.getMarkerInfor().saveStops(stops);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void updateBuses(ArrayList<IBus> bus) {
+	public void updateBuses(ArrayList<SITMBus> bus) {
 		if (mapController != null) {
 			try {
 				mapController.update(bus);
@@ -383,6 +366,16 @@ public class GUIController implements Observer {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void updateStops(ArrayList<SITMStop> stops) {
+		try {
+			mapController.getMarkerInfor().saveStops(stops);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -44,7 +44,7 @@ public class MapController {
     	mainController.getMiMap().fire();
     }
     
-    public void update(ArrayList<IBus> bus) throws JSONException {
+    public void update(ArrayList<SITMBus> bus) throws JSONException {
     	markerInfor.saveBus(bus);
     }
 }
