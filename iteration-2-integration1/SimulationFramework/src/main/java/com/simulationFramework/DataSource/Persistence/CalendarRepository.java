@@ -10,7 +10,7 @@ import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 public interface CalendarRepository extends CrudRepository<SITMCalendar, Long> {
 	
 	
-	@Query(value="select * from Calendar  where planVersionID = ?1", nativeQuery=true)
+	@Query(value="select * from Calendar  where planVersionID = ?1 order by operationday", nativeQuery=true)
 	Iterable<SITMCalendar> findAllCalendarsbyPlanVersionID(long planVersionID);
 	
 }

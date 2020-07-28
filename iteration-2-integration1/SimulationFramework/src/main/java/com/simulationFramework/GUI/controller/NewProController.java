@@ -10,6 +10,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 
 import com.simulationFramework.Simulation.SimController;
 import com.simulationFramework.SystemState.FactoryInerfaces.IPlanVersion;
+import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 
 import javafx.collections.ObservableList;
@@ -171,9 +172,27 @@ public class NewProController {
 			containerView.setCenter(clockView);
 
 		} else if (containerView.getCenter() == oracleView) {
-			//Query Start and Ending Date
-			dtStartDate.setValue(convertToLocalDateViaSqlDate(guiController.getStartDate()));
-			dtEndingDate.setValue(convertToLocalDateViaSqlDate(guiController.getEdingDate()));
+			
+			ObservableList<CheckBox> selectedVariables = lvPlanversionIds.getItems();
+			long planVersioId = -1;
+			
+			for (CheckBox i : selectedVariables) {
+				if (i.isSelected()) {
+					planVersioId=Long.parseLong(i.getText());
+				}
+			}
+			Iterable<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion(planVersioId);
+			
+			SITMCalendar initialDate = calendar.iterator().next();
+			SITMCalendar lastDate = null;
+ 			
+			for (SITMCalendar c : calendar) {
+				lastDate = c;
+			}
+			
+			
+			dtStartDate.setValue(convertToLocalDateViaSqlDate(initialDate.getOperationDay()));
+			dtEndingDate.setValue(convertToLocalDateViaSqlDate(lastDate.getOperationDay()));
 			containerView.setCenter(oracleDateView);
 		
 		} else if (containerView.getCenter() == oracleDateView) {

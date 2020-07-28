@@ -2,6 +2,7 @@ package com.simulationFramework.DataSource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -9,15 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simulationFramework.DataSource.Persistence.CalendarRepository;
+import com.simulationFramework.DataSource.Persistence.LineRepository;
 import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
 import com.simulationFramework.DataSource.Persistence.StopRepository;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
+import com.simulationFramework.SystemState.SITMFactory.SITMLine;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
 
 @Service
-public class Source_db {
+public class Source_db implements IDateSource{
 	
 	private static final String dbURL = "jdbc:oracle:thin:@192.168.161.43:1521:liason";
 	private static final String USER_NAME ="metrocali";
@@ -28,6 +31,9 @@ public class Source_db {
 	
 	@Autowired
 	private StopRepository stopRepository;
+	
+	@Autowired
+	private LineRepository lineRepository;
 	
 	@Autowired
 	private CalendarRepository calendarRepository;
@@ -50,6 +56,7 @@ public class Source_db {
 		}
 	}
 	
+	@Override
 	public String[] getHeaders() {
 		String[] headers= new String[26];
 		headers[0]="OPERTRAVELID";
@@ -81,6 +88,7 @@ public class Source_db {
 		return headers;
 	}
 
+	@Override
 	public HashMap<String, String> fetchNextRow(Date initialDate, Date finalDate, long line,long planVerionID) {
 		
 		HashMap<String, String> data = new HashMap<String, String>();
@@ -93,18 +101,31 @@ public class Source_db {
 		}
 		return data;
 	}
+
+	@Override
+	public ArrayList<SITMPlanVersion> findAllPlanVersions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMLine> findAllLinesByPlanVersion(long planVersionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMStop> findAllStopsByLine(long planVersionID, long lineID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	public Iterable<SITMPlanVersion> findAllPlanVersions() {
-		return planVersionRepository.findAll();
-	}
 
-	public Iterable<SITMStop> findAllStopsByLine(long planVersionID,long lineID) {
-		//return stopRepository.findAllStopsbyLineID(planVersionID, lineID);
-		return stopRepository.findAll();
-	}
-
-	public Iterable<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
-		return calendarRepository.findAllCalendarsbyPlanVersionID(planVersionID);
-	}
 
 }

@@ -319,7 +319,7 @@ public class GUIController implements Observer {
 		if (varStaController != null) {
 			simController.initVariables(headers);
 			varStaController.loadVariables(variables);
-			varStaController.loadLines(simController.getTargetSystem().getLines());
+			varStaController.loadLines();
 		}
 
 		Long id = System.nanoTime();

@@ -2,6 +2,7 @@ package com.simulationFramework.DataSource;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -9,18 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
+import com.simulationFramework.SystemState.SITMFactory.SITMLine;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
 import lombok.Getter;
+import lombok.Setter;
 
-@Getter
+
 @Component
+@Getter @Setter
 public class DataSource2 implements IDateSource, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-
 	public final static String FILE_CSV = "FileCSV";
 	public final static String DATA_BASE = "DataBase";
 
@@ -38,7 +41,6 @@ public class DataSource2 implements IDateSource, Serializable{
 	public DataSource2() {
 		this.type = DATA_BASE;
 	}
-
 	
 	@Override 
 	public String[] getHeaders() {
@@ -68,27 +70,29 @@ public class DataSource2 implements IDateSource, Serializable{
 		return null;
 	}
 
+	@Override
+	public ArrayList<SITMPlanVersion> findAllPlanVersions() {
+
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
+
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMLine> findAllLinesByPlanVersion(long planVersionID) {
+
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMStop> findAllStopsByLine(long planVersionID, long lineID) {
+
+		return null;
+	}
+
 	
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-
-	public Iterable<SITMPlanVersion> findAllPlanVersions() {
-		return source_db.findAllPlanVersions();
-	}
-
-	public Iterable<SITMStop> findAllStopsByLine(long planVersionID,long lineID) {
-		return source_db.findAllStopsByLine(planVersionID, lineID);
-	}
-
-	public Iterable<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
-		return source_db.findAllCalendarsByPlanVersion(planVersionID);
-	}
-
-
 }

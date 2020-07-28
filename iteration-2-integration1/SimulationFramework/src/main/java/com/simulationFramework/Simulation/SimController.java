@@ -72,13 +72,12 @@ public class SimController implements SubjectOberver {
 		eventProcessorController = new EventProcessorController();
 	}
 
+	public Iterable<SITMPlanVersion> getPlanVersions() {
+		return dataSource.findAllPlanVersions();
+	}
+	
 	public Iterable<SITMCalendar> getDateByPlanVersion(long planVersionID) {
 		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
-	}
-
-	public Iterable<SITMPlanVersion> getPlanVersions() {
-		System.out.println(getDateByPlanVersion(185));
-		return dataSource.findAllPlanVersions();
 	}
 
 	public void initTargetSystem() {
@@ -95,7 +94,6 @@ public class SimController implements SubjectOberver {
 		finalDate = new Date();
 		dataSource = new DataSource2();
 		eventProvirderController.setDataSource(dataSource);
-
 	}
 
 	public void initVariables(String[] headers) {

@@ -21,7 +21,7 @@ import com.simulationFramework.SystemState.SITMFactory.SITMTrip;
 
 import lombok.Getter;
 
-@Getter
+
 public class TargetSystem implements Serializable {
 
 	private static final long serialVersionUID = 1L;

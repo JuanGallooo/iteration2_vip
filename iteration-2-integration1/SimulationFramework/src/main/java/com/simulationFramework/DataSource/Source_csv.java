@@ -3,8 +3,14 @@ package com.simulationFramework.DataSource;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
+import com.simulationFramework.SystemState.SITMFactory.SITMLine;
+import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
+import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -82,6 +88,30 @@ public class Source_csv implements IDateSource {
 			return data;
 		}
 
+	}
+
+	@Override
+	public ArrayList<SITMPlanVersion> findAllPlanVersions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMLine> findAllLinesByPlanVersion(long planVersionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SITMStop> findAllStopsByLine(long planVersionID, long lineID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.simulationFramework.DataSource.Persistence.CalendarRepository;
+import com.simulationFramework.DataSource.Persistence.LineRepository;
 import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
 import com.simulationFramework.GUI.controller.GUIController;
 import com.simulationFramework.Simulation.SimController;
@@ -33,12 +34,12 @@ public class VipFrameworkApplication extends Application{
     private FXMLLoader fxmlLoader;
     
 	private PlanVersionRepository plansVersionRepository;
-	private CalendarRepository calendarRepository;
+	private LineRepository lineRepository;
 	
 	@Autowired
-	public VipFrameworkApplication(PlanVersionRepository plansVersionRepository, CalendarRepository calendarrepository) {
+	public VipFrameworkApplication(PlanVersionRepository plansVersionRepository, LineRepository lineRepository) {
 		this.plansVersionRepository = plansVersionRepository;
-		this.calendarRepository= calendarrepository;
+		this.lineRepository= lineRepository;
 	}
 	@Override
     public void init() throws Exception {
@@ -76,6 +77,9 @@ public class VipFrameworkApplication extends Application{
 		GUIController guiController = fxmlLoader.getController();
 		SPController spcontroller = new SPController();
 		SimController simController = springContext.getBean(SimController.class);
+		
+		LineRepository ls = springContext.getBean(LineRepository.class);
+		
 		
 		simController.subscribe(guiController);
 		guiController.setStage(primaryStage);
