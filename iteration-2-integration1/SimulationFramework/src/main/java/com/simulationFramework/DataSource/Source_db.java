@@ -104,8 +104,7 @@ public class Source_db {
 	}
 
 	public Iterable<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
-		//return calendarRepository.findAllCalendarsbyPlanVersionID(planVersionID);
-		return calendarRepository.findAll();
+		return calendarRepository.findAllCalendarsbyPlanVersionID(planVersionID);
 	}
 
 }

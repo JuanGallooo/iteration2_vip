@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.BatchSize;
 
 import com.simulationFramework.SystemState.FactoryInerfaces.ICalendar;
+import com.sun.istack.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,15 +27,19 @@ public class SITMCalendar implements ICalendar,Serializable  {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@NotNull
 	@Column(name="CALENDARID")
 	private long calendarID;
 	
+	@NotNull
 	@Column(name="OPERATIONDAY")
 	private Date operationDay;
 	
+	@NotNull
 	@Column(name="SCHEDULETYPEID")
-	private String scheduleTypeID;
+	private long scheduleTypeID;
 	
+	@NotNull
 	@Column(name="PLANVERSIONID")
 	private long planVersionID;
 
@@ -42,7 +47,7 @@ public class SITMCalendar implements ICalendar,Serializable  {
 		super();
 	}
 	
-	public SITMCalendar(long calendarID, Date operationDay, String scheduleTypeID, long planVersionID) {
+	public SITMCalendar(long calendarID, Date operationDay, long scheduleTypeID, long planVersionID) {
 		super();
 		this.calendarID = calendarID;
 		this.operationDay = operationDay;

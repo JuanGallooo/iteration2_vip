@@ -353,7 +353,7 @@ public class ConcreteSITMFactory implements AbstractModelFactory {
 					
 					Date operationDate = createDate(columns[1]);
 					
-					String scheduleTypeID = columns[2];
+					long scheduleTypeID = Long.parseLong(columns[2]);
 					if (columns[3].equals(planVersionID + "")) {
 						calendars.add(new SITMCalendar(calendarID, operationDate, scheduleTypeID, planVersionID));
 					}

@@ -77,6 +77,7 @@ public class SimController implements SubjectOberver {
 	}
 
 	public Iterable<SITMPlanVersion> getPlanVersions() {
+		System.out.println(getDateByPlanVersion(185));
 		return dataSource.findAllPlanVersions();
 	}
 
