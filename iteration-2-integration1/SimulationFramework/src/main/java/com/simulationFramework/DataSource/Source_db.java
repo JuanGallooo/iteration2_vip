@@ -143,7 +143,7 @@ public class Source_db implements IDateSource{
 
 		ArrayList<SITMStop> returnAnswer = new ArrayList<SITMStop>();
 		
-		for (SITMStop element : stopRepository.findAll()) {
+		for (SITMStop element : stopRepository.findAllStopsbyLineID(planVersionID, lineID)) {
 			returnAnswer.add(element);
 		}
 		
