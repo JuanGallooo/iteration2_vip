@@ -1,7 +1,7 @@
 package com.simulationFramework.DataSource;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;

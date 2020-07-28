@@ -1,9 +1,9 @@
 package com.simulationFramework.DataSource;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,28 +104,51 @@ public class Source_db implements IDateSource{
 
 	@Override
 	public ArrayList<SITMPlanVersion> findAllPlanVersions() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<SITMPlanVersion> returnAnswer = new ArrayList<SITMPlanVersion>();
+		
+		for (SITMPlanVersion element : planVersionRepository.findAll()) {
+			returnAnswer.add(element);
+		}
+		
+		return returnAnswer;
 	}
 
 	@Override
 	public ArrayList<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<SITMCalendar> returnAnswer = new ArrayList<SITMCalendar>();
+		
+		for (SITMCalendar element : calendarRepository.findAllCalendarsbyPlanVersionID(planVersionID)) {
+			returnAnswer.add(element);
+		}
+		
+		return returnAnswer;
 	}
 
 	@Override
 	public ArrayList<SITMLine> findAllLinesByPlanVersion(long planVersionID) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<SITMLine> returnAnswer = new ArrayList<SITMLine>();
+		
+		for (SITMLine element : lineRepository.findAllLinesbyPlanVersionID(planVersionID)) {
+			returnAnswer.add(element);
+		}
+		
+		return returnAnswer;
 	}
 
 	@Override
 	public ArrayList<SITMStop> findAllStopsByLine(long planVersionID, long lineID) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<SITMStop> returnAnswer = new ArrayList<SITMStop>();
+		
+		for (SITMStop element : stopRepository.findAll()) {
+			returnAnswer.add(element);
+		}
+		
+		return returnAnswer;
 	}
 	
-
 
 }

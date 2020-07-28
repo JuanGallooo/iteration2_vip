@@ -1,8 +1,8 @@
 package com.simulationFramework.Simulation;
 
 import java.io.File;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,8 +43,7 @@ public class SimController implements SubjectOberver {
 	private long lineID;
 	private volatile int speed;
 	private long planVersionID;
-
-	private Date iniDate;
+	private Date initialDate;
 	private Date finalDate;
 
 	@Autowired
@@ -90,8 +89,6 @@ public class SimController implements SubjectOberver {
 	}
 
 	public void initializeDB() {
-		iniDate = new Date();
-		finalDate = new Date();
 		dataSource = new DataSource2();
 		eventProvirderController.setDataSource(dataSource);
 	}
@@ -124,14 +121,10 @@ public class SimController implements SubjectOberver {
 		System.out.println("=======> simulation stoped");
 	}
 
-	public void setLineId(long lineId) {
+	public void setLineId(long planversionId,long lineId) {
 		this.lineID = lineId;
 		System.out.println("=======> filter to line " + lineId);
-		if (dataSource.getType().equals(DataSource2.FILE_CSV)) {
-			observer.updateStops(targetSystem.filterStopsByLineId(lineId));
-		} else {
-			//observer.updateStops(dataSource.findAllStopsByLine(planVersionID, lineID));
-		}
+		observer.updateStops(dataSource.findAllStopsByLine(planVersionID, lineId));
 	}
 
 	public void setFastSpeed() {
@@ -175,8 +168,7 @@ public class SimController implements SubjectOberver {
 	}
 
 	public ArrayList<Event> getNextEvents() throws Exception {
-		return eventProvirderController.getNextEvent(clock.getClockRate(), lineID, iniDate, finalDate, lineID,
-				planVersionID);
+		return eventProvirderController.getNextEvent(clock.getClockRate(), initialDate, finalDate, lineID, planVersionID);
 	}
 
 	@Override
@@ -187,9 +179,10 @@ public class SimController implements SubjectOberver {
 	public void setPlanVersionID(long planVersionID) {
 		this.planVersionID = planVersionID;
 	}
-
-	public long getPlanVersionID() {
-		return this.planVersionID;
+	
+	public void setDates(Date initialDate,Date finalDate) {
+		this.initialDate=initialDate;
+		this.finalDate=finalDate;
 	}
 
 }

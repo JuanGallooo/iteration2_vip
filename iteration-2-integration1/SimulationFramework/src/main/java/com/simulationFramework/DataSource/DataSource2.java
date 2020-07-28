@@ -2,8 +2,8 @@ package com.simulationFramework.DataSource;
 
 import java.io.File;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,32 +65,64 @@ public class DataSource2 implements IDateSource, Serializable{
 
 		case DATA_BASE:
 			return source_db.fetchNextRow(initialDate,finalDate,line,planVerionID);
-
 		}
+		
 		return null;
 	}
 
 	@Override
 	public ArrayList<SITMPlanVersion> findAllPlanVersions() {
 
+		switch (type) {
+		case FILE_CSV:
+			return source_csv.findAllPlanVersions();
+
+		case DATA_BASE:
+			return source_db.findAllPlanVersions();
+		}
+		
 		return null;
 	}
 
 	@Override
 	public ArrayList<SITMCalendar> findAllCalendarsByPlanVersion(long planVersionID) {
 
+		switch (type) {
+		case FILE_CSV:
+			return source_csv.findAllCalendarsByPlanVersion(planVersionID);
+
+		case DATA_BASE:
+			return source_db.findAllCalendarsByPlanVersion(planVersionID);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public ArrayList<SITMLine> findAllLinesByPlanVersion(long planVersionID) {
 
+		switch (type) {
+		case FILE_CSV:
+			return source_csv.findAllLinesByPlanVersion(planVersionID);
+
+		case DATA_BASE:
+			return source_db.findAllLinesByPlanVersion(planVersionID);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public ArrayList<SITMStop> findAllStopsByLine(long planVersionID, long lineID) {
 
+		switch (type) {
+		case FILE_CSV:
+			return source_csv.findAllStopsByLine(planVersionID,lineID);
+
+		case DATA_BASE:
+			return source_db.findAllStopsByLine(planVersionID,lineID);
+		}
+		
 		return null;
 	}
 

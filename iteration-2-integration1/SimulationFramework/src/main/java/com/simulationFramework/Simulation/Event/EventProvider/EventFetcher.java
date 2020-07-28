@@ -1,7 +1,7 @@
 package com.simulationFramework.Simulation.Event.EventProvider;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.Simulation.Event.Event;
@@ -25,7 +25,7 @@ public class EventFetcher {
 		return event;
 	}
 
-	public ArrayList<Event> nextFetch(int rate, long lineId,Date initialDate, Date finalDate, long line,long planVerionID) throws Exception {
+	public ArrayList<Event> nextFetch(int rate, Date initialDate, Date finalDate, long line,long planVerionID) throws Exception {
 		
 		Event actualEvent = fetch(initialDate,finalDate,line,planVerionID);
 		Date actualDate = actualEvent.getDate();
@@ -37,7 +37,7 @@ public class EventFetcher {
 
 			long actualId = Long.parseLong(actualEvent.getContext().get("lineId"));
 			
-			if (actualId == lineId) {
+			if (actualId == line) {
 				eventlist.add(actualEvent);
 			}
 
