@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.simulationFramework.DataSource.Persistence.CalendarRepository;
 import com.simulationFramework.DataSource.Persistence.LineRepository;
 import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
+import com.simulationFramework.DataSource.Persistence.StopRepository;
 import com.simulationFramework.GUI.controller.GUIController;
 import com.simulationFramework.Simulation.SimController;
 import com.simulationFramework.SimulationProject.SPController;
@@ -70,6 +71,9 @@ public class VipFrameworkApplication extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+		StopRepository sp = springContext.getBean(StopRepository.class);
+		System.out.println(sp.findAllStopsbyLineID(180,150));
+		
 		primaryStage.setOnCloseRequest(e->{
 				Platform.exit();
 				System.exit(0);
@@ -77,8 +81,6 @@ public class VipFrameworkApplication extends Application{
 		GUIController guiController = fxmlLoader.getController();
 		SPController spcontroller = new SPController();
 		SimController simController = springContext.getBean(SimController.class);
-		
-		LineRepository ls = springContext.getBean(LineRepository.class);
 		
 		
 		simController.subscribe(guiController);

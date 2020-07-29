@@ -42,7 +42,7 @@ public class TargetSystem implements Serializable {
 
 	public TargetSystem() {
 
-//		factory = new ConcreteSITMFactory();
+		factory = new ConcreteSITMFactory();
 //		planVersion = factory.createPlanVersion();
 		buses = factory.createBuses();
 //		arcs = factory.createArcs();

@@ -7,8 +7,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.simulationFramework.SystemState.FactoryInerfaces.IStop;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMLine;
+import com.simulationFramework.SystemState.SITMFactory.SITMLineStop;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
@@ -199,8 +201,23 @@ public class Source_csv implements IDateSource {
 
 	@Override
 	public ArrayList<SITMStop> findAllStopsByLine(long planVersionID, long lineID) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<SITMStop> stopsByLine = new ArrayList<>();
+
+//		for (int i = 0; i < lineStops.size(); i++) {
+//			SITMLineStop lineStop = (SITMLineStop) lineStops.get(i);
+//
+//			if (lineStop.getLineID() == lineId) {
+//
+//				for (int j = 0; j < stops.size(); j++) {
+//					SITMStop stop = (SITMStop) stops.get(j);
+//					if (stop.getStopID() == lineStop.getStopID()) {
+//						stopsByLine.add(stop);
+//					}
+//				}
+//			}
+//		}
+
+		return stopsByLine;
 	}
 
 	@SuppressWarnings("deprecation")
