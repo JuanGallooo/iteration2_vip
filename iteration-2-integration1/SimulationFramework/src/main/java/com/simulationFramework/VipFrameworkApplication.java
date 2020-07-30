@@ -72,7 +72,7 @@ public class VipFrameworkApplication extends Application{
 		primaryStage.show();
 		
 		StopRepository sp = springContext.getBean(StopRepository.class);
-		System.out.println(sp.findAllStopsbyLineID(180,150));
+//		System.out.println(sp.findAllStopsbyLineID(180,150));
 		
 		primaryStage.setOnCloseRequest(e->{
 				Platform.exit();
