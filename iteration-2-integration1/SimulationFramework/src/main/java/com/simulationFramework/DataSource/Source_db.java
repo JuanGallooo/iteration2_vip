@@ -146,6 +146,7 @@ public class Source_db implements IDateSource{
 		for (SITMStop element : stopRepository.findAllStopsbyLineID(planVersionID,lineID)) {
 			returnAnswer.add(element);
 		}
+
 		
 		return returnAnswer;
 	}

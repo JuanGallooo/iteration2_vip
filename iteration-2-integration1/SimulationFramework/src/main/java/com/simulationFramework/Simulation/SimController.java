@@ -126,12 +126,6 @@ public class SimController implements SubjectOberver {
 		System.out.println("=======> simulation stoped");
 	}
 
-	public void setLineId(long lineId) {
-		this.lineID = lineId;
-		System.out.println("=======> filter to line " + lineId);
-		observer.updateStops(dataSource.findAllStopsByLine(planVersionID, lineId));
-	}
-
 	public void setFastSpeed() {
 		this.speed = Clock.FAST;
 		System.out.println("=======> set Fast Speed");
@@ -188,6 +182,13 @@ public class SimController implements SubjectOberver {
 	public void setDates(Date initialDate,Date finalDate) {
 		this.initialDate=initialDate;
 		this.finalDate=finalDate;
+	}
+	
+	public void setLineId(long lineID) {
+		this.lineID = lineID;
+		System.out.println("=======> filter to line " + lineID);
+		System.out.println("=======> quantity of Stops " + dataSource.findAllStopsByLine(this.planVersionID, this.lineID));
+		observer.updateStops(dataSource.findAllStopsByLine(this.planVersionID, this.lineID));
 	}
 
 }

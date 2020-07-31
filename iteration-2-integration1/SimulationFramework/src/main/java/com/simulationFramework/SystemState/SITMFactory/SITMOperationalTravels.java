@@ -22,13 +22,13 @@ public class SITMOperationalTravels {
 	
 	@Id
 	@Column(name="OPERTRAVELID")
-	private long opertravelID;
+	private Long opertravelID;
 	
 	@Column(name="BUSID")
-	private long busID;
+	private Long busID;
 	
 	@Column(name="LASTSTOPID")
-	private long laststopID;
+	private Long laststopID;
 	
 	@Column(name="GPS_X")
 	private String GPS_X;
@@ -37,67 +37,67 @@ public class SITMOperationalTravels {
 	private String GPS_Y;
 	
 	@Column(name="DEVIATIONTIME")
-	private long deviationTime;
+	private Long deviationTime;
 	
 	@Column(name="ODOMETERVALUE")
-	private long odometervalue;
+	private Long odometervalue;
 	
 	@Column(name="LINEID")
-	private long lineID;
+	private Long lineID;
 	
 	@Column(name="TASKID")
-	private long taskID;
+	private Long taskID;
 	
 	@Column(name="TRIPID")
-	private long tripID;
+	private Long tripID;
 	
 	@Column(name="RIGHTCOURSE")
-	private long rightcourse;
+	private Long rightcourse;
 	
 	@Column(name="ORIENTATION")
-	private long orientation;
+	private Long orientation;
 	
 	@Column(name="EVENTDATE")
 	private Date eventDate;
 	
 	@Column(name="EVENTTIME")
-	private long eventTime;
+	private Long eventTime;
 	
 	@Column(name="REGISTERDATE")
 	private Date registerDate;
 	
 	@Column(name="EVENTTYPEID")
-	private long eventTypeID;
+	private Long eventTypeID;
 	
 	@Column(name="NEARESTSTOPID")
-	private long nearestStopID;
+	private Long nearestStopID;
 	
 	@Column(name="LASTUPDATEDATE")
 	private Date lastUpDateDate;
 	
 	@Column(name="NEARESTSTOPMTS")
-	private long nearestStopMTS;
+	private Long nearestStopMTS;
 	
 	@Column(name="UPDNEARESTFLAG")
 	private String updNearestFlag;
 	
 	@Column(name="LOGFILEID")
-	private long logFileID;
+	private Long logFileID;
 	
 	@Column(name="NEARESTPLANSTOPID")
-	private long nearestPlanStopID;
+	private Long nearestPlanStopID;
 	
 	@Column(name="NEARESTPLANSTOPMTS")
-	private long nearestPlanStopMTS;
+	private Long nearestPlanStopMTS;
 	
 	@Column(name="PLANSTOPAUTH")
 	private String planStopAuth;
 	
 	@Column(name="RADIUSTOLERANCEMTS")
-	private long radiusToleranceMTS;
+	private Long radiusToleranceMTS;
 	
 	@Column(name="TIMEDIFF")
-	private long timeDiff;
+	private Long timeDiff;
 	
 	public SITMOperationalTravels () {
 		super();
@@ -136,8 +136,5 @@ public class SITMOperationalTravels {
 		this.radiusToleranceMTS = radiusToleranceMTS;
 		this.timeDiff = timeDiff;
 	}
-
-		
-	
 	
 }

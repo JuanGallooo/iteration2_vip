@@ -7,10 +7,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.simulationFramework.SystemState.FactoryInerfaces.IStop;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMLine;
-import com.simulationFramework.SystemState.SITMFactory.SITMLineStop;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 

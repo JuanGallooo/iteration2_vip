@@ -50,7 +50,7 @@ public class WriterJson {
 			file.close();
 
 		} catch (IOException e) {
-			System.out.println("No se pudo guardar");
+			System.out.println("======> Can't save JSON file");
 		}
     
 	}
