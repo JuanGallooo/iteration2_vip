@@ -73,7 +73,7 @@ public class VipFrameworkApplication extends Application{
 		primaryStage.show();
 		
 		OperationalTravelsRepository sp = springContext.getBean(OperationalTravelsRepository.class);
-		System.out.println(sp.findAllOP());
+		System.out.println(sp.findAllOP("01/08/19","02/08/19"));
 		
 		primaryStage.setOnCloseRequest(e->{
 				Platform.exit();
