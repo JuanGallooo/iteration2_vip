@@ -182,15 +182,10 @@ public class NewProController {
 				}
 			}
 			guiController.getSimController().setPlanVersionID(planVersioId);
-			Iterable<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion();
+			ArrayList<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion();
 			
-			SITMCalendar initialDate = calendar.iterator().next();
-			SITMCalendar lastDate = null;
- 			
-			for (SITMCalendar c : calendar) {
-				lastDate = c;
-			}
-			
+			SITMCalendar initialDate = calendar.get(0);
+			SITMCalendar lastDate = calendar.get(calendar.size()-1);
 			
 			dtStartDate.setValue(convertToLocalDateViaSqlDate(initialDate.getOperationDay()));
 			dtEndingDate.setValue(convertToLocalDateViaSqlDate(lastDate.getOperationDay()));
