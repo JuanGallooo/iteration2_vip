@@ -15,12 +15,13 @@ public interface StopRepository extends CrudRepository<SITMStop, Long> {
 //		 + "where operationaltravels.laststopID = stops.stopID and stops.planversionID = ?1 and operationaltravels.lineID = ?2 and rownum<100000 "
 //		 + "group by stops.stopId,stops.planversionID,stops.shortName,stops.GPS_X,stops.GPS_Y, stops.decimalLongitude,stops.decimalLatitude",
 //		 nativeQuery=true)
-	@Query(value="select s "
-			 + "from stops s "
-			 + "inner join operationaltravels o on o.laststopID = s.stopID "
-			 + "where s.planversionID = ?1 and rownum<100000"
+	@Query(value="select s.STOPID, s.PLANVERSIONID, s.SHORTNAME, s.LONGNAME, s.GPS_X, s.GPS_Y, s.DECIMALLONGITUDE, s.DECIMALLATITUDE "
+			 + "from operationaltravels o, stops s "
+			 + "where o.LASTSTOPID = s.STOPID and s.PLANVERSIONID = ?1 and o.LINEID = ?2 and rownum<1000 "
+			 + "group by s.STOPID, s.PLANVERSIONID, s.SHORTNAME, s.LONGNAME, s.GPS_X, s.GPS_Y, s.DECIMALLONGITUDE, s.DECIMALLATITUDE"
 			 ,nativeQuery=true)
 	public Iterable<SITMStop>findAllStopsbyLineID(long planVersionID,long lineID);
+		
 
 	
 }
