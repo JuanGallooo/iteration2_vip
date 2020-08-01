@@ -66,12 +66,12 @@ function update(){
 
 		 myBuses = JSON.parse(info)["Bus"];
 		 myStops = JSON.parse(info)["Stop"];
-		
+		 
 		 for (let item of myBuses) {
 			 const Gicon = L.icon({iconUrl: item.img, iconSize:[20, 20],iconAnchor:[20, 20],popupAnchor:[0, 0]});	
 			 
 			 if(markers[item.id]==null){					
-			
+					
 				 markers[item.id] = L.marker([item.lat, item.long]).addTo(layerGroupBuses);				 
 				 markers[item.id].setIcon(Gicon);
 			 

@@ -9,13 +9,10 @@ import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 @Repository
 public interface StopRepository extends CrudRepository<SITMStop, Long> {
 	
-	@Query(value="select s.STOPID, s.PLANVERSIONID, s.SHORTNAME, s.LONGNAME, s.GPS_X, s.GPS_Y, s.DECIMALLONGITUDE, s.DECIMALLATITUDE "
-			 + "from operationaltravels o, stops s "
-			 + "where o.LASTSTOPID = s.STOPID and s.PLANVERSIONID = ?1 and o.LINEID = ?2 and rownum<1000 "
-			 + "group by s.STOPID, s.PLANVERSIONID, s.SHORTNAME, s.LONGNAME, s.GPS_X, s.GPS_Y, s.DECIMALLONGITUDE, s.DECIMALLATITUDE"
-			 ,nativeQuery=true)
+	@Query(value="select o.STOPID, o.PLANVERSIONID, o.SHORTNAME, o.LONGNAME, o.GPS_X, o.GPS_Y, o.DECIMALLONGITUDE, o.DECIMALLATITUDE "
+			+ "from STOPS o, LINESTOPS s "
+			+ "where o.PLANVERSIONID = ?1 and s.STOPID= o.STOPID and s.LINEID= ?2 "
+			+ "group by o.STOPID, o.PLANVERSIONID, o.SHORTNAME, o.LONGNAME, o.GPS_X, o.GPS_Y, o.DECIMALLONGITUDE, o.DECIMALLATITUDE", nativeQuery=true)
 	public Iterable<SITMStop>findAllStopsbyLineID(long planVersionID,long lineID);
-
-
 	
 }

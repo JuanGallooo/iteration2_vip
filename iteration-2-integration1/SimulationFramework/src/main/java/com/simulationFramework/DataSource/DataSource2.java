@@ -117,6 +117,7 @@ public class DataSource2 implements IDateSource, Serializable{
 
 		switch (type) {
 		case FILE_CSV:
+			System.out.println("=======> quantity of Stops ");
 			return source_csv.findAllStopsByLine(planVersionID,lineID);
 
 		case DATA_BASE:
