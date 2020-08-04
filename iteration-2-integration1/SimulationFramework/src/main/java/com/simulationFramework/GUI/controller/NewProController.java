@@ -6,10 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Plane;
-
-import com.simulationFramework.Simulation.SimController;
-import com.simulationFramework.SystemState.FactoryInerfaces.IPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 

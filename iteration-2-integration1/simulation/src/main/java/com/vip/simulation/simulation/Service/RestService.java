@@ -12,6 +12,8 @@ public class RestService {
 				  +File.separator+"src"
 				  +File.separator+"main"
 				  +File.separator+"java"
+				  +File.separator+"com"
+				  +File.separator+"simulationFramework"
 				  +File.separator+"GUI"
 				  +File.separator+"view"
 				  +File.separator+ "markerBus.json";
@@ -26,6 +28,8 @@ public class RestService {
 				  +File.separator+"src"
 				  +File.separator+"main"
 				  +File.separator+"java"
+				  +File.separator+"com"
+				  +File.separator+"simulationFramework"
 				  +File.separator+"GUI"
 				  +File.separator+"view"
 				  +File.separator+ "markerStop.json";

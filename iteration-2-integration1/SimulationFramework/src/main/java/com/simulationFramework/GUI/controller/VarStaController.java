@@ -1,11 +1,8 @@
 package com.simulationFramework.GUI.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import com.google.errorprone.annotations.Var;
 import com.simulationFramework.Simulation.SimState.Variable;
-import com.simulationFramework.SystemState.FactoryInerfaces.ILine;
 import com.simulationFramework.SystemState.SITMFactory.SITMLine;
 
 import javafx.collections.ObservableList;

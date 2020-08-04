@@ -13,32 +13,13 @@ public class TargetSystem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	// SITM configuration
-//	private IPlanVersion planVersion;
 	private ArrayList<IBus> buses;
-//	private ArrayList<IArc> arcs;
-//	private ArrayList<ICalendar> calendars;
-//	private ArrayList<ILine> lines;
-//	private ArrayList<IScheduleTypes> stypes;
-//	private ArrayList<IStop> stops;
-//	private ArrayList<ITask> tasks;
-//	private ArrayList<SITMTrip> trips;
-//	private ArrayList<ILineStop> lineStops;
-
 	private AbstractModelFactory factory;
 
 	public TargetSystem() {
 
 		factory = new ConcreteSITMFactory();
-//		planVersion = factory.createPlanVersion();
 		buses = factory.createBuses();
-//		arcs = factory.createArcs();
-//		calendars = factory.createCalendars();
-//		lines = factory.createLines();
-//		stypes = factory.createScheduleTypes();
-//		stops = factory.createStops();
-//		tasks = factory.createTasks();
-//		lineStops = factory.createLineStops();
 	}
 
 	public void moveBus(double idBus, double longitude, double latitude) {
@@ -51,26 +32,6 @@ public class TargetSystem implements Serializable {
 			}
 		}
 	}
-
-//	public ArrayList<IStop> filterStopsByLineId(long lineId) {
-//		ArrayList<IStop> stopsByLine = new ArrayList<>();
-//
-//		for (int i = 0; i < lineStops.size(); i++) {
-//			SITMLineStop lineStop = (SITMLineStop) lineStops.get(i);
-//
-//			if (lineStop.getLineID() == lineId) {
-//
-//				for (int j = 0; j < stops.size(); j++) {
-//					SITMStop stop = (SITMStop) stops.get(j);
-//					if (stop.getStopID() == lineStop.getStopID()) {
-//						stopsByLine.add(stop);
-//					}
-//				}
-//			}
-//		}
-//
-//		return stopsByLine;
-//	}
 
 	public ArrayList<SITMBus> filterBusesByLineId(long lineId) {
 		ArrayList<SITMBus> busesByLine = new ArrayList<>();

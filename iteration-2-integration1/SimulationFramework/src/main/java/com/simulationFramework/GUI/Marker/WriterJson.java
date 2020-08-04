@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 public class WriterJson {
 
+	@SuppressWarnings("unused")
 	private MarkerInfo info;
 	
 	

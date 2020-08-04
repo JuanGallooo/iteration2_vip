@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.json.JSONException;
@@ -14,9 +13,6 @@ import com.simulationFramework.Simulation.SimController;
 import com.simulationFramework.Simulation.SimState.Variable;
 import com.simulationFramework.SimulationProject.Project;
 import com.simulationFramework.SimulationProject.SPController;
-import com.simulationFramework.SystemState.FactoryInerfaces.IBus;
-import com.simulationFramework.SystemState.FactoryInerfaces.IPlanVersion;
-import com.simulationFramework.SystemState.FactoryInerfaces.IStop;
 import com.simulationFramework.SystemState.SITMFactory.SITMBus;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
