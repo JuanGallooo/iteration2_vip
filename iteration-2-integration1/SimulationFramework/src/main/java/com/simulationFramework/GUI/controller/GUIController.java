@@ -309,7 +309,7 @@ public class GUIController implements Observer {
 		}
 
 		if (varStaController != null) {
-			simController.initVariables(headers);
+			simController.initialize_Variables(headers);
 			varStaController.loadVariables(variables);
 			varStaController.loadLines(simController.getLinesByPlanVersion());
 		}
@@ -369,7 +369,9 @@ public class GUIController implements Observer {
 	}
 
 	@Override
-	public void updateStops(ArrayList<SITMStop> stops) {
+	public void updateStops() {
+		ArrayList<SITMStop> stops = simController.getStopsByLine();
+		
 		try {
 			mapController.getMarkerInfor().saveStops(stops);
 		} catch (JSONException e) {

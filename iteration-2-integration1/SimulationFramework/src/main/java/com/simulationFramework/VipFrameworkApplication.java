@@ -2,22 +2,16 @@ package com.simulationFramework;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.simulationFramework.DataSource.Persistence.CalendarRepository;
-import com.simulationFramework.DataSource.Persistence.LineRepository;
 import com.simulationFramework.DataSource.Persistence.OperationalTravelsRepository;
-import com.simulationFramework.DataSource.Persistence.PlanVersionRepository;
-import com.simulationFramework.DataSource.Persistence.StopRepository;
 import com.simulationFramework.GUI.controller.GUIController;
 import com.simulationFramework.Simulation.SimController;
 import com.simulationFramework.SimulationProject.SPController;
-import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,15 +28,8 @@ public class VipFrameworkApplication extends Application{
     private ConfigurableApplicationContext springContext;
     private Parent rootNode;
     private FXMLLoader fxmlLoader;
-    
-	private PlanVersionRepository plansVersionRepository;
-	private LineRepository lineRepository;
 	
-	@Autowired
-	public VipFrameworkApplication(PlanVersionRepository plansVersionRepository, LineRepository lineRepository) {
-		this.plansVersionRepository = plansVersionRepository;
-		this.lineRepository= lineRepository;
-	}
+
 	@Override
     public void init() throws Exception {
         springContext = SpringApplication.run(VipFrameworkApplication.class);
@@ -56,12 +43,6 @@ public class VipFrameworkApplication extends Application{
 
 	public static void main(String[] args) {
 		launch(args);
-	}
-
-	public void test() {
-		for (SITMPlanVersion planVersion : plansVersionRepository.findAll()) {
-			System.out.println(planVersion);
-		}
 	}
 	@Override
 	public void start(Stage primaryStage) throws IOException {
@@ -79,6 +60,7 @@ public class VipFrameworkApplication extends Application{
 				Platform.exit();
 				System.exit(0);
 		});
+		
 		GUIController guiController = fxmlLoader.getController();
 		SPController spcontroller = new SPController();
 		SimController simController = springContext.getBean(SimController.class);

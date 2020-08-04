@@ -18,6 +18,7 @@ import com.simulationFramework.SystemState.TargetSystem;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMLine;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
+import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -58,7 +59,7 @@ public class SimController implements SubjectOberver {
 		speed = Clock.NORMAL;
 
 		// upload system state
-		initTargetSystem();
+		initialize_TargetSystem();
 
 		// clock configuration
 		clock = new Clock();
@@ -72,34 +73,51 @@ public class SimController implements SubjectOberver {
 		eventProcessorController = new EventProcessorController();
 	}
 
+	public void initialize_SCV(File sourceFile, String split) {
+		dataSource = new DataSource2(sourceFile, split);
+		eventProvirderController.setDataSource(dataSource);
+	}
+
+	public void initialize_DB() {
+		dataSource = new DataSource2();
+		eventProvirderController.setDataSource(dataSource);
+	}
+	
+	public void initialize_TargetSystem() {
+		this.targetSystem = new TargetSystem();
+	}
+
+	public void initialize_Variables(String[] headers) {
+		variables.addHeaders(headers);
+	}
+	
 	public ArrayList<SITMPlanVersion> getPlanVersions() {
 		return dataSource.findAllPlanVersions();
+	}
+	
+	public void setPlanVersionID(long planVersionID) {
+		this.planVersionID = planVersionID;
 	}
 	
 	public ArrayList<SITMCalendar> getDateByPlanVersion() {
 		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
 	}
 	
+	public void setDates(Date initialDate,Date finalDate) {
+		this.initialDate=initialDate;
+		this.finalDate=finalDate;
+	}
+	
 	public ArrayList<SITMLine> getLinesByPlanVersion() {
 		return dataSource.findAllLinesByPlanVersion(planVersionID);
 	}
-
-	public void initTargetSystem() {
-		this.targetSystem = new TargetSystem();
+	
+	public void setLineId(long lineID) {
+		this.lineID = lineID;
 	}
-
-	public void initialize_SCV(File sourceFile, String split) {
-		dataSource = new DataSource2(sourceFile, split);
-		eventProvirderController.setDataSource(dataSource);
-	}
-
-	public void initializeDB() {
-		dataSource = new DataSource2();
-		eventProvirderController.setDataSource(dataSource);
-	}
-
-	public void initVariables(String[] headers) {
-		variables.addHeaders(headers);
+	
+	public ArrayList<SITMStop> getStopsByLine(){
+		return dataSource.findAllStopsByLine(this.planVersionID, this.lineID);
 	}
 
 	public void start() {
@@ -174,23 +192,6 @@ public class SimController implements SubjectOberver {
 	public void subscribe(Observer observer) {
 		this.observer = observer;
 	}
-
-	public void setPlanVersionID(long planVersionID) {
-		this.planVersionID = planVersionID;
-	}
-	
-	public void setDates(Date initialDate,Date finalDate) {
-		this.initialDate=initialDate;
-		this.finalDate=finalDate;
-	}
-	
-	public void setLineId(long lineID) {
-		this.lineID = lineID;
-		System.out.println("=======> filter to line " + lineID);
-		System.out.println("=======> quantity of Stops " + dataSource.findAllStopsByLine(this.planVersionID, this.lineID));
-		observer.updateStops(dataSource.findAllStopsByLine(this.planVersionID, this.lineID));
-	}
-
 }
 
 @Getter

@@ -4,22 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.simulationFramework.SystemState.FactoryInerfaces.AbstractModelFactory;
-import com.simulationFramework.SystemState.FactoryInerfaces.IArc;
 import com.simulationFramework.SystemState.FactoryInerfaces.IBus;
-import com.simulationFramework.SystemState.FactoryInerfaces.ICalendar;
-import com.simulationFramework.SystemState.FactoryInerfaces.ILine;
-import com.simulationFramework.SystemState.FactoryInerfaces.ILineStop;
-import com.simulationFramework.SystemState.FactoryInerfaces.IPlanVersion;
-import com.simulationFramework.SystemState.FactoryInerfaces.IScheduleTypes;
-import com.simulationFramework.SystemState.FactoryInerfaces.IStop;
-import com.simulationFramework.SystemState.FactoryInerfaces.ITask;
 import com.simulationFramework.SystemState.SITMFactory.ConcreteSITMFactory;
 import com.simulationFramework.SystemState.SITMFactory.SITMBus;
-import com.simulationFramework.SystemState.SITMFactory.SITMLineStop;
-import com.simulationFramework.SystemState.SITMFactory.SITMStop;
-import com.simulationFramework.SystemState.SITMFactory.SITMTrip;
-
-import lombok.Getter;
 
 
 public class TargetSystem implements Serializable {

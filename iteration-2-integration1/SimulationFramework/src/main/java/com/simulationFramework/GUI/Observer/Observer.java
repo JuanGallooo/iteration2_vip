@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 import com.simulationFramework.Simulation.SimState.Variable;
 import com.simulationFramework.SystemState.SITMFactory.SITMBus;
-import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
 public interface Observer {
 
 	public void updateVariables(ArrayList<Variable> variables);
 
-	public void updateStops(ArrayList<SITMStop> arrayList);
+	public void updateStops();
 
 	public void updateBuses(ArrayList<SITMBus> bus);
 
