@@ -23,7 +23,7 @@ public class TargetSystem implements Serializable {
 	}
 
 	public void moveBus(double idBus, double longitude, double latitude) {
-
+		
 		for (int i = 0; i < buses.size(); i++) {
 
 			if (((SITMBus) buses.get(i)).getBusID() == idBus) {

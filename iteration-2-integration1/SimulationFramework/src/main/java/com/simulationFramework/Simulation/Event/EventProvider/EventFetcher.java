@@ -2,6 +2,7 @@ package com.simulationFramework.Simulation.Event.EventProvider;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.Simulation.Event.Event;
@@ -51,19 +52,28 @@ public class EventFetcher {
 
 	public ArrayList<Event> allFetch(Date initialDate, Date lastDate, long lineID){
 		
-		ArrayList<Event> eventlist = new ArrayList<>();
 		
 		ArrayList<SITMOperationalTravels> operationaTravels = dataSource.findAllOperationalTravelsByRange(initialDate, lastDate, lineID);
+		ArrayList<Event> eventlist = new ArrayList<>();
 		
 		for (int i = 0; i < operationaTravels.size(); i++) {
 			
 			Event event = new Event();
 			event.setType(EventType.POSICIONAMIENTO_GPS);
-			event.setContext(null);
-			event.setDate(event.getContext().get("datagramDate"));
 			
-			eventlist.add(event);
+			HashMap<String, String> context = new HashMap<String, String>();
+			context.put("opertravelID", operationaTravels.get(i).getOpertravelID()+"");
+			context.put("busID", operationaTravels.get(i).getBusID()+"");
+			context.put("laststopID", operationaTravels.get(i).getLaststopID()+"");
+			context.put("GPS_X", operationaTravels.get(i).getGPS_X()+"");
+			context.put("GPS_Y", operationaTravels.get(i).getGPS_Y()+"");
+			context.put("odometervalue", operationaTravels.get(i).getOdometervalue()+"");
+			context.put("lineID", operationaTravels.get(i).getLineID()+"");
+			context.put("taskID", operationaTravels.get(i).getTaskID()+"");
+			context.put("tripID", operationaTravels.get(i).getTripID()+"");
 			
+			event.setContext(context);
+			eventlist.add(event);	
 		}
 		
 		return eventlist;

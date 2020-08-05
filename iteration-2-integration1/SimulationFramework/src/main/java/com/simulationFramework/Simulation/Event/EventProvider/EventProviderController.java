@@ -16,21 +16,21 @@ public class EventProviderController {
 		eventGenerator = new EventGenerator();
 	}
 
-	public ArrayList<Event> getNextEvent(int rate, Date initialDate, Date finalDate, long line,long planVerionID) throws Exception {
+	public ArrayList<Event> getNextEvent(Date initialDate, Date lastDate, long lineID) throws Exception {
+		
+		ArrayList<Event> events = eventFecher.allFetch(initialDate, lastDate, lineID);
 
-		ArrayList<Event> events = eventFecher.nextFetch(rate, initialDate,finalDate,line,planVerionID);
 		Event eventGenerated = eventGenerator.generate();
-	
+
 		if (eventGenerated != null) {
-			events.add(0,eventGenerated);
+			events.add(0, eventGenerated);
 		}
 
 		return events;
 	}
 
-	public void setDataSource(DataSource2 dataSource) { 
+	public void setDataSource(DataSource2 dataSource) {
 		eventFecher.setDataSource(dataSource);
 	}
-
 
 }

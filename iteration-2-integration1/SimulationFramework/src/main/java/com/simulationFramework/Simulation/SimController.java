@@ -2,6 +2,9 @@ package com.simulationFramework.Simulation;
 
 import java.io.File;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +45,11 @@ public class SimController implements SubjectOberver {
 	private ExecutionThread executionThread;
 
 	// variables
-	private long lineID;
 	private volatile int speed;
+	private long lineID;
 	private long planVersionID;
 	private Date initialDate;
-	private Date finalDate;
+	private Date lastDate;
 
 	@Autowired
 	public SimController(DataSource2 dataSource) {
@@ -55,7 +58,7 @@ public class SimController implements SubjectOberver {
 
 		// set default variables
 		lineID = 140;
-		planVersionID = 185;
+		planVersionID = 260;
 		speed = Clock.NORMAL;
 
 		// upload system state
@@ -103,9 +106,9 @@ public class SimController implements SubjectOberver {
 		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
 	}
 	
-	public void setDates(Date initialDate,Date finalDate) {
-		this.initialDate=initialDate;
-		this.finalDate=finalDate;
+	public void setDates(Date initialDate,Date lastDate) {
+		this.initialDate = initialDate;
+		this.lastDate = lastDate;
 	}
 	
 	public ArrayList<SITMLine> getLinesByPlanVersion() {
@@ -122,6 +125,20 @@ public class SimController implements SubjectOberver {
 
 	public void start() {
 		clock.start();
+		
+		try {
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			Date init = new Date(dateFormat.parse("2019-06-20 18:00:08").getTime());
+			Date last = new Date(dateFormat.parse("2019-06-20 18:10:00").getTime());
+			
+			setDates(init, last);
+			
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
 		executionThread.start();
 		System.out.println("=======> simulation started");
 	}
@@ -185,7 +202,18 @@ public class SimController implements SubjectOberver {
 	}
 
 	public ArrayList<Event> getNextEvents() throws Exception {
-		return eventProvirderController.getNextEvent(clock.getClockRate(), initialDate, finalDate, lineID, planVersionID);
+		
+		System.out.println("fetch ========================");
+		
+		Date nextDate = new Date(initialDate.getTime()+clock.getClockRate());
+		ArrayList<Event> events = eventProvirderController.getNextEvent(initialDate,nextDate,lineID);
+		initialDate = nextDate;
+		
+		if(nextDate.getTime()>=lastDate.getTime()) {
+			System.out.println("have to end");
+		}
+		
+		return events;
 	}
 
 	@Override
@@ -218,7 +246,7 @@ class ExecutionThread extends Thread {
 				try {
 
 					ArrayList<Event> events = simController.getNextEvents();
-
+					
 					if (!events.isEmpty()) {
 
 						simController.getVariables().updateAllValues(events.get(events.size() - 1).getContext());
@@ -226,7 +254,6 @@ class ExecutionThread extends Thread {
 
 						for (int i = 0; i < events.size(); i++) {
 							simController.getEventProcessorController().processEvent(events.get(i),simController.getTargetSystem());
-
 						}
 
 						simController.getObserver().updateBuses(simController.getTargetSystem().filterBusesByLineId(simController.getLineID()));
@@ -234,7 +261,7 @@ class ExecutionThread extends Thread {
 
 						sleep(simController.getSpeed());
 					}
-
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 					pause = true;

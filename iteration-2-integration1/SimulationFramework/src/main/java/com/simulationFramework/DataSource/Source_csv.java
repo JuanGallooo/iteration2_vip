@@ -7,6 +7,8 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -26,12 +28,11 @@ public class Source_csv implements IDateSource {
 
 	private File sourceFile;
 	private String split;
-	private int currentPosition;
+	private int currentPosition = 1;
 
 	public Source_csv(File sourceFile, String split) {
 		this.sourceFile = sourceFile;
 		this.split = split;
-		this.currentPosition = 1;
 	}
 
 	@Override
@@ -168,6 +169,13 @@ public class Source_csv implements IDateSource {
 			e.printStackTrace();
 		}
 
+		
+		Collections.sort(calendars,new Comparator<SITMCalendar>() {
+			public int compare(SITMCalendar o1, SITMCalendar o2) {
+		         return o1.getOperationDay().compareTo(o2.getOperationDay());
+		     }
+		});
+		
 		return calendars;
 	}
 
@@ -343,20 +351,26 @@ public class Source_csv implements IDateSource {
 		ArrayList<SITMOperationalTravels> operationaTravels = new ArrayList<SITMOperationalTravels>();
 		
 		BufferedReader br;
-		
 
 		try {
 
 			br = new BufferedReader(new FileReader(sourceFile));
 			String text = br.readLine();
-			text = br.readLine();
+			
+			for (int i = 0; i < currentPosition; i++) {
+				text = br.readLine();
+			}
+
 			String[]data = text.split(this.split);
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 			Long date = dateFormat.parse(data[0]).getTime();
 			
+			System.out.println("init " + initialDate.getTime());
+			System.out.println("actual " + date);
+			System.out.println("last " + lastDate.getTime());
+			
 			if (text != null && !text.equals("")) {
-				
 				
 				while (initialDate.getTime()<= date && date <=lastDate.getTime()) {
 					
@@ -375,6 +389,7 @@ public class Source_csv implements IDateSource {
 					}
 					
 					text = br.readLine();
+					currentPosition++;
 					
 					if(text!=null && text!="") {
 						data = text.split(this.split);
