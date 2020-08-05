@@ -124,41 +124,41 @@ public class SimController implements SubjectOberver {
 	}
 
 	public void start() {
-		clock.start();
 		
 		try {
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-			Date init = new Date(dateFormat.parse("2019-06-20 18:00:08").getTime());
-			Date last = new Date(dateFormat.parse("2019-06-20 18:10:00").getTime());
+			Date init = new Date(dateFormat.parse("2019-06-20 18:00:00").getTime());
+			Date last = new Date(dateFormat.parse("2019-06-20 18:30:00").getTime());
 			
 			setDates(init, last);
 			
 		} catch (ParseException e) {
-			
 			e.printStackTrace();
 		}
 		
-		executionThread.start();
-		System.out.println("=======> simulation started");
+		if(executionThread.isPause()) {
+			executionThread.setPause(false);
+			System.out.println("=======> simulation resumed");
+		}else {
+			executionThread.start();
+			System.out.println("=======> simulation started");
+		}	
 	}
 
 	public void pause() {
-		clock.pause();
 		executionThread.setPause(true);
 		System.out.println("=======> simulation paused");
 	}
 
 	public void resume() {
-		clock.resumeClock();
 		executionThread.setPause(false);
 		System.out.println("=======> simulation resumed");
 	}
 
 	public void stop() {
-		clock.stopClock();
 		executionThread.kill();
-		System.out.println("=======> simulation stoped");
+		System.out.println("=======> simulation finished");
 	}
 
 	public void setFastSpeed() {
@@ -203,14 +203,12 @@ public class SimController implements SubjectOberver {
 
 	public ArrayList<Event> getNextEvents() throws Exception {
 		
-		System.out.println("fetch ========================");
-		
 		Date nextDate = new Date(initialDate.getTime()+clock.getClockRate());
 		ArrayList<Event> events = eventProvirderController.getNextEvent(initialDate,nextDate,lineID);
 		initialDate = nextDate;
 		
 		if(nextDate.getTime()>=lastDate.getTime()) {
-			System.out.println("have to end");
+			stop();
 		}
 		
 		return events;

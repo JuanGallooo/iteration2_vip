@@ -366,10 +366,6 @@ public class Source_csv implements IDateSource {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 			Long date = dateFormat.parse(data[0]).getTime();
 			
-			System.out.println("init " + initialDate.getTime());
-			System.out.println("actual " + date);
-			System.out.println("last " + lastDate.getTime());
-			
 			if (text != null && !text.equals("")) {
 				
 				while (initialDate.getTime()<= date && date <=lastDate.getTime()) {
