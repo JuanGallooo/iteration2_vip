@@ -103,6 +103,20 @@ public class SITMOperationalTravels {
 		super();
 	}
 
+	public SITMOperationalTravels(Long opertravelID, Long busID, Long laststopID, String gPS_X, String gPS_Y,
+			Long odometervalue, Long lineID, Long taskID, Long tripID) {
+		super();
+		this.opertravelID = opertravelID;
+		this.busID = busID;
+		this.laststopID = laststopID;
+		this.GPS_X = gPS_X;
+		this.GPS_Y = gPS_Y;
+		this.odometervalue = odometervalue;
+		this.lineID = lineID;
+		this.taskID = taskID;
+		this.tripID = tripID;
+	}
+	
 	public SITMOperationalTravels(long opertravelID, long busID, long laststopID, String gPS_X, String gPS_Y,
 			long deviationTime, long odometervalue, long lineID, long taskID, long tripID, long rightcourse,
 			long orientation, Date eventDate, long eventTime, Date registerDate, long eventTypeID, long nearestStopID,

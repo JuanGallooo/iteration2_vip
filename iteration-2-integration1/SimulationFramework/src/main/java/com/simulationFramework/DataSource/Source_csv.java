@@ -4,12 +4,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMLine;
 import com.simulationFramework.SystemState.SITMFactory.SITMLineStop;
+import com.simulationFramework.SystemState.SITMFactory.SITMOperationalTravels;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
@@ -94,6 +98,7 @@ public class Source_csv implements IDateSource {
 
 	@Override
 	public ArrayList<SITMPlanVersion> findAllPlanVersions() {
+
 		String path = new File("DataCSV/planversions.csv").getAbsolutePath();
 		ArrayList<SITMPlanVersion> plans = new ArrayList<>();
 		BufferedReader br;
@@ -111,8 +116,9 @@ public class Source_csv implements IDateSource {
 				if (!columns[0].isEmpty()) {
 
 					long planVersionID = Long.parseLong(columns[0]);
-					Date activationDate = createDate(columns[1]);
-					Date creationDate = createDate(columns[2]);
+					DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+					Date activationDate = new Date(dateFormat.parse(columns[1]).getTime());
+					Date creationDate = new Date(dateFormat.parse(columns[2]).getTime());
 
 					SITMPlanVersion plan = new SITMPlanVersion(planVersionID, activationDate, creationDate);
 					plans.add(plan);
@@ -134,7 +140,9 @@ public class Source_csv implements IDateSource {
 		ArrayList<SITMCalendar> calendars = new ArrayList<>();
 
 		BufferedReader br;
+
 		try {
+
 			br = new BufferedReader(new FileReader(path));
 			String[] columns = null;
 			String line = br.readLine();
@@ -143,19 +151,18 @@ public class Source_csv implements IDateSource {
 			while (line != null) {
 				columns = line.split(";");
 
-				if (!columns[0].isEmpty()) {
+				if (!columns[0].isEmpty() && columns[3].equals(planVersionID + "")) {
+
 					long calendarID = Long.parseLong(columns[0]);
-
-					Date operationDate = createDate(columns[1]);
-
+					DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+					Date operationDate = new Date(dateFormat.parse(columns[1]).getTime());
 					long scheduleTypeID = Long.parseLong(columns[2]);
-					if (columns[3].equals(planVersionID + "")) {
-						calendars.add(new SITMCalendar(calendarID, operationDate, scheduleTypeID, planVersionID));
-					}
+					calendars.add(new SITMCalendar(calendarID, operationDate, scheduleTypeID, planVersionID));
 				}
 
 				line = br.readLine();
 			}
+
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,6 +180,7 @@ public class Source_csv implements IDateSource {
 		BufferedReader br;
 
 		try {
+
 			br = new BufferedReader(new FileReader(path));
 			String[] columns = null;
 			String line = br.readLine();
@@ -181,21 +189,21 @@ public class Source_csv implements IDateSource {
 			while (line != null) {
 				columns = line.split(";");
 
-				if (!columns[0].isEmpty()) {
+				if (!columns[0].isEmpty() && columns[1].equals(planVersionID + "")) {
 
 					long lineid = Long.parseLong(columns[0]);
 					String shortName = columns[2];
 					String description = columns[3];
 
-					if (columns[1].equals(planVersionID + "")) {
-						lines.add(new SITMLine(lineid, shortName, description, planVersionID));
-					}
+					lines.add(new SITMLine(lineid, shortName, description, planVersionID));
 
 				}
 
 				line = br.readLine();
 			}
+
 			br.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -204,7 +212,7 @@ public class Source_csv implements IDateSource {
 	}
 
 	public ArrayList<SITMStop> findAllStopsByPlanVersion(long planVersionID) {
-		
+
 		ArrayList<SITMStop> stops = new ArrayList<>();
 		String path = new File("DataCSV/stops.csv").getAbsolutePath();
 
@@ -219,44 +227,39 @@ public class Source_csv implements IDateSource {
 			while (line != null) {
 				columns = line.split(";");
 
-				try {
+				if (!columns[0].isEmpty() && columns[1].equals(planVersionID + "")
+						&& !columns[6].equals("#¡CAMPO!") && !columns[6].equals("0")
+						&& !columns[7].equals("#¡CAMPO!") && !columns[7].equals("0")) {
 
-					if (!columns[0].isEmpty()) {
+					String longName = columns[3];
+					String shortName = columns[2];
+					long stopId = Long.parseLong(columns[0]);
 
-						String longName = columns[3];
-						String shortName = columns[2];
-						long stopId = Long.parseLong(columns[0]);
+					double gPSX = 0;
+					double gPSY = 0;
+					double decimalLongitude = 0;
+					double decimalLactitude = 0;
 
-						double gPSX = 0;
-						double gPSY = 0;
-						double decimalLongitude = 0;
-						double decimalLactitude = 0;
-
-						if (!columns[4].isEmpty()) {
-							gPSX = Double.parseDouble(columns[4]) / 10000000;
-						}
-						if (!columns[5].isEmpty()) {
-							gPSY = Double.parseDouble(columns[5]) / 10000000;
-						}
-						if (!columns[6].isEmpty() && !columns[6].equals("#ï¿½CAMPO!")) {
-							String origi = columns[6].replace(".", "");
-							StringBuffer str = new StringBuffer(origi);
-							str.insert(3, ".");
-							decimalLongitude = Double.parseDouble(str.toString());
-						}
-						if (!columns[7].isEmpty()) {
-							String origi = columns[7].replace(".", "");
-							StringBuffer str = new StringBuffer(origi);
-							str.insert(1, ".");
-							decimalLactitude = Double.parseDouble(str.toString());
-						}
-						if (columns[1].equals(planVersionID + "")) {
-							stops.add(new SITMStop(stopId, shortName, longName, gPSX, gPSY, decimalLongitude,decimalLactitude, stopId));
-						}
+					if (!columns[4].isEmpty()) {
+						gPSX = Double.parseDouble(columns[4]) / 10000000;
 					}
-				} catch (Exception e) {
-					line = br.readLine();
-					continue;
+					if (!columns[5].isEmpty()) {
+						gPSY = Double.parseDouble(columns[5]) / 10000000;
+					}
+					if (!columns[6].isEmpty()) {
+						String origi = columns[6].replace(".", "");
+						StringBuffer str = new StringBuffer(origi);
+						str.insert(3, ".");
+						decimalLongitude = Double.parseDouble(str.toString());
+					}
+					if (!columns[7].isEmpty()) {
+						String origi = columns[7].replace(".", "");
+						StringBuffer str = new StringBuffer(origi);
+						str.insert(1, ".");
+						decimalLactitude = Double.parseDouble(str.toString());
+					}
+
+					stops.add(new SITMStop(stopId, shortName, longName, gPSX, gPSY, decimalLongitude,decimalLactitude, planVersionID));
 				}
 
 				line = br.readLine();
@@ -265,12 +268,12 @@ public class Source_csv implements IDateSource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return stops;
 	}
-	
+
 	public ArrayList<SITMLineStop> findAllLineStopByPlanVersion(long planVersionID) {
-		
+
 		String path = new File("DataCSV/linestops.csv").getAbsolutePath();
 		ArrayList<SITMLineStop> lineStops = new ArrayList<>();
 
@@ -283,30 +286,33 @@ public class Source_csv implements IDateSource {
 
 			while (line != null) {
 				columns = line.split(";");
-				
-				if (!columns[0].isEmpty()) {
+
+				if (!columns[0].isEmpty() && columns[5].equals(planVersionID + "")) {
+					
 					long lineStopid = Long.parseLong(columns[0]);
-					long stopsequence= Long.parseLong(columns[1]);
-					long orientation= Long.parseLong(columns[2]);
-					long lineid= Long.parseLong(columns[3]);
-					long stopid= Long.parseLong(columns[4]);
-					long planVersionid= Long.parseLong(columns[5]);
-					long lineVariant= Long.parseLong(columns[6]);
-					Date registerDate= createDate(columns[7]);
-					long lineVariantType= Long.parseLong(columns[8]);
-					if (columns[5].equals(planVersionID + "")) {
-						lineStops.add(new SITMLineStop(lineStopid,stopsequence,orientation,lineid,stopid,planVersionid,lineVariant,registerDate,lineVariantType));
-					}
+					long stopsequence = Long.parseLong(columns[1]);
+					long orientation = Long.parseLong(columns[2]);
+					long lineid = Long.parseLong(columns[3]);
+					long stopid = Long.parseLong(columns[4]);
+					long planVersionid = Long.parseLong(columns[5]);
+					long lineVariant = Long.parseLong(columns[6]);
+					DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+					Date registerDate = new Date(dateFormat.parse(columns[7]).getTime());
+					long lineVariantType = Long.parseLong(columns[8]);
+					
+					lineStops.add(new SITMLineStop(lineStopid, stopsequence, orientation, lineid, stopid,planVersionid, lineVariant, registerDate, lineVariantType));
 				}
+				
 				line = br.readLine();
 			}
+			
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return lineStops;
 	}
-	
+
 	@Override
 	public ArrayList<SITMStop> findAllStopsByLine(long planVersionID, long lineID) {
 
@@ -330,53 +336,62 @@ public class Source_csv implements IDateSource {
 
 		return stopsByLine;
 	}
+	
+	@Override
+	public ArrayList<SITMOperationalTravels> findAllOperationalTravelsByRange(Date initialDate, Date lastDate, long lineID){
+		
+		ArrayList<SITMOperationalTravels> operationaTravels = new ArrayList<SITMOperationalTravels>();
+		
+		BufferedReader br;
+		
 
-	@SuppressWarnings("deprecation")
-	private Date createDate(String input) {
+		try {
 
-		String[] fecha = input.split("-");
-		int dia = Integer.parseInt(fecha[0]);
-		int mes = 0;
-		int ano = 2000 + Integer.parseInt(fecha[2]);
-		String str = fecha[1];
+			br = new BufferedReader(new FileReader(sourceFile));
+			String text = br.readLine();
+			text = br.readLine();
+			String[]data = text.split(this.split);
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			Long date = dateFormat.parse(data[0]).getTime();
+			
+			if (text != null && !text.equals("")) {
+				
+				
+				while (initialDate.getTime()<= date && date <=lastDate.getTime()) {
+					
+					Long opertravelID = System.currentTimeMillis();
+					Long busID = Long.parseLong(data[1]);
+					Long laststopID = Long.parseLong(data[2]);
+					String gPS_X = data[4];
+					String gPS_Y = data[5];
+					Long odometervalue = Long.parseLong(data[3]);
+					Long taskID = Long.parseLong(data[6]);
+					Long tripID = Long.parseLong(data[8]);
+					
+					if(data[7].equals(lineID+"")) {
+						SITMOperationalTravels op = new SITMOperationalTravels(opertravelID, busID, laststopID, gPS_X, gPS_Y, odometervalue, lineID, taskID, tripID);
+						operationaTravels.add(op);
+					}
+					
+					text = br.readLine();
+					
+					if(text!=null && text!="") {
+						data = text.split(this.split);
+						date = dateFormat.parse(data[0]).getTime();
+					}else {
+						break;
+					}
+					
+				}
+			}
 
-		switch (str) {
-		case "feb":
-			mes = 1;
-			break;
-		case "mar":
-			mes = 2;
-			break;
-		case "APR":
-			mes = 3;
-			break;
-		case "may":
-			mes = 4;
-			break;
-		case "jun":
-			mes = 5;
-			break;
-		case "jul":
-			mes = 6;
-			break;
-		case "AUG":
-			mes = 7;
-			break;
-		case "sep":
-			mes = 8;
-			break;
-		case "oct":
-			mes = 9;
-			break;
-		case "nov":
-			mes = 10;
-			break;
-		case "DEC":
-			mes = 11;
-			break;
-		default:
-			mes = 0;
+			br.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return new Date(ano, mes, dia);
+
+		return operationaTravels;
 	}
 }

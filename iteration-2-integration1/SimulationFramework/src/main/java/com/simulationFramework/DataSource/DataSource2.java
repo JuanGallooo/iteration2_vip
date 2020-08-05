@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMLine;
+import com.simulationFramework.SystemState.SITMFactory.SITMOperationalTravels;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
@@ -126,5 +127,17 @@ public class DataSource2 implements IDateSource, Serializable{
 		return null;
 	}
 
-	
+	@Override
+	public ArrayList<SITMOperationalTravels> findAllOperationalTravelsByRange(Date initialDate, Date lastDate, long lineID){
+		
+		switch (type) {
+		case FILE_CSV:
+			return source_csv.findAllOperationalTravelsByRange(initialDate, lastDate, lineID);
+
+		case DATA_BASE:
+			return source_db.findAllOperationalTravelsByRange(initialDate, lastDate, lineID);
+		}
+		
+		return null;
+	}
 }

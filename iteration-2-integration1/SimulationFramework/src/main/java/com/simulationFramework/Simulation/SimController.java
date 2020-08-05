@@ -225,13 +225,11 @@ class ExecutionThread extends Thread {
 						simController.getClock().getNextTick(events.get(events.size() - 1).getDate());
 
 						for (int i = 0; i < events.size(); i++) {
-							simController.getEventProcessorController().processEvent(events.get(i),
-									simController.getTargetSystem());
+							simController.getEventProcessorController().processEvent(events.get(i),simController.getTargetSystem());
 
 						}
 
-						simController.getObserver().updateBuses(
-								simController.getTargetSystem().filterBusesByLineId(simController.getLineID()));
+						simController.getObserver().updateBuses(simController.getTargetSystem().filterBusesByLineId(simController.getLineID()));
 						simController.getObserver().updateVariables(simController.getVariables().getAllVariables());
 
 						sleep(simController.getSpeed());

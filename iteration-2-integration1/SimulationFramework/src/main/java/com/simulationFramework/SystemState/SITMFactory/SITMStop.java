@@ -59,8 +59,8 @@ public class SITMStop implements IStop,Serializable  {
 		this.stopID = stopID;
 		this.shortName = shortName;
 		this.longName = longName;
-		GPSX = gPSX;
-		GPSY = gPSY;
+		this.GPSX = gPSX;
+		this.GPSY = gPSY;
 		this.decimalLongitude = decimalLongitude;
 		this.decimalLatitude = decimalLatitude;
 		this.planVersionID = planVersionID;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.simulationFramework.DataSource.DataSource2;
 import com.simulationFramework.Simulation.Event.Event;
 import com.simulationFramework.Simulation.Event.EventType;
+import com.simulationFramework.SystemState.SITMFactory.SITMOperationalTravels;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,11 +45,28 @@ public class EventFetcher {
 			actualEvent = fetch(initialDate,finalDate,line,planVerionID);
 			actualDate = actualEvent.getDate();
 		}
-
-		
 		
 		return eventlist;
 	}
 
+	public ArrayList<Event> allFetch(Date initialDate, Date lastDate, long lineID){
+		
+		ArrayList<Event> eventlist = new ArrayList<>();
+		
+		ArrayList<SITMOperationalTravels> operationaTravels = dataSource.findAllOperationalTravelsByRange(initialDate, lastDate, lineID);
+		
+		for (int i = 0; i < operationaTravels.size(); i++) {
+			
+			Event event = new Event();
+			event.setType(EventType.POSICIONAMIENTO_GPS);
+			event.setContext(null);
+			event.setDate(event.getContext().get("datagramDate"));
+			
+			eventlist.add(event);
+			
+		}
+		
+		return eventlist;
+	}
 
 }
