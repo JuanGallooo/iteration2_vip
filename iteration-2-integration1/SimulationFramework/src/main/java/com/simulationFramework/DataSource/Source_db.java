@@ -171,7 +171,7 @@ public class Source_db implements IDateSource {
 		
 		ArrayList<SITMOperationalTravels> returnAnswer = new ArrayList<SITMOperationalTravels>();
 
-		for (SITMOperationalTravels element : operationalTravelsRepository.findAllOP(initialDate.toString(), lastDate.toString())) {
+		for (SITMOperationalTravels element : operationalTravelsRepository.findAllOP("01/08/19","02/08/19")) {
 			returnAnswer.add(element);
 		}
 

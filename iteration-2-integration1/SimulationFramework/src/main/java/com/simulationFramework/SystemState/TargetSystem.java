@@ -2,10 +2,9 @@ package com.simulationFramework.SystemState;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
-import com.simulationFramework.SystemState.FactoryInerfaces.AbstractModelFactory;
-import com.simulationFramework.SystemState.FactoryInerfaces.IBus;
-import com.simulationFramework.SystemState.SITMFactory.ConcreteSITMFactory;
 import com.simulationFramework.SystemState.SITMFactory.SITMBus;
 
 
@@ -13,49 +12,43 @@ public class TargetSystem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<IBus> buses;
-	private AbstractModelFactory factory;
+	private HashMap<Long, SITMBus> buses ;
 
 	public TargetSystem() {
-
-		factory = new ConcreteSITMFactory();
-		buses = factory.createBuses();
+		buses = new HashMap<Long, SITMBus>();
 	}
 
-	public void moveBus(double idBus, double longitude, double latitude) {
+	public void moveBus(long busID, long lineId, double longitude, double latitude) {
 		
-		for (int i = 0; i < buses.size(); i++) {
-
-			if (((SITMBus) buses.get(i)).getBusID() == idBus) {
-				((SITMBus) buses.get(i)).setLatitude(latitude);
-				((SITMBus) buses.get(i)).setLongitude(longitude);
-			}
+		if(buses.containsKey(busID)) {
+			
+			buses.get(busID).setLatitude(latitude);
+			buses.get(busID).setLongitude(longitude);
+			buses.get(busID).setLineId(lineId);;
+		}else {
+			
+			SITMBus bus = new SITMBus();
+			bus.setBusID(busID);
+			bus.setLatitude(latitude);
+			bus.setLongitude(longitude);
+			bus.setLineId(lineId);
+			buses.put(busID, bus);
 		}
+		
 	}
 
-	public ArrayList<SITMBus> filterBusesByLineId(long lineId) {
+	public ArrayList<SITMBus> filterBusesByLineId(long lineID) {
 		ArrayList<SITMBus> busesByLine = new ArrayList<>();
 
-		for (int i = 0; i < buses.size(); i++) {
-			SITMBus bus = (SITMBus) buses.get(i);
-			if (bus.getLineId() == lineId) {
+		for (Entry<Long, SITMBus> entry : buses.entrySet()) {
+			SITMBus bus = entry.getValue();
+			
+			if(bus.getLineId()==lineID) {
 				busesByLine.add(bus);
 			}
-
 		}
-
+		
 		return busesByLine;
-	}
-
-	public void setLineToBus(long busId, long lineId) {
-
-		for (int i = 0; i < buses.size(); i++) {
-			SITMBus bus = (SITMBus) buses.get(i);
-			if (bus.getBusID() == busId) {
-				bus.setLineId(lineId);
-			}
-
-		}
 	}
 
 }

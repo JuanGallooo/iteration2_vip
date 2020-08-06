@@ -78,8 +78,8 @@ public class VariableController implements Serializable {
 
 		for (HashMap.Entry<String, Object> entry : headersValue.entrySet()) {
 			variables.add(new Variable(entry.getKey(), getValue(entry.getKey())));
-
 		}
+		
 		return variables;
 	}
 

@@ -74,6 +74,7 @@ public class SimController implements SubjectOberver {
 		executionThread = new ExecutionThread(this);
 		eventProvirderController = new EventProviderController();
 		eventProcessorController = new EventProcessorController();
+		eventProvirderController.setDataSource(dataSource);
 	}
 
 	public void initialize_SCV(File sourceFile, String split) {

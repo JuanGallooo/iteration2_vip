@@ -8,8 +8,8 @@ public class Processor_Posicionamiento_GPS implements IEventProcessor {
 	@Override
 	public void processEvent(Event event, TargetSystem TargetSystem) {
 
-		long idBus = Long.parseLong(event.getContext().get("busID"));
-		long idLine = Long.parseLong(event.getContext().get("lineID"));
+		long busID = Long.parseLong(event.getContext().get("busID"));
+		long lineID = Long.parseLong(event.getContext().get("lineID"));
 		double longitude = Double.parseDouble(event.getContext().get("GPS_X"));
 		double latitude = Double.parseDouble(event.getContext().get("GPS_Y"));
 		
@@ -20,8 +20,7 @@ public class Processor_Posicionamiento_GPS implements IEventProcessor {
 					"GPS_X="+event.getContext().get("GPS_X")+" "+
 					"GPS_Y="+event.getContext().get("GPS_Y"));
 			
-			TargetSystem.setLineToBus(idBus, idLine);
-			TargetSystem.moveBus(idBus, longitude / 10000000, latitude / 10000000);
+			TargetSystem.moveBus(busID, lineID, longitude / 10000000, latitude / 10000000);
 		}
 
 	}
