@@ -188,7 +188,6 @@ public class NewProController {
 			butFinish.setDisable(false);
 			lvVariablesList.setItems(guiController.getVariables());
 			containerView.setCenter(variablesView);
-			
 		}
 		
 
