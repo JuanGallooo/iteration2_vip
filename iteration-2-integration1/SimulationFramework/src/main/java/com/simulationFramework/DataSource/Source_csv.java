@@ -37,21 +37,20 @@ public class Source_csv implements IDateSource {
 
 	@Override
 	public String[] getHeaders() {
-
-		String[] columns = null;
-		BufferedReader br;
-
-		try {
-
-			br = new BufferedReader(new FileReader(sourceFile));
-			String line = br.readLine();
-			columns = line.split(split);
-			br.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return columns;
+		
+		String[] headers = new String[10];
+		headers[0] = "opertravelID";
+		headers[1] = "busID";
+		headers[2] = "laststopID";
+		headers[3] = "GPS_X";
+		headers[4] = "GPS_Y";
+		headers[5] = "odometervalue";
+		headers[6] = "lineID";
+		headers[7] = "taskID";
+		headers[8] = "tripID";
+		headers[9] = "eventDate";
+		
+		return headers;
 	}
 
 	@Override
@@ -378,9 +377,10 @@ public class Source_csv implements IDateSource {
 					Long odometervalue = Long.parseLong(data[3]);
 					Long taskID = Long.parseLong(data[6]);
 					Long tripID = Long.parseLong(data[8]);
+					Date eventDate = new Date(date);
 					
 					if(data[7].equals(lineID+"")) {
-						SITMOperationalTravels op = new SITMOperationalTravels(opertravelID, busID, laststopID, gPS_X, gPS_Y, odometervalue, lineID, taskID, tripID);
+						SITMOperationalTravels op = new SITMOperationalTravels(opertravelID, busID, laststopID, gPS_X, gPS_Y, odometervalue, lineID, taskID, tripID,eventDate);
 						operationaTravels.add(op);
 					}
 					

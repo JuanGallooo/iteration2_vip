@@ -201,16 +201,15 @@ public class SimController implements SubjectOberver {
 		System.out.println("=======> set One To Sixty Speed");
 	}
 
-	public ArrayList<Event> getNextEvents() throws Exception {
+	public ArrayList<Event> getNextEvents(){
 		
 		Date nextDate = new Date(initialDate.getTime()+clock.getClockRate());
 		ArrayList<Event> events = eventProvirderController.getNextEvent(initialDate,nextDate,lineID);
 		initialDate = nextDate;
 		
 		if(nextDate.getTime()>=lastDate.getTime()) {
-			stop();
+			events = null;
 		}
-		
 		return events;
 	}
 
@@ -245,7 +244,13 @@ class ExecutionThread extends Thread {
 
 					ArrayList<Event> events = simController.getNextEvents();
 					
-					if (!events.isEmpty()) {
+					if(events==null) {
+						
+						pause = true;
+						killed = true;
+						System.out.println("=======> simulation finished");
+						
+					}else if (!events.isEmpty()) {
 
 						simController.getVariables().updateAllValues(events.get(events.size() - 1).getContext());
 						simController.getClock().getNextTick(events.get(events.size() - 1).getDate());

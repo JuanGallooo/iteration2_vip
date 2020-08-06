@@ -9,14 +9,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import com.simulationFramework.Simulation.SimController;
+import com.simulationFramework.Simulation.Event.Event;
+import com.simulationFramework.Simulation.Event.EventType;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMLine;
-import com.simulationFramework.SystemState.SITMFactory.SITMOperationalTravels;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 import com.simulationFramework.SystemState.SITMFactory.SITMStop;
 
@@ -66,21 +64,35 @@ public class simulationMain {
 	public static void startTest() throws ParseException {
 		
 		SimController sm = new SimController(null);
-		sm.initialize_SCV(new File(""), ",");
-		sm.setPlanVersionID(260);
+		sm.initialize_SCV(new File("C:/Users/Nicolas Biojo Bermeo/Downloads/datagrams.csv"), ",");
+		sm.setPlanVersionID(261);
 		ArrayList<SITMCalendar> calendars = sm.getDateByPlanVersion();
 		sm.setDates(calendars.get(0).getOperationDay(), calendars.get(calendars.size()-1).getOperationDay());
-		sm.setLineId(332);
+		sm.setLineId(131);
 		
-		System.out.println("OperationalTravels ========================================================================================================================================\n");
+		System.out.println("Events ============================================\n");
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		Date init = new Date(dateFormat.parse("2019-06-20 18:00:08").getTime());
 		Date last = new Date(dateFormat.parse("2019-06-20 18:10:00").getTime());
 		sm.setDates(init, last);
-		ArrayList<SITMOperationalTravels> operationalTravels = sm.getDataSource().findAllOperationalTravelsByRange(init, last, 131);
-		for (int i = 0; i < operationalTravels.size(); i++) {System.out.println(operationalTravels.get(i));}
-		System.out.println();
+		ArrayList<Event> events = sm.getNextEvents();
 		
-		//sm.start();
+		while(events!=null) {
+			
+			for (int i = 0; i < events.size(); i++){
+				if(events.get(i).getType().equals(EventType.POSICIONAMIENTO_GPS)) {
+					System.out.println("BusID="+events.get(i).getContext().get("busID")+" "+
+							"GPS_X="+events.get(i).getContext().get("GPS_X")+" "+
+							"GPS_Y="+events.get(i).getContext().get("GPS_Y"));
+				}
+			}
+			
+			System.out.println();
+			events = sm.getNextEvents();
+		}
+		
+		
+		System.out.println();
+
 	}
 }

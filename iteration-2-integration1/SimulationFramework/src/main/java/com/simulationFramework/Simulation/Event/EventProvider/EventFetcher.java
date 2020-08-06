@@ -50,6 +50,7 @@ public class EventFetcher {
 		return eventlist;
 	}
 
+	@SuppressWarnings("deprecation")
 	public ArrayList<Event> allFetch(Date initialDate, Date lastDate, long lineID){
 		
 		
@@ -58,22 +59,27 @@ public class EventFetcher {
 		
 		for (int i = 0; i < operationaTravels.size(); i++) {
 			
-			Event event = new Event();
-			event.setType(EventType.POSICIONAMIENTO_GPS);
+			if(!operationaTravels.get(i).getGPS_X().equals("-1") && !operationaTravels.get(i).getGPS_Y().equals("-1")) {
+				
+				Event event = new Event();
+				event.setType(EventType.POSICIONAMIENTO_GPS);
+				
+				HashMap<String, String> context = new HashMap<String, String>();
+				context.put("opertravelID", operationaTravels.get(i).getOpertravelID()+"");
+				context.put("busID", operationaTravels.get(i).getBusID()+"");
+				context.put("laststopID", operationaTravels.get(i).getLaststopID()+"");
+				context.put("GPS_X", operationaTravels.get(i).getGPS_X()+"");
+				context.put("GPS_Y", operationaTravels.get(i).getGPS_Y()+"");
+				context.put("odometervalue", operationaTravels.get(i).getOdometervalue()+"");
+				context.put("lineID", operationaTravels.get(i).getLineID()+"");
+				context.put("taskID", operationaTravels.get(i).getTaskID()+"");
+				context.put("tripID", operationaTravels.get(i).getTripID()+"");
+				context.put("eventDate", operationaTravels.get(i).getEventDate().toGMTString());
+				
+				event.setContext(context);
+				eventlist.add(event);	
+			}
 			
-			HashMap<String, String> context = new HashMap<String, String>();
-			context.put("opertravelID", operationaTravels.get(i).getOpertravelID()+"");
-			context.put("busID", operationaTravels.get(i).getBusID()+"");
-			context.put("laststopID", operationaTravels.get(i).getLaststopID()+"");
-			context.put("GPS_X", operationaTravels.get(i).getGPS_X()+"");
-			context.put("GPS_Y", operationaTravels.get(i).getGPS_Y()+"");
-			context.put("odometervalue", operationaTravels.get(i).getOdometervalue()+"");
-			context.put("lineID", operationaTravels.get(i).getLineID()+"");
-			context.put("taskID", operationaTravels.get(i).getTaskID()+"");
-			context.put("tripID", operationaTravels.get(i).getTripID()+"");
-			
-			event.setContext(context);
-			eventlist.add(event);	
 		}
 		
 		return eventlist;

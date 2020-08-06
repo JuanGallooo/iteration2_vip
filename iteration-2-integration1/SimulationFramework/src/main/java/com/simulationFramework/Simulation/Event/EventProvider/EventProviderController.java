@@ -16,7 +16,7 @@ public class EventProviderController {
 		eventGenerator = new EventGenerator();
 	}
 
-	public ArrayList<Event> getNextEvent(Date initialDate, Date lastDate, long lineID) throws Exception {
+	public ArrayList<Event> getNextEvent(Date initialDate, Date lastDate, long lineID){
 		
 		ArrayList<Event> events = eventFecher.allFetch(initialDate, lastDate, lineID);
 
