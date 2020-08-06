@@ -37,15 +37,15 @@ public class NewProController {
 
 	private AnchorPane formView;
 
-	private AnchorPane dataView;
+	private AnchorPane csvDataView;
 
 	private AnchorPane variablesView;
 
 	private AnchorPane clockView;
 
-	private AnchorPane oracleView;
+	private AnchorPane planversionsView;
 	
-	private AnchorPane oracleDateView;
+	private AnchorPane dateView;
 
 	@FXML
 	private Button butCancel;
@@ -110,24 +110,21 @@ public class NewProController {
 	@FXML
 	void butBackAction(ActionEvent event) throws IOException {
 
-		if (containerView.getCenter() == dataView || containerView.getCenter() == oracleView) {
+		if (containerView.getCenter() == csvDataView || containerView.getCenter() == planversionsView) {
 
 			butBack.setDisable(true);
 			containerView.setCenter(formView);
 
 		} else if (containerView.getCenter() == variablesView) {
-
-			containerView.setCenter(formView);
-
-		} else if (containerView.getCenter() == clockView) {
-
+			
 			butNext.setDisable(false);
 			butFinish.setDisable(true);
-			containerView.setCenter(variablesView);
-
-		} else if(containerView.getCenter() == oracleDateView) {
 			
-			containerView.setCenter(oracleView);
+			containerView.setCenter(dateView);
+
+		} else if(containerView.getCenter() == dateView) {
+			
+			containerView.setCenter(planversionsView);
 			
 		}
 
@@ -148,26 +145,24 @@ public class NewProController {
 			butBack.setDisable(false);
 			
 			if (chCSV.isSelected()) {
-				containerView.setCenter(dataView);
+				containerView.setCenter(csvDataView);
+				
 			} else if(chOracle.isSelected()){
-				containerView.setCenter(oracleView);
+				containerView.setCenter(planversionsView);
 				loadPlanVersionIds(guiController.getPlanversion());
 			}
 			
 
-		} else if (containerView.getCenter() == dataView) {
-
+		} else if (containerView.getCenter() == csvDataView) {
+			
 			guiController.loadDataSource(txtDataResourcePath.getText(), txtSeparator.getText());
-			lvVariablesList.setItems(guiController.getVariables());
-			containerView.setCenter(variablesView);
+			containerView.setCenter(planversionsView);
+			loadPlanVersionIds(guiController.getPlanversion());
+			
+			//lvVariablesList.setItems(guiController.getVariables());
+			//containerView.setCenter(variablesView);
 
-		} else if (containerView.getCenter() == variablesView) {
-
-			butNext.setDisable(true);
-			butFinish.setDisable(false);
-			containerView.setCenter(clockView);
-
-		} else if (containerView.getCenter() == oracleView) {
+		} else if (containerView.getCenter() == planversionsView) {
 			
 			ObservableList<CheckBox> selectedVariables = lvPlanversionIds.getItems();
 			long planVersioId = -1;
@@ -185,10 +180,12 @@ public class NewProController {
 			
 			dtStartDate.setValue(convertToLocalDateViaSqlDate(initialDate.getOperationDay()));
 			dtEndingDate.setValue(convertToLocalDateViaSqlDate(lastDate.getOperationDay()));
-			containerView.setCenter(oracleDateView);
+			containerView.setCenter(dateView);
 		
-		} else if (containerView.getCenter() == oracleDateView) {
-			 
+		} else if (containerView.getCenter() == dateView) {
+			
+			butNext.setDisable(true);
+			butFinish.setDisable(false);
 			lvVariablesList.setItems(guiController.getVariables());
 			containerView.setCenter(variablesView);
 			
@@ -247,7 +244,7 @@ public class NewProController {
 		chOracle = newProController.getChOracle();
 		
 		fmxlLoader = GUIController.loadFXML("NewProView-Data");
-		dataView = fmxlLoader.load();
+		csvDataView = fmxlLoader.load();
 		newProController = fmxlLoader.getController();
 		txtDataResourcePath = newProController.getTxtDataResourcePath();
 		txtSeparator = newProController.getTxtSeparator();
@@ -261,15 +258,15 @@ public class NewProController {
 		clockView = fmxlLoader.load();
 		newProController = fmxlLoader.getController();
 
-		fmxlLoader = GUIController.loadFXML("NewProView-Oracle-Date");
-		oracleDateView = fmxlLoader.load();
+		fmxlLoader = GUIController.loadFXML("NewProView-Date");
+		dateView = fmxlLoader.load();
 		newProController = fmxlLoader.getController();
 		dtStartDate = newProController.getDtStartDate();
 		dtEndingDate = newProController.getDtEndingDate();
 		
 		
-		fmxlLoader = GUIController.loadFXML("NewProView-Oracle");
-		oracleView = fmxlLoader.load();
+		fmxlLoader = GUIController.loadFXML("NewProView-Planversions");
+		planversionsView = fmxlLoader.load();
 		newProController = fmxlLoader.getController();
 		lvPlanversionIds = newProController.getLvPlanversionIds();
 		
