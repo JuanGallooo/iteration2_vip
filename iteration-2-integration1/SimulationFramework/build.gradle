@@ -13,12 +13,13 @@ plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 
 }
 
 group = 'com.simulationFramework'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '14'
 
 configurations {
 	compileOnly {
@@ -66,9 +67,16 @@ dependencies {
 
 	
 	compile group: 'org.json', name: 'json', version: '20090211'
+	compile 'com.jfoenix:jfoenix:9.0.8'
+	
 	//testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
 	//compile group: 'org.springframework', name: 'spring-orm', version: '5.2.7.RELEASE'
 
+}
+
+javafx {
+    version = "14"
+    modules = [ 'javafx.controls','javafx.fxml','javafx.web' ]
 }
 
 mainClassName = 'GUI.Main'

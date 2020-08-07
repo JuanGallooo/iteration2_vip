@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.jfoenix.controls.JFXTimePicker;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 
@@ -86,6 +87,12 @@ public class NewProController {
 
 	@FXML
 	private DatePicker dtEndingDate;
+	
+	@FXML
+    private JFXTimePicker timePickerStartDate;
+	
+	@FXML
+    private JFXTimePicker timerPickerEndingDate;
 	
 	
     @FXML

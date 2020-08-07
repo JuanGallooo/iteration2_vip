@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,5 +25,7 @@
       </Label>
       <DatePicker fx:id="dtStartDate" layoutX="104.0" layoutY="76.0" />
       <DatePicker fx:id="dtEndingDate" layoutX="104.0" layoutY="118.0" />
+      <JFXTimePicker fx:id="timePickerStartDate" layoutX="298.0" layoutY="64.0" prefHeight="28.0" prefWidth="81.0" />
+      <JFXTimePicker fx:id="timerPickerEndingDate" layoutX="298.0" layoutY="107.0" prefHeight="28.0" prefWidth="81.0" />
    </children>
 </AnchorPane>
