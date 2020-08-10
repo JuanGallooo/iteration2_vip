@@ -7,19 +7,17 @@
  */
 
 plugins {
-    // Apply the java-library plugin to add support for Java Library
-    id 'java-library'
+	id 'java-library'
     id 'application'
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'java'
     id 'org.openjfx.javafxplugin' version '0.0.8'
 
 }
 
 group = 'com.simulationFramework'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '14'
+sourceCompatibility = '15'
 
 configurations {
 	compileOnly {
@@ -36,9 +34,9 @@ repositories {
 }
 
 dependencies {
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
-
+    
+    
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
 
@@ -67,7 +65,7 @@ dependencies {
 
 	
 	compile group: 'org.json', name: 'json', version: '20090211'
-	compile 'com.jfoenix:jfoenix:9.0.8'
+	compile 'com.jfoenix:jfoenix:9.0.10'
 	
 	//testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
 	//compile group: 'org.springframework', name: 'spring-orm', version: '5.2.7.RELEASE'
@@ -79,4 +77,12 @@ javafx {
     modules = [ 'javafx.controls','javafx.fxml','javafx.web' ]
 }
 
-mainClassName = 'GUI.Main'
+application{
+	mainClassName = 'com.simulationFramework.GUI.Main'
+}
+
+task printprops{
+	doLast{
+		println JavaVersion.current()
+	}
+}
