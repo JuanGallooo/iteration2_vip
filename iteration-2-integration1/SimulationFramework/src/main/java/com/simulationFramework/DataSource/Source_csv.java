@@ -235,8 +235,8 @@ public class Source_csv implements IDateSource {
 				columns = line.split(";");
 
 				if (!columns[0].isEmpty() && columns[1].equals(planVersionID + "")
-						&& !columns[6].equals("#CAMPO!") && !columns[6].equals("0")
-						&& !columns[7].equals("#CAMPO!") && !columns[7].equals("0")) {
+						&& !columns[6].contains("#") && !columns[6].equals("0")
+						&& !columns[7].contains("#") && !columns[7].equals("0")) {
 
 					String longName = columns[3];
 					String shortName = columns[2];
