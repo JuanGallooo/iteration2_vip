@@ -130,7 +130,7 @@ public class SimController implements SubjectOberver {
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 			Date init = new Date(dateFormat.parse("2019-06-20 18:00:00").getTime());
-			Date last = new Date(dateFormat.parse("2019-06-20 18:30:00").getTime());
+			Date last = new Date(dateFormat.parse("2019-06-20 19:00:00").getTime());
 			
 			setDates(init, last);
 			

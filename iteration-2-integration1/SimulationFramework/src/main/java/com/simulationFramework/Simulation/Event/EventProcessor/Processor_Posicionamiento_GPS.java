@@ -15,10 +15,10 @@ public class Processor_Posicionamiento_GPS implements IEventProcessor {
 		
 		if (longitude != -1 && latitude != -1) {
 
-			System.out.println("Processor_Posicionamiento_GPS ===> "+
-					"BusID="+event.getContext().get("busID")+" "+
-					"GPS_X="+event.getContext().get("GPS_X")+" "+
-					"GPS_Y="+event.getContext().get("GPS_Y"));
+//			System.out.println("Processor_Posicionamiento_GPS ===> "+
+//					"BusID="+event.getContext().get("busID")+" "+
+//					"GPS_X="+event.getContext().get("GPS_X")+" "+
+//					"GPS_Y="+event.getContext().get("GPS_Y"));
 			
 			TargetSystem.moveBus(busID, lineID, longitude / 10000000, latitude / 10000000);
 		}

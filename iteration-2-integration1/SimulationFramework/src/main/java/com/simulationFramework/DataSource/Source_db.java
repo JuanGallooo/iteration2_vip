@@ -170,8 +170,19 @@ public class Source_db implements IDateSource {
 	public ArrayList<SITMOperationalTravels> findAllOperationalTravelsByRange(Date initialDate, Date lastDate, long lineID){
 		
 		ArrayList<SITMOperationalTravels> returnAnswer = new ArrayList<SITMOperationalTravels>();
-
-		for (SITMOperationalTravels element : operationalTravelsRepository.findAllOP("01/08/19","02/08/19")) {
+		
+//		long y = new Long("1564635633902");
+//		java.util.Date x = new java.util.Date(y);
+//
+//		System.out.println(x.toGMTString());
+		
+		for (SITMOperationalTravels element : operationalTravelsRepository.findAllOP("01/08/19","01/08/19")) {
+//			System.out.println(new Date(element.getEventDate().getTime()+element.getEventTime()).toGMTString());
+			System.out.println(element.getEventDate().toGMTString());
+			//System.out.println(element.getEventTime());
+			System.out.println(element.getRegisterDate().toGMTString());
+			System.out.println(element.getLastUpDateDate().toGMTString());
+			System.out.println();
 			returnAnswer.add(element);
 		}
 
