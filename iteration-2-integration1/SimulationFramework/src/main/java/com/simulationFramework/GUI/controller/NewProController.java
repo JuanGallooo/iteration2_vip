@@ -87,7 +87,6 @@ public class NewProController {
 	@FXML
 	private DatePicker dtEndingDate;
 	
-	
     @FXML
     private ListView<CheckBox> lvPlanversionIds;
 
