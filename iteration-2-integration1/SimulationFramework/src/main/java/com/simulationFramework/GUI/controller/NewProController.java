@@ -88,6 +88,12 @@ public class NewProController {
 	private DatePicker dtEndingDate;
 	
     @FXML
+    private TextField tfHourStartDate;
+
+    @FXML
+    private TextField tfHourEndingDate;
+	
+    @FXML
     private ListView<CheckBox> lvPlanversionIds;
 
 	@FXML
@@ -157,7 +163,6 @@ public class NewProController {
 			guiController.loadDataSource(txtDataResourcePath.getText(), txtSeparator.getText());
 			containerView.setCenter(planversionsView);
 			loadPlanVersionIds(guiController.getPlanversion());
-			
 			//lvVariablesList.setItems(guiController.getVariables());
 			//containerView.setCenter(variablesView);
 
@@ -183,6 +188,21 @@ public class NewProController {
 		
 		} else if (containerView.getCenter() == dateView) {
 			
+			//tfHourStartDate.setText("18:00");
+			//tfHourEndingDate.setText("19:33");
+			
+			
+			System.out.println(tfHourStartDate.getText());
+			System.out.println(tfHourEndingDate.getText());
+			
+			LocalDate startDate = dtStartDate.getValue();
+			LocalDate endingDate = dtEndingDate.getValue();
+			String completeStart = startDate.toString();
+			String completeEnding = endingDate.toString();
+			
+			System.out.println(completeStart);
+			System.out.println(completeEnding);
+					
 			butNext.setDisable(true);
 			butFinish.setDisable(false);
 			lvVariablesList.setItems(guiController.getVariables());
