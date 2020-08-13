@@ -99,6 +99,11 @@ public class NewProController {
 	@FXML
 	private ListView<CheckBox> lvVariablesList;
 
+	
+	public void initiaize() {
+		
+	}
+	
 	@FXML
 	void butSelectDataResourcePathAction(ActionEvent event) {
 
@@ -281,6 +286,8 @@ public class NewProController {
 		newProController = fmxlLoader.getController();
 		dtStartDate = newProController.getDtStartDate();
 		dtEndingDate = newProController.getDtEndingDate();
+		tfHourStartDate = newProController.getTfHourStartDate();
+		tfHourEndingDate = newProController.getTfHourEndingDate();
 		
 		
 		fmxlLoader = GUIController.loadFXML("NewProView-Planversions");

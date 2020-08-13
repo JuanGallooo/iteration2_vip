@@ -17,8 +17,8 @@ public class MarkerInfo implements AdapterInfoMarkers {
 	public static final String imgBus = "bus_azul.png";
 	public static final String imgStop = "estacion_roja.png";
 	
-	public static final String pathBus = "src/main/java/com/simulationFramework/GUI/view/markerBus.json";
-	public static final String pathStop = "src/main/java/com/simulationFramework/GUI/view/markerStop.json";
+	public static final String pathBus = "src/main/resources/com/simulationFramework/GUI/view/markerBus.json";
+	public static final String pathStop = "src/main/resources/com/simulationFramework/GUI/view/markerStop.json";
 	
 	public static final String typeBus = "Bus";
 	public static final String typeStop = "Stop";

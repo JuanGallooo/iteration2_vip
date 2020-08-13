@@ -13,16 +13,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="78.0" text="Start date: ">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="16.0" layoutY="121.0" text="Ending date: ">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
       <DatePicker fx:id="dtStartDate" layoutX="104.0" layoutY="76.0" />
       <DatePicker fx:id="dtEndingDate" layoutX="104.0" layoutY="118.0" />
       <TextField fx:id="tfHourStartDate" layoutX="289.0" layoutY="76.0" prefHeight="25.0" prefWidth="81.0" promptText="18:00" />
