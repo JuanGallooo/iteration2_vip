@@ -15,7 +15,7 @@
       </Label>
       <DatePicker fx:id="dtStartDate" layoutX="104.0" layoutY="76.0" />
       <DatePicker fx:id="dtEndingDate" layoutX="104.0" layoutY="118.0" />
-      <TextField fx:id="tfHourStartDate" layoutX="289.0" layoutY="76.0" prefHeight="25.0" prefWidth="81.0" promptText="18:00" />
-      <TextField fx:id="tfHourEndingDate" layoutX="289.0" layoutY="119.0" prefHeight="25.0" prefWidth="81.0" promptText="19:33" />
+      <TextField fx:id="tfHourStartDate" layoutX="289.0" layoutY="76.0" prefHeight="25.0" prefWidth="81.0" text="18:00" />
+      <TextField fx:id="tfHourEndingDate" layoutX="289.0" layoutY="119.0" prefHeight="25.0" prefWidth="81.0" text="19:33" />
    </children>
 </AnchorPane>

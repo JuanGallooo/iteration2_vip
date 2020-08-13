@@ -108,6 +108,8 @@ public class SimController implements SubjectOberver {
 	}
 	
 	public void setDates(Date initialDate,Date lastDate) {
+		System.out.println(initialDate);
+		System.out.println(lastDate);
 		this.initialDate = initialDate;
 		this.lastDate = lastDate;
 	}
@@ -125,18 +127,6 @@ public class SimController implements SubjectOberver {
 	}
 
 	public void start() {
-		
-		try {
-			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-			Date init = new Date(dateFormat.parse("2019-06-20 18:00:00").getTime());
-			Date last = new Date(dateFormat.parse("2019-06-20 19:00:00").getTime());
-			
-			setDates(init, last);
-			
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		
 		if(executionThread.isPause()) {
 			executionThread.setPause(false);

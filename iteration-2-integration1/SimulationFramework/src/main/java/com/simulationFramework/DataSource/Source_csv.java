@@ -362,7 +362,7 @@ public class Source_csv implements IDateSource {
 
 			String[]data = text.split(this.split);
 			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Long date = dateFormat.parse(data[0]).getTime();
 			
 			if (text != null && !text.equals("")) {

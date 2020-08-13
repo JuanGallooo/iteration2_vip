@@ -2,9 +2,12 @@ package com.simulationFramework.GUI.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
@@ -193,20 +196,25 @@ public class NewProController {
 		
 		} else if (containerView.getCenter() == dateView) {
 			
-			//tfHourStartDate.setText("18:00");
-			//tfHourEndingDate.setText("19:33");
+			String starHour = tfHourStartDate.getText();
+			String endingHour = tfHourEndingDate.getText(); 
 			
 			
-			System.out.println(tfHourStartDate.getText());
-			System.out.println(tfHourEndingDate.getText());
+			String startDate = dtStartDate.getValue().toString();
+			String endingDate = dtEndingDate.getValue().toString();
 			
-			LocalDate startDate = dtStartDate.getValue();
-			LocalDate endingDate = dtEndingDate.getValue();
-			String completeStart = startDate.toString();
-			String completeEnding = endingDate.toString();
 			
-			System.out.println(completeStart);
-			System.out.println(completeEnding);
+			String startFormat=startDate+" "+starHour+":00";
+			String endingFormat=endingDate+" "+endingHour+":00";
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			try {
+				Date initialDate = new Date(dateFormat.parse(startFormat).getTime());
+				Date lastDate = new Date(dateFormat.parse(endingFormat).getTime());
+				guiController.getSimController().setDates(initialDate, lastDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 					
 			butNext.setDisable(true);
 			butFinish.setDisable(false);
