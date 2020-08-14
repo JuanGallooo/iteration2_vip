@@ -108,8 +108,6 @@ public class SimController implements SubjectOberver {
 	}
 	
 	public void setDates(Date initialDate,Date lastDate) {
-		System.out.println(initialDate);
-		System.out.println(lastDate);
 		this.initialDate = initialDate;
 		this.lastDate = lastDate;
 	}

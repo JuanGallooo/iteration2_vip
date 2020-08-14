@@ -3,6 +3,9 @@ package com.simulationFramework.DataSource;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,10 +41,10 @@ public class Source_db implements IDateSource {
 
 	@Autowired
 	private CalendarRepository calendarRepository;
-	
+
 	@Autowired
 	private OperationalTravelsRepository operationalTravelsRepository;
-	
+
 	public Source_db() {
 		super();
 	}
@@ -61,7 +64,7 @@ public class Source_db implements IDateSource {
 
 	@Override
 	public String[] getHeaders() {
-		
+
 		String[] headers = new String[10];
 		headers[0] = "opertravelID";
 		headers[1] = "busID";
@@ -73,7 +76,7 @@ public class Source_db implements IDateSource {
 		headers[7] = "taskID";
 		headers[8] = "tripID";
 		headers[9] = "eventDate";
-		
+
 //		String[] headers = new String[26];
 //		headers[0] = "OPERTRAVELID";
 //		headers[1] = "BUSID";
@@ -171,20 +174,39 @@ public class Source_db implements IDateSource {
 		
 		ArrayList<SITMOperationalTravels> returnAnswer = new ArrayList<SITMOperationalTravels>();
 		
-//		long y = new Long("1564635633902");
-//		java.util.Date x = new java.util.Date(y);
-//
-//		System.out.println(x.toGMTString());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+		DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
 		
-		for (SITMOperationalTravels element : operationalTravelsRepository.findAllOP("01/08/19","01/08/19")) {
-//			System.out.println(new Date(element.getEventDate().getTime()+element.getEventTime()).toGMTString());
-			System.out.println(element.getEventDate().toGMTString());
-			//System.out.println(element.getEventTime());
-			System.out.println(element.getRegisterDate().toGMTString());
-			System.out.println(element.getLastUpDateDate().toGMTString());
-			System.out.println();
-			returnAnswer.add(element);
+		if(initialDate.toString().equals(lastDate.toString())) {
+			
+			
+			String date = dateFormat.format(initialDate);
+
+			try {
+				
+				long startHour = (hourFormat.parse(hourFormat.format(initialDate)).getTime()-18000000)/1000;
+				System.out.println(startHour);
+				
+				long endHour = (hourFormat.parse(hourFormat.format(lastDate)).getTime()-18000000)/1000;
+				System.out.println(endHour);
+				
+				System.out.println(date);
+			
+				for (SITMOperationalTravels element : operationalTravelsRepository.findAllOPDay(date, startHour, endHour)) {
+					returnAnswer.add(element);
+				}	
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}else {
+			for (SITMOperationalTravels element : operationalTravelsRepository.findAllOP("01/08/19","01/08/19")) {
+				returnAnswer.add(element);
+			}
 		}
+		
 
 		return returnAnswer;
 	}
