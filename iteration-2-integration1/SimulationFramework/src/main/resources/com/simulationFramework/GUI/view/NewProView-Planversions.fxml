@@ -12,6 +12,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ListView fx:id="lvPlanversionIds" layoutX="14.0" layoutY="54.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="lvPlanversionIds" layoutX="14.0" layoutY="54.0" prefHeight="200.0" prefWidth="302.0" />
    </children>
 </AnchorPane>

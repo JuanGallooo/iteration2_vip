@@ -41,7 +41,7 @@ public class simulationMain {
 		
 		
 		System.out.println("calendars ========================================================================================================================================\n");
-		ArrayList<SITMCalendar> calendars = sm.getDateByPlanVersion();
+		ArrayList<SITMCalendar> calendars = sm.getDateByPlanVersion(261);
 		for (int i = 0; i < calendars.size(); i++) {System.out.println(calendars.get(i));}
 		sm.setDates(calendars.get(0).getOperationDay(), calendars.get(calendars.size()-1).getOperationDay());
 		System.out.println();
@@ -66,7 +66,7 @@ public class simulationMain {
 		SimController sm = new SimController(null);
 		sm.initialize_SCV(new File("C:/Users/Nicolas Biojo Bermeo/Downloads/datagrams.csv"), ",");
 		sm.setPlanVersionID(261);
-		ArrayList<SITMCalendar> calendars = sm.getDateByPlanVersion();
+		ArrayList<SITMCalendar> calendars = sm.getDateByPlanVersion(261);
 		sm.setDates(calendars.get(0).getOperationDay(), calendars.get(calendars.size()-1).getOperationDay());
 		sm.setLineId(131);
 		

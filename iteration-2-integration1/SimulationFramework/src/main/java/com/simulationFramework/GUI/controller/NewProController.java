@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
@@ -170,7 +172,20 @@ public class NewProController {
 			
 			guiController.loadDataSource(txtDataResourcePath.getText(), txtSeparator.getText());
 			containerView.setCenter(planversionsView);
-			loadPlanVersionIds(guiController.getPlanversion());
+			
+			ArrayList<SITMPlanVersion> planversions = new ArrayList<>();
+			for(SITMPlanVersion i : guiController.getPlanversion()) {
+				planversions.add(i);
+			}
+			
+			Collections.sort(planversions , new Comparator<SITMPlanVersion>() {
+				public int compare(SITMPlanVersion o1, SITMPlanVersion o2) {
+			         return o2.getActivationDate().compareTo(o1.getActivationDate());
+			     }
+			});
+			
+			loadPlanVersionIds(planversions);
+			
 			//lvVariablesList.setItems(guiController.getVariables());
 			//containerView.setCenter(variablesView);
 
@@ -181,11 +196,11 @@ public class NewProController {
 			
 			for (CheckBox i : selectedVariables) {
 				if (i.isSelected()) {
-					planVersioId=Long.parseLong(i.getText());
+					planVersioId=Long.parseLong(i.getText().split(" ")[1]);
 				}
 			}
 			guiController.getSimController().setPlanVersionID(planVersioId);
-			ArrayList<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion();
+			ArrayList<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion(planVersioId);
 			
 			SITMCalendar initialDate = calendar.get(0);
 			SITMCalendar lastDate = calendar.get(calendar.size()-1);
@@ -250,9 +265,14 @@ public class NewProController {
 		
 		for (SITMPlanVersion plan :  planversionIds) {
 			
+			ArrayList<SITMCalendar> calendar = guiController.getSimController().getDateByPlanVersion(plan.getPlanVersionID());
+			
+			SITMCalendar initialDate = calendar.get(0);
+			SITMCalendar lastDate = calendar.get(calendar.size()-1);
+			
 			CheckBox check = new CheckBox();
 			check.setUserData(plan);
-			check.setText(plan.getPlanVersionID()+"");
+			check.setText("ID: "+plan.getPlanVersionID()+" Dates: ["+initialDate.getOperationDay()+" - "+lastDate.getOperationDay()+"]");
 			lvPlanversionIds.getItems().add(check);
 
 		}

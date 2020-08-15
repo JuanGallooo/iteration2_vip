@@ -103,7 +103,7 @@ public class SimController implements SubjectOberver {
 		this.planVersionID = planVersionID;
 	}
 	
-	public ArrayList<SITMCalendar> getDateByPlanVersion() {
+	public ArrayList<SITMCalendar> getDateByPlanVersion(long planVersionID) {
 		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
 	}
 	
