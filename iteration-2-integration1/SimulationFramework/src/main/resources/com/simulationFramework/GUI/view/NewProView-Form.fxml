@@ -24,7 +24,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <CheckBox fx:id="chCSV" layoutX="192.0" layoutY="122.0" mnemonicParsing="false" text="CSV" />
-      <CheckBox fx:id="chOracle" layoutX="249.0" layoutY="122.0" mnemonicParsing="false" text="Oracle" />
+      <CheckBox fx:id="chCSV" layoutX="192.0" layoutY="122.0" mnemonicParsing="false" onAction="#onClickCheckCSV" text="CSV" />
+      <CheckBox fx:id="chOracle" layoutX="249.0" layoutY="122.0" mnemonicParsing="false" onAction="#onClickOracleCheck" text="Oracle" />
    </children>
 </AnchorPane>
