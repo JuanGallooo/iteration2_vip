@@ -18,11 +18,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -158,35 +160,39 @@ public class NewProController {
 
 			butBack.setDisable(false);
 
-			if (chCSV.isSelected()) {
-				containerView.setCenter(csvDataView);
+			if (txtName.getText().equals("")) {
+				validateFieldEmpty();
+			} else {
+				if (chCSV.isSelected()) {
+					containerView.setCenter(csvDataView);
+				} else if (chOracle.isSelected()) {
+					containerView.setCenter(planversionsView);
+					loadPlanVersionIds(guiController.getPlanversion());
 
-			} else if (chOracle.isSelected()) {
-				containerView.setCenter(planversionsView);
-				loadPlanVersionIds(guiController.getPlanversion());
-
+				}
 			}
 
 		} else if (containerView.getCenter() == csvDataView) {
 
-			guiController.loadDataSource(txtDataResourcePath.getText(), txtSeparator.getText());
-			containerView.setCenter(planversionsView);
+			if (txtDataResourcePath.getText().equals("") || txtSeparator.getText().equals("")) {
+				validateFieldEmpty();
+			} else {
+				guiController.loadDataSource(txtDataResourcePath.getText(), txtSeparator.getText());
+				containerView.setCenter(planversionsView);
 
-			ArrayList<SITMPlanVersion> planversions = new ArrayList<>();
-			for (SITMPlanVersion i : guiController.getPlanversion()) {
-				planversions.add(i);
-			}
-
-			Collections.sort(planversions, new Comparator<SITMPlanVersion>() {
-				public int compare(SITMPlanVersion o1, SITMPlanVersion o2) {
-					return o2.getActivationDate().compareTo(o1.getActivationDate());
+				ArrayList<SITMPlanVersion> planversions = new ArrayList<>();
+				for (SITMPlanVersion i : guiController.getPlanversion()) {
+					planversions.add(i);
 				}
-			});
 
-			loadPlanVersionIds(planversions);
+				Collections.sort(planversions, new Comparator<SITMPlanVersion>() {
+					public int compare(SITMPlanVersion o1, SITMPlanVersion o2) {
+						return o2.getActivationDate().compareTo(o1.getActivationDate());
+					}
+				});
 
-			// lvVariablesList.setItems(guiController.getVariables());
-			// containerView.setCenter(variablesView);
+				loadPlanVersionIds(planversions);
+			}
 
 		} else if (containerView.getCenter() == planversionsView) {
 
@@ -210,28 +216,35 @@ public class NewProController {
 
 		} else if (containerView.getCenter() == dateView) {
 
-			String starHour = tfHourStartDate.getText();
-			String endingHour = tfHourEndingDate.getText();
+			if (tfHourStartDate.getText().equals("") || tfHourEndingDate.getText().equals("") || dtStartDate.getValue() == null || dtEndingDate.getValue() == null) {
+				validateFieldEmpty();
+			} else {
+				
+				String starHour = tfHourStartDate.getText();
+				String endingHour = tfHourEndingDate.getText();
 
-			String startDate = dtStartDate.getValue().toString();
-			String endingDate = dtEndingDate.getValue().toString();
+				String startDate = dtStartDate.getValue().toString();
+				String endingDate = dtEndingDate.getValue().toString();
 
-			String startFormat = startDate + " " + starHour + ":00";
-			String endingFormat = endingDate + " " + endingHour + ":00";
+				String startFormat = startDate + " " + starHour + ":00";
+				String endingFormat = endingDate + " " + endingHour + ":00";
 
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			try {
-				Date initialDate = new Date(dateFormat.parse(startFormat).getTime());
-				Date lastDate = new Date(dateFormat.parse(endingFormat).getTime());
-				guiController.getSimController().setDates(initialDate, lastDate);
-			} catch (ParseException e) {
-				e.printStackTrace();
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				try {
+					Date initialDate = new Date(dateFormat.parse(startFormat).getTime());
+					Date lastDate = new Date(dateFormat.parse(endingFormat).getTime());
+					guiController.getSimController().setDates(initialDate, lastDate);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				butNext.setDisable(true);
+				butFinish.setDisable(false);
+				lvVariablesList.setItems(guiController.getVariables());
+				containerView.setCenter(variablesView);
+
 			}
 
-			butNext.setDisable(true);
-			butFinish.setDisable(false);
-			lvVariablesList.setItems(guiController.getVariables());
-			containerView.setCenter(variablesView);
 		}
 
 	}
@@ -321,17 +334,23 @@ public class NewProController {
 
 		containerView.setCenter(formView);
 	}
-	
-	
-    @FXML
-    void onClickCheckCSV(ActionEvent event) {
-    	chOracle.setSelected(false);
-    }
 
-    @FXML
-    void onClickOracleCheck(ActionEvent event) {
-    	chCSV.setSelected(false);
-    }
-	
+	@FXML
+	void onClickCheckCSV(ActionEvent event) {
+		chOracle.setSelected(false);
+	}
+
+	@FXML
+	void onClickOracleCheck(ActionEvent event) {
+		chCSV.setSelected(false);
+	}
+
+	private void validateFieldEmpty() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Empty Fields");
+		alert.setHeaderText(null);
+		alert.setContentText("The field cannot be empty");
+		alert.showAndWait();
+	}
 
 }
