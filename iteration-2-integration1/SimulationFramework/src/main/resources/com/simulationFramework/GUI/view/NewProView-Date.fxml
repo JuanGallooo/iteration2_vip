@@ -13,9 +13,29 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dtStartDate" layoutX="104.0" layoutY="76.0" />
-      <DatePicker fx:id="dtEndingDate" layoutX="104.0" layoutY="118.0" />
-      <TextField fx:id="tfHourStartDate" layoutX="289.0" layoutY="76.0" prefHeight="25.0" prefWidth="81.0" text="18:00" />
-      <TextField fx:id="tfHourEndingDate" layoutX="289.0" layoutY="119.0" prefHeight="25.0" prefWidth="81.0" text="19:33" />
+      <DatePicker fx:id="dtStartDate" layoutX="122.0" layoutY="76.0" />
+      <DatePicker fx:id="dtEndingDate" layoutX="122.0" layoutY="119.0" />
+      <TextField fx:id="tfHourStartDate" layoutX="354.0" layoutY="76.0" prefHeight="25.0" prefWidth="46.0" promptText="00:00" />
+      <TextField fx:id="tfHourEndingDate" layoutX="354.0" layoutY="119.0" prefHeight="25.0" prefWidth="46.0" promptText="00:00" />
+      <Label layoutX="16.0" layoutY="75.0" text="Start Date">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="121.0" text="Ending Date">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="308.0" layoutY="75.0" text="Hour">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="308.0" layoutY="121.0" text="Hour">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
