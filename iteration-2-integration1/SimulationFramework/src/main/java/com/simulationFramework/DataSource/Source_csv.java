@@ -346,7 +346,7 @@ public class Source_csv implements IDateSource {
 	
 	@Override
 	public ArrayList<SITMOperationalTravels> findAllOperationalTravelsByRange(Date initialDate, Date lastDate, long lineID){
-		
+				
 		ArrayList<SITMOperationalTravels> operationaTravels = new ArrayList<SITMOperationalTravels>();
 		
 		BufferedReader br;
@@ -366,6 +366,9 @@ public class Source_csv implements IDateSource {
 			Long date = dateFormat.parse(data[0]).getTime();
 			
 			if (text != null && !text.equals("")) {
+				System.out.println(text);
+				System.out.println(initialDate.getTime());
+				System.out.println(date);
 				
 				while (initialDate.getTime()<= date && date <=lastDate.getTime()) {
 					

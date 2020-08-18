@@ -232,7 +232,7 @@ class ExecutionThread extends Thread {
 				try {
 
 					ArrayList<Event> events = simController.getNextEvents();
-					
+									
 					if(events==null) {
 						
 						pause = true;
@@ -240,7 +240,7 @@ class ExecutionThread extends Thread {
 						System.out.println("=======> simulation finished");
 						
 					}else if (!events.isEmpty()) {
-
+						
 						simController.getVariables().updateAllValues(events.get(events.size() - 1).getContext());
 						simController.getClock().getNextTick(events.get(events.size() - 1).getDate());
 
