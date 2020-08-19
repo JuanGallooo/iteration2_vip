@@ -325,16 +325,13 @@ public class Source_csv implements IDateSource {
 		return stopsByLine;
 	}
 	
-	
 	public ArrayList<SITMOperationalTravels> findAllOperationalTravelsByRange(Date initialDate, Date lastDate, long lineID){
 				
 		ArrayList<SITMOperationalTravels> operationaTravels = new ArrayList<SITMOperationalTravels>();
-		
-		BufferedReader br;
 
 		try {
 
-			br = new BufferedReader(new FileReader(sourceFile));
+			BufferedReader br = new BufferedReader(new FileReader(sourceFile));
 			String text = br.readLine();
 			
 			for (int i = 0; i < currentPosition; i++) {
@@ -347,6 +344,16 @@ public class Source_csv implements IDateSource {
 			Long date = dateFormat.parse(data[headersDirectory.get("clock")]).getTime();
 			
 			if (text != null && !text.equals("")) {
+				
+				while(initialDate.getTime()>date) {
+					text = br.readLine();
+					if(text!=null && text!="") {
+						data = text.split(this.split);
+						date = dateFormat.parse(data[headersDirectory.get("clock")]).getTime();
+					}else {
+						break;
+					}
+				}
 				
 				while (initialDate.getTime()<= date && date <=lastDate.getTime()) {
 					

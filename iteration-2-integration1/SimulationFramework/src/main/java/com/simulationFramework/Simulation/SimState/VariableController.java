@@ -42,9 +42,7 @@ public class VariableController implements Serializable {
 			if (headersValue.containsKey(entry.getKey())) {
 				headersValue.replace(entry.getKey(), entry.getValue());
 			}
-
 		}
-
 	}
 
 	public String getValue(String variable) {
