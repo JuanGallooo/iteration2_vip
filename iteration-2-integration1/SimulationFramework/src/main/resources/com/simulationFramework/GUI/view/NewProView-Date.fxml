@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -15,8 +15,6 @@
       </Label>
       <DatePicker fx:id="dtStartDate" layoutX="122.0" layoutY="76.0" />
       <DatePicker fx:id="dtEndingDate" layoutX="122.0" layoutY="119.0" />
-      <TextField fx:id="tfHourStartDate" layoutX="354.0" layoutY="76.0" prefHeight="25.0" prefWidth="46.0" promptText="00:00" />
-      <TextField fx:id="tfHourEndingDate" layoutX="354.0" layoutY="119.0" prefHeight="25.0" prefWidth="46.0" promptText="00:00" />
       <Label layoutX="16.0" layoutY="75.0" text="Start Date">
          <font>
             <Font size="15.0" />
@@ -37,5 +35,7 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <JFXTimePicker fx:id="tpHourStartDate" layoutX="354.0" layoutY="72.0" prefHeight="28.0" prefWidth="67.0" />
+      <JFXTimePicker fx:id="tpHourEndDate" layoutX="354.0" layoutY="118.0" prefHeight="28.0" prefWidth="67.0" />
    </children>
 </AnchorPane>

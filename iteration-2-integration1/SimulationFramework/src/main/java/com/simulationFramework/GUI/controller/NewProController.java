@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.jfoenix.controls.JFXTimePicker;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
 import com.simulationFramework.SystemState.SITMFactory.SITMPlanVersion;
 
@@ -93,12 +94,12 @@ public class NewProController {
 
 	@FXML
 	private DatePicker dtEndingDate;
+	
+    @FXML
+    private JFXTimePicker tpHourStartDate;
 
-	@FXML
-	private TextField tfHourStartDate;
-
-	@FXML
-	private TextField tfHourEndingDate;
+    @FXML
+    private JFXTimePicker tpHourEndDate;
 
 	@FXML
 	private ListView<CheckBox> lvPlanversionIds;
@@ -216,18 +217,18 @@ public class NewProController {
 
 		} else if (containerView.getCenter() == dateView) {
 
-			if (tfHourStartDate.getText().equals("") || tfHourEndingDate.getText().equals("") || dtStartDate.getValue() == null || dtEndingDate.getValue() == null) {
+			if (tpHourStartDate.getValue()==null || tpHourEndDate.getValue()==null || dtStartDate.getValue() == null || dtEndingDate.getValue() == null) {
 				validateFieldEmpty();
 			} else {
 				
-				String starHour = tfHourStartDate.getText();
-				String endingHour = tfHourEndingDate.getText();
+				String starHour = tpHourStartDate.getValue()+":00";
+				String endingHour = tpHourEndDate.getValue()+":00";
 
 				String startDate = dtStartDate.getValue().toString();
 				String endingDate = dtEndingDate.getValue().toString();
 
-				String startFormat = startDate + " " + starHour + ":00";
-				String endingFormat = endingDate + " " + endingHour + ":00";
+				String startFormat = startDate + " " + starHour;
+				String endingFormat = endingDate + " " + endingHour;
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				try {
@@ -324,8 +325,10 @@ public class NewProController {
 		newProController = fmxlLoader.getController();
 		dtStartDate = newProController.getDtStartDate();
 		dtEndingDate = newProController.getDtEndingDate();
-		tfHourStartDate = newProController.getTfHourStartDate();
-		tfHourEndingDate = newProController.getTfHourEndingDate();
+		tpHourStartDate = newProController.getTpHourStartDate();
+		tpHourEndDate = newProController.getTpHourEndDate();
+		tpHourStartDate.set24HourView(true);
+		tpHourEndDate.set24HourView(true);
 
 		fmxlLoader = GUIController.loadFXML("NewProView-Planversions");
 		planversionsView = fmxlLoader.load();

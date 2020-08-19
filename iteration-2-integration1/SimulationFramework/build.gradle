@@ -70,13 +70,22 @@ dependencies {
 	
 	compile group: 'org.json', name: 'json', version: '20090211'
 	
-
+	 compile 'com.jfoenix:jfoenix:9.0.10'
 }
 
 
 javafx {
     version = "14"
     modules = [ 'javafx.controls','javafx.fxml','javafx.web' ]
+}
+
+run {
+    jvmArgs = [
+    	"--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED",
+    	"--add-exports=javafx.base/com.sun.javafx.binding=ALL-UNNAMED",
+    	"--add-exports=javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED",
+    	"--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED"
+    ]
 }
 
 

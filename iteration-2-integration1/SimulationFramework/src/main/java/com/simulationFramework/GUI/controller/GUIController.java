@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import org.json.JSONException;
 
+import com.jfoenix.controls.JFXTimePicker;
 import com.simulationFramework.GUI.Observer.Observer;
 import com.simulationFramework.Simulation.SimController;
 import com.simulationFramework.Simulation.SimState.Variable;
@@ -50,7 +51,6 @@ public class GUIController implements Observer {
 
 	private VarStaController varStaController;
 
-	
 	private SimController simController;
 
 	@FXML
@@ -109,10 +109,10 @@ public class GUIController implements Observer {
 
 	@FXML
 	private Button closeButton;
-
+	
 	@FXML
 	private void initialize() {
-		views = new HashMap<String, Parent>();
+		views = new HashMap<String, Parent>();	
 	}
 
 	@FXML
