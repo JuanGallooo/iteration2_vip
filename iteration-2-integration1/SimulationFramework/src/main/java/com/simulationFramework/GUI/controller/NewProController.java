@@ -265,7 +265,7 @@ public class NewProController {
 				list.add(i);
 			}
 		}
-
+		guiController.getSimController().setColumnNumberForSimulationVariables(0, 4, 5, 1, 7);
 		guiController.finishNewProject(pAttributes, list);
 		stage.close();
 	}

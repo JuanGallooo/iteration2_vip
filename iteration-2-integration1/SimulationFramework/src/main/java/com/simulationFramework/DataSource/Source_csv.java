@@ -35,11 +35,6 @@ public class Source_csv implements IDateSource {
 		this.sourceFile = sourceFile;
 		this.split = split;
 		headersDirectory = new HashMap<>();
-		headersDirectory.put("clock", 0);
-		headersDirectory.put("busID", 1);
-		headersDirectory.put("lineID", 7);
-		headersDirectory.put("GPS_X", 4);
-		headersDirectory.put("GPS_Y", 5);
 	}
 
 	@Override
@@ -74,55 +69,12 @@ public class Source_csv implements IDateSource {
 		}
 	}
 	
-	public void setSimulationVariables(int clock, int gps_X, int gps_Y, int busID, int lineID) {
+	public void setColumnNumberForSimulationVariables(int clock, int gps_X, int gps_Y, int busID, int lineID) {
 		headersDirectory.put("clock", clock);
 		headersDirectory.put("busID", busID);
 		headersDirectory.put("lineID", lineID);
 		headersDirectory.put("GPS_X", gps_X);
 		headersDirectory.put("GPS_Y", gps_Y);
-	}
-
-	@Override
-	public HashMap<String, String> fetchNextRow(Date initialDate, Date finalDate, long line, long planVerionID)
-			throws Exception {
-
-		BufferedReader br;
-		String line2 = "";
-
-		String[] row = null;
-		String[] headers = getHeaders();
-		HashMap<String, String> data = new HashMap<String, String>();
-
-		try {
-
-			br = new BufferedReader(new FileReader(sourceFile));
-
-			for (int i = 0; i <= currentPosition; i++) {
-				line2 = br.readLine();
-			}
-
-			br.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		if (line2 == null || line2.equals("")) {
-
-			throw new Exception("CSV source is already empty");
-
-		} else {
-
-			row = line2.split(split);
-
-			for (int i = 0; i < row.length; i++) {
-				data.put(headers[i], row[i]);
-			}
-
-			currentPosition++;
-			return data;
-		}
-
 	}
 
 	@Override

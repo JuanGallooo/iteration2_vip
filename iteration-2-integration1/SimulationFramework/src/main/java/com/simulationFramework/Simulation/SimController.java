@@ -3,6 +3,7 @@ package com.simulationFramework.Simulation;
 import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,16 +93,16 @@ public class SimController implements SubjectOberver {
 		variables.addHeaders(headers);
 	}
 	
-	public ArrayList<SITMPlanVersion> getPlanVersions() {
-		return dataSource.findAllPlanVersions();
-	}
-	
 	public void setPlanVersionID(long planVersionID) {
 		this.planVersionID = planVersionID;
 	}
 	
-	public ArrayList<SITMCalendar> getDateByPlanVersion(long planVersionID) {
-		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
+	public void setLineId(long lineID) {
+		this.lineID = lineID;
+	}
+	
+	public void setColumnNumberForSimulationVariables(int clock, int gps_X, int gps_Y, int busID, int lineID) {
+		dataSource.setColumnNumberForSimulationVariables(clock, gps_X, gps_Y, busID, lineID);
 	}
 	
 	public void setDates(Date initialDate,Date lastDate) {
@@ -109,12 +110,16 @@ public class SimController implements SubjectOberver {
 		this.lastDate = lastDate;
 	}
 	
-	public ArrayList<SITMLine> getLinesByPlanVersion() {
-		return dataSource.findAllLinesByPlanVersion(planVersionID);
+	public ArrayList<SITMPlanVersion> getPlanVersions() {
+		return dataSource.findAllPlanVersions();
 	}
 	
-	public void setLineId(long lineID) {
-		this.lineID = lineID;
+	public ArrayList<SITMCalendar> getDateByPlanVersion(long planVersionID) {
+		return dataSource.findAllCalendarsByPlanVersion(planVersionID);
+	}
+	
+	public ArrayList<SITMLine> getLinesByPlanVersion() {
+		return dataSource.findAllLinesByPlanVersion(planVersionID);
 	}
 	
 	public ArrayList<SITMStop> getStopsByLine(){
@@ -200,6 +205,10 @@ public class SimController implements SubjectOberver {
 			initialDate = nextDate;
 		}
 		return events;
+	}
+	
+	public HashMap<String, String> getLastVariables(){
+		return null;
 	}
 
 	@Override

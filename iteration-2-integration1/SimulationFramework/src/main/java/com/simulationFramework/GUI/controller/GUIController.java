@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 import org.json.JSONException;
 
-import com.jfoenix.controls.JFXTimePicker;
 import com.simulationFramework.GUI.Observer.Observer;
 import com.simulationFramework.Simulation.SimController;
 import com.simulationFramework.Simulation.SimState.Variable;
