@@ -55,7 +55,7 @@ public class SimController implements SubjectOberver {
 
 		// set default variables
 		lineID = 140;
-		planVersionID = 260;
+		planVersionID = 261;
 		speed = Clock.NORMAL;
 
 		// upload system state
@@ -190,11 +190,14 @@ public class SimController implements SubjectOberver {
 	public ArrayList<Event> getNextEvents(){
 		
 		Date nextDate = new Date(initialDate.getTime()+clock.getClockRate());
-		ArrayList<Event> events = eventProvirderController.getNextEvent(initialDate,nextDate,lineID);
-		initialDate = nextDate;
+		ArrayList<Event> events = new ArrayList<>();
 		
-		if(nextDate.getTime()>=lastDate.getTime()) {
+		if(nextDate.getTime()>lastDate.getTime()) {
 			events = null;
+		}else {
+			events = eventProvirderController.getNextEvent(initialDate,nextDate,lineID);
+			getClock().getNextTick(nextDate);
+			initialDate = nextDate;
 		}
 		return events;
 	}
@@ -238,8 +241,7 @@ class ExecutionThread extends Thread {
 						
 					}else if (!events.isEmpty()) {
 						
-						simController.getVariables().updateAllValues(events.get(events.size() - 1).getContext());
-						simController.getClock().getNextTick(events.get(events.size() - 1).getDate());
+						simController.getVariables().updateAllValues(events.get(events.size() - 1).getContext());			
 
 						for (int i = 0; i < events.size(); i++) {
 							simController.getEventProcessorController().processEvent(events.get(i),simController.getTargetSystem());

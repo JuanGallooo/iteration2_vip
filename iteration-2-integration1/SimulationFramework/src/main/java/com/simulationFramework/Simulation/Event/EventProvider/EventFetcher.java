@@ -18,7 +18,6 @@ public class EventFetcher {
 
 	private DataSource2 dataSource;
 
-	@SuppressWarnings("deprecation")
 	public ArrayList<Event> allFetch(Date initialDate, Date lastDate, long lineID){
 		
 		ArrayList<SITMOperationalTravels> operationaTravels = dataSource.findAllOperationalTravelsByRange(initialDate, lastDate, lineID);
@@ -37,7 +36,7 @@ public class EventFetcher {
 				context.put("GPS_X", operationaTravels.get(i).getGPS_X()+"");
 				context.put("GPS_Y", operationaTravels.get(i).getGPS_Y()+"");
 				context.put("lineID", operationaTravels.get(i).getLineID()+"");
-				context.put("eventDate", operationaTravels.get(i).getEventDate().toGMTString());
+				context.put("eventDate", operationaTravels.get(i).getEventDate().getTime()+"");
 				
 				event.setContext(context);
 				eventlist.add(event);	
