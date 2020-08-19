@@ -2,9 +2,6 @@ package com.simulationFramework.Simulation;
 
 import java.io.File;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -34,13 +34,9 @@ public class EventFetcher {
 				HashMap<String, String> context = new HashMap<String, String>();
 				context.put("opertravelID", operationaTravels.get(i).getOpertravelID()+"");
 				context.put("busID", operationaTravels.get(i).getBusID()+"");
-				context.put("laststopID", operationaTravels.get(i).getLaststopID()+"");
 				context.put("GPS_X", operationaTravels.get(i).getGPS_X()+"");
 				context.put("GPS_Y", operationaTravels.get(i).getGPS_Y()+"");
-				context.put("odometervalue", operationaTravels.get(i).getOdometervalue()+"");
 				context.put("lineID", operationaTravels.get(i).getLineID()+"");
-				context.put("taskID", operationaTravels.get(i).getTaskID()+"");
-				context.put("tripID", operationaTravels.get(i).getTripID()+"");
 				context.put("eventDate", operationaTravels.get(i).getEventDate().toGMTString());
 				
 				event.setContext(context);

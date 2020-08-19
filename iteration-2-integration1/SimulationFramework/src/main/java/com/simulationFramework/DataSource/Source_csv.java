@@ -29,28 +29,57 @@ public class Source_csv implements IDateSource {
 	private File sourceFile;
 	private String split;
 	private int currentPosition = 1;
+	private HashMap<String, Integer> headersDirectory;
 
 	public Source_csv(File sourceFile, String split) {
 		this.sourceFile = sourceFile;
 		this.split = split;
+		headersDirectory = new HashMap<>();
+		headersDirectory.put("clock", 0);
+		headersDirectory.put("busID", 1);
+		headersDirectory.put("lineID", 7);
+		headersDirectory.put("GPS_X", 4);
+		headersDirectory.put("GPS_Y", 5);
 	}
 
 	@Override
 	public String[] getHeaders() {
 		
-		String[] headers = new String[10];
-		headers[0] = "opertravelID";
-		headers[1] = "busID";
-		headers[2] = "laststopID";
-		headers[3] = "GPS_X";
-		headers[4] = "GPS_Y";
-		headers[5] = "odometervalue";
-		headers[6] = "lineID";
-		headers[7] = "taskID";
-		headers[8] = "tripID";
-		headers[9] = "eventDate";
+		BufferedReader br;
+		String[] headers = null;
+		
+		try {
+
+			br = new BufferedReader(new FileReader(sourceFile));
+			String text = br.readLine();
+			headers = text.split(split);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return headers;
+	}
+	
+	public void setHeaders(HashMap<String, Integer> headers) {
+		
+		for (HashMap.Entry<String, Integer> entry : headers.entrySet()) {
+
+			if (headersDirectory.containsKey(entry.getKey())) {
+				headersDirectory.replace(entry.getKey(), entry.getValue());
+			}else {
+				headersDirectory.put(entry.getKey(), entry.getValue());
+			}
+
+		}
+	}
+	
+	public void setSimulationVariables(int clock, int gps_X, int gps_Y, int busID, int lineID) {
+		headersDirectory.put("clock", clock);
+		headersDirectory.put("busID", busID);
+		headersDirectory.put("lineID", lineID);
+		headersDirectory.put("GPS_X", gps_X);
+		headersDirectory.put("GPS_Y", gps_Y);
 	}
 
 	@Override
@@ -344,7 +373,7 @@ public class Source_csv implements IDateSource {
 		return stopsByLine;
 	}
 	
-	@Override
+	
 	public ArrayList<SITMOperationalTravels> findAllOperationalTravelsByRange(Date initialDate, Date lastDate, long lineID){
 				
 		ArrayList<SITMOperationalTravels> operationaTravels = new ArrayList<SITMOperationalTravels>();
@@ -363,27 +392,20 @@ public class Source_csv implements IDateSource {
 			String[]data = text.split(this.split);
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Long date = dateFormat.parse(data[0]).getTime();
+			Long date = dateFormat.parse(data[headersDirectory.get("clock")]).getTime();
 			
 			if (text != null && !text.equals("")) {
-				System.out.println(text);
-				System.out.println(initialDate.getTime());
-				System.out.println(date);
 				
 				while (initialDate.getTime()<= date && date <=lastDate.getTime()) {
 					
 					Long opertravelID = System.currentTimeMillis();
-					Long busID = Long.parseLong(data[1]);
-					Long laststopID = Long.parseLong(data[2]);
-					String gPS_X = data[4];
-					String gPS_Y = data[5];
-					Long odometervalue = Long.parseLong(data[3]);
-					Long taskID = Long.parseLong(data[6]);
-					Long tripID = Long.parseLong(data[8]);
+					Long busID = Long.parseLong(data[headersDirectory.get("busID")]);
+					String gPS_X = data[headersDirectory.get("GPS_X")];
+					String gPS_Y = data[headersDirectory.get("GPS_Y")];
 					Date eventDate = new Date(date);
 					
 					if(data[7].equals(lineID+"")) {
-						SITMOperationalTravels op = new SITMOperationalTravels(opertravelID, busID, laststopID, gPS_X, gPS_Y, odometervalue, lineID, taskID, tripID,eventDate);
+						SITMOperationalTravels op = new SITMOperationalTravels(opertravelID, busID, lineID, gPS_X, gPS_Y, eventDate);
 						operationaTravels.add(op);
 					}
 					
@@ -392,7 +414,7 @@ public class Source_csv implements IDateSource {
 					
 					if(text!=null && text!="") {
 						data = text.split(this.split);
-						date = dateFormat.parse(data[0]).getTime();
+						date = dateFormat.parse(data[headersDirectory.get("clock")]).getTime();
 					}else {
 						break;
 					}
