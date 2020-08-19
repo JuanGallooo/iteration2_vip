@@ -29,28 +29,51 @@ public class Source_csv implements IDateSource {
 	private File sourceFile;
 	private String split;
 	private int currentPosition = 1;
+	private HashMap<String, Integer> headersDirectory;
 
 	public Source_csv(File sourceFile, String split) {
 		this.sourceFile = sourceFile;
 		this.split = split;
+		headersDirectory = new HashMap<>();
 	}
 
 	@Override
 	public String[] getHeaders() {
 		
-		String[] headers = new String[10];
-		headers[0] = "opertravelID";
-		headers[1] = "busID";
-		headers[2] = "laststopID";
-		headers[3] = "GPS_X";
-		headers[4] = "GPS_Y";
-		headers[5] = "odometervalue";
-		headers[6] = "lineID";
-		headers[7] = "taskID";
-		headers[8] = "tripID";
-		headers[9] = "eventDate";
+		BufferedReader br;
+		String[] headers = null;
+		
+		try {
+
+			br = new BufferedReader(new FileReader(sourceFile));
+			String text = br.readLine();
+			headers = text.split(split);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return headers;
+	}
+	
+	public void setHeaders(HashMap<String, Integer> headers) {
+		
+		for (HashMap.Entry<String, Integer> entry : headers.entrySet()) {
+
+			if (headersDirectory.containsKey(entry.getKey())) {
+				headersDirectory.replace(entry.getKey(), entry.getValue());
+			}else {
+				headersDirectory.put(entry.getKey(), entry.getValue());
+			}
+
+		}
+	}
+	
+	public void setSimulationVariables(int clock, int gps_X, int gps_Y, int busID) {
+		headersDirectory.put("busID", busID);
+		headersDirectory.put("clock", clock);
+		headersDirectory.put("GPS_X", gps_X);
+		headersDirectory.put("GPS_Y", gps_Y);
 	}
 
 	@Override
@@ -344,7 +367,7 @@ public class Source_csv implements IDateSource {
 		return stopsByLine;
 	}
 	
-	@Override
+	
 	public ArrayList<SITMOperationalTravels> findAllOperationalTravelsByRange(Date initialDate, Date lastDate, long lineID){
 				
 		ArrayList<SITMOperationalTravels> operationaTravels = new ArrayList<SITMOperationalTravels>();
