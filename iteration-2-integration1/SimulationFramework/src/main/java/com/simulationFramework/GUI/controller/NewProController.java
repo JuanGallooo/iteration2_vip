@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -31,12 +32,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Data;
 
 @Data
 public class NewProController {
 
+	public static final String VIEW_ADDRESS = "/com/simulationFramework/GUI/view/";
+
+	
 	private Stage stage;
 
 	private GUIController guiController;
@@ -137,6 +142,14 @@ public class NewProController {
 
     @FXML
     private ListView<?> lvColumnName;
+
+    
+    @FXML
+    private Button butAssign;
+
+    @FXML
+    private TextField tfNameVariableUser;
+
 
 
 	public void initiaize() {
@@ -336,10 +349,38 @@ public class NewProController {
 		}
 	}
 	
-	@FXML
-	void butAssignNameColumn(ActionEvent event) {
-		
+	public static FXMLLoader loadFXML(String fxml) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(GUIController.class.getResource(VIEW_ADDRESS + fxml + ".fxml"));
+		return fxmlLoader;
 	}
+	
+	@FXML
+	void butAssignNameColumn(ActionEvent event) throws IOException {
+	    
+
+		FXMLLoader fxmlLoader = loadFXML("Popup-Name");
+		Scene scene = new Scene(fxmlLoader.load());
+
+		Stage dialogStage = new Stage();
+		dialogStage.setTitle("Variable name");
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(stage);
+		dialogStage.setScene(scene);
+		
+		NewProController newProController = fxmlLoader.getController();
+		newProController.setGuiController(guiController);
+		newProController.setStage(dialogStage);
+		tfNameVariableUser = newProController.getTfNameVariableUser();
+		butAssign = newProController.getButAssign();
+
+		dialogStage.showAndWait();
+	}
+	
+	//PopupWindow
+    @FXML
+    void butAssignName(ActionEvent event) {
+
+    }
 
 
 	public void start() throws IOException {
@@ -347,38 +388,38 @@ public class NewProController {
 		butBack.setDisable(true);
 		butFinish.setDisable(true);
 
-		FXMLLoader fmxlLoader = new FXMLLoader();
+		FXMLLoader fxmlLoader = new FXMLLoader();
 
 		NewProController newProController = null;
 
-		fmxlLoader = GUIController.loadFXML("NewProView-Form");
-		formView = fmxlLoader.load();
-		newProController = fmxlLoader.getController();
+		fxmlLoader = GUIController.loadFXML("NewProView-Form");
+		formView = fxmlLoader.load();
+		newProController = fxmlLoader.getController();
 		txtName = newProController.getTxtName();
 		chCSV = newProController.getChCSV();
 		chOracle = newProController.getChOracle();
 
-		fmxlLoader = GUIController.loadFXML("NewProView-Data");
-		csvDataView = fmxlLoader.load();
-		newProController = fmxlLoader.getController();
+		fxmlLoader = GUIController.loadFXML("NewProView-Data");
+		csvDataView = fxmlLoader.load();
+		newProController = fxmlLoader.getController();
 		txtDataResourcePath = newProController.getTxtDataResourcePath();
 		txtSeparator = newProController.getTxtSeparator();
 
-		fmxlLoader = GUIController.loadFXML("NewProView-Variables");
-		variablesView = fmxlLoader.load();
-		newProController = fmxlLoader.getController();
+		fxmlLoader = GUIController.loadFXML("NewProView-Variables");
+		variablesView = fxmlLoader.load();
+		newProController = fxmlLoader.getController();
 		lvVariablesList = newProController.getLvVariablesList();
 		lvColumnName = newProController.getLvColumnName();
 		lvColumnValue = newProController.getLvColumnValue();
 		butOpenAssign = newProController.getButOpenAssign();
 
-		fmxlLoader = GUIController.loadFXML("NewProView-Clock");
-		clockView = fmxlLoader.load();
-		newProController = fmxlLoader.getController();
+		fxmlLoader = GUIController.loadFXML("NewProView-Clock");
+		clockView = fxmlLoader.load();
+		newProController = fxmlLoader.getController();
 
-		fmxlLoader = GUIController.loadFXML("NewProView-Date");
-		dateView = fmxlLoader.load();
-		newProController = fmxlLoader.getController();
+		fxmlLoader = GUIController.loadFXML("NewProView-Date");
+		dateView = fxmlLoader.load();
+		newProController = fxmlLoader.getController();
 		dtStartDate = newProController.getDtStartDate();
 		dtEndingDate = newProController.getDtEndingDate();
 		tpHourStartDate = newProController.getTpHourStartDate();
@@ -386,21 +427,20 @@ public class NewProController {
 		tpHourStartDate.set24HourView(true);
 		tpHourEndDate.set24HourView(true);
 
-		fmxlLoader = GUIController.loadFXML("NewProView-Planversions");
-		planversionsView = fmxlLoader.load();
-		newProController = fmxlLoader.getController();
+		fxmlLoader = GUIController.loadFXML("NewProView-Planversions");
+		planversionsView = fxmlLoader.load();
+		newProController = fxmlLoader.getController();
 		lvPlanversionIds = newProController.getLvPlanversionIds();
 		
-		fmxlLoader = GUIController.loadFXML("NewProView-Variables-System");
-		systemVariablesView = fmxlLoader.load();
-		newProController = fmxlLoader.getController();
+		fxmlLoader = GUIController.loadFXML("NewProView-Variables-System");
+		systemVariablesView = fxmlLoader.load();
+		newProController = fxmlLoader.getController();
 		nameBusID = newProController.getNameBusID();
 	    nameLineID = newProController.getNameLineID();
 	    nameGPSx = newProController.getNameGPSx();
 	    nameGPSY = newProController.getNameGPSY();
 	    clock = newProController.getClock();
-		
-		
+	    
 
 		containerView.setCenter(formView);
 	}
