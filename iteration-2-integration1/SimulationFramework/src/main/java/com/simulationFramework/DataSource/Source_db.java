@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,6 +78,10 @@ public class Source_db implements IDateSource {
 		headers[9] = "eventDate";
 
 		return headers;
+	}
+	
+	public HashMap<String,String> getLastRow(){
+		return null;
 	}
 
 	@Override
