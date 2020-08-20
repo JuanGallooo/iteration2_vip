@@ -42,25 +42,6 @@ public class Source_csv implements IDateSource {
 		this.headersDirectory = new HashMap<String, Integer>();
 	}
 
-	@Override
-	public String[] getHeaders() {
-		
-		BufferedReader br;
-		String[] headers = null;
-		
-		try {
-
-			br = new BufferedReader(new FileReader(sourceFile));
-			String text = br.readLine();
-			headers = text.split(split);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return headers;
-	}
-	
 	public void setColumnNumberForSimulationVariables(int clock, int gps_X, int gps_Y, int busID, int lineID) {
 		systemDirectory.put("clock", clock);
 		systemDirectory.put("busID", busID);
@@ -80,7 +61,27 @@ public class Source_csv implements IDateSource {
 			}
 		}
 	}
+	
+	@Override
+	public String[] getHeaders() {
+		
+		BufferedReader br;
+		String[] headers = null;
+		
+		try {
 
+			br = new BufferedReader(new FileReader(sourceFile));
+			String text = br.readLine();
+			headers = text.split(split);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return headers;
+	}
+
+	@Override
 	public HashMap<String,String> getLastRow(){
 		
 		String[] data = lastRow.split(this.split);

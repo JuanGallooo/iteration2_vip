@@ -49,6 +49,12 @@ public class DataSource2 implements IDateSource, Serializable{
 		}
 	}
 	
+	public void setHeaders(HashMap<String, Integer> headers) {
+		if(source_csv!=null) {
+			source_csv.setHeaders(headers);
+		}
+	}
+	
 	@Override 
 	public String[] getHeaders() {
 
