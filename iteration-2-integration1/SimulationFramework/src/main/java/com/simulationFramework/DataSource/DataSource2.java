@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,6 +49,12 @@ public class DataSource2 implements IDateSource, Serializable{
 		}
 	}
 	
+	public void setHeaders(HashMap<String, Integer> headers) {
+		if(source_csv!=null) {
+			source_csv.setHeaders(headers);
+		}
+	}
+	
 	@Override 
 	public String[] getHeaders() {
 
@@ -59,6 +66,18 @@ public class DataSource2 implements IDateSource, Serializable{
 			return source_db.getHeaders();
 
 		}
+		return null;
+	}
+	
+	public HashMap<String,String> getLastRow(){
+		switch (type) {
+		case FILE_CSV:
+			return source_csv.getLastRow();
+
+		case DATA_BASE:
+			return source_db.getLastRow();
+		}
+		
 		return null;
 	}
 

@@ -105,6 +105,10 @@ public class SimController implements SubjectOberver {
 		dataSource.setColumnNumberForSimulationVariables(clock, gps_X, gps_Y, busID, lineID);
 	}
 	
+	public void setHeaders(HashMap<String, Integer> headers) {
+		dataSource.setHeaders(headers);
+	}
+	
 	public void setDates(Date initialDate,Date lastDate) {
 		this.initialDate = initialDate;
 		this.lastDate = lastDate;
@@ -126,6 +130,10 @@ public class SimController implements SubjectOberver {
 		return dataSource.findAllStopsByLine(this.planVersionID, this.lineID);
 	}
 
+	public HashMap<String,String> getLastRow(){
+		return dataSource.getLastRow();
+	}
+	
 	public void start() {
 		
 		if(executionThread.isPause()) {
@@ -250,7 +258,7 @@ class ExecutionThread extends Thread {
 						
 					}else if (!events.isEmpty()) {
 						
-						simController.getVariables().updateAllValues(events.get(events.size() - 1).getContext());			
+						simController.getVariables().updateAllValues(simController.getLastRow());			
 
 						for (int i = 0; i < events.size(); i++) {
 							simController.getEventProcessorController().processEvent(events.get(i),simController.getTargetSystem());

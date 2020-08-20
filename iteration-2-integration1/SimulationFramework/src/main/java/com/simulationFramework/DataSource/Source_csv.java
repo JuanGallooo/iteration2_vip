@@ -29,14 +29,39 @@ public class Source_csv implements IDateSource {
 	private File sourceFile;
 	private String split;
 	private int currentPosition = 1;
+	private String lastRow;
+	
 	private HashMap<String, Integer> headersDirectory;
+	private HashMap<String, Integer> systemDirectory;
+	
 
 	public Source_csv(File sourceFile, String split) {
-		this.sourceFile = sourceFile;
 		this.split = split;
-		headersDirectory = new HashMap<>();
+		this.sourceFile = sourceFile;
+		this.systemDirectory = new HashMap<String, Integer>();
+		this.headersDirectory = new HashMap<String, Integer>();
 	}
 
+	public void setColumnNumberForSimulationVariables(int clock, int gps_X, int gps_Y, int busID, int lineID) {
+		systemDirectory.put("clock", clock);
+		systemDirectory.put("busID", busID);
+		systemDirectory.put("lineID", lineID);
+		systemDirectory.put("GPS_X", gps_X);
+		systemDirectory.put("GPS_Y", gps_Y);
+	}
+	
+	public void setHeaders(HashMap<String, Integer> headers) {
+		
+		for (HashMap.Entry<String, Integer> entry : headers.entrySet()) {
+
+			if (headersDirectory.containsKey(entry.getKey())) {
+				headersDirectory.replace(entry.getKey(), entry.getValue());
+			}else {
+				headersDirectory.put(entry.getKey(), entry.getValue());
+			}
+		}
+	}
+	
 	@Override
 	public String[] getHeaders() {
 		
@@ -55,26 +80,18 @@ public class Source_csv implements IDateSource {
 		
 		return headers;
 	}
-	
-	public void setHeaders(HashMap<String, Integer> headers) {
+
+	@Override
+	public HashMap<String,String> getLastRow(){
 		
-		for (HashMap.Entry<String, Integer> entry : headers.entrySet()) {
-
-			if (headersDirectory.containsKey(entry.getKey())) {
-				headersDirectory.replace(entry.getKey(), entry.getValue());
-			}else {
-				headersDirectory.put(entry.getKey(), entry.getValue());
-			}
-
+		String[] data = lastRow.split(this.split);
+		HashMap<String, String> variables = new HashMap<>();
+		
+		for (HashMap.Entry<String, Integer> entry : headersDirectory.entrySet()) {
+			variables.put(entry.getKey(), data[entry.getValue()]);
 		}
-	}
-	
-	public void setColumnNumberForSimulationVariables(int clock, int gps_X, int gps_Y, int busID, int lineID) {
-		headersDirectory.put("clock", clock);
-		headersDirectory.put("busID", busID);
-		headersDirectory.put("lineID", lineID);
-		headersDirectory.put("GPS_X", gps_X);
-		headersDirectory.put("GPS_Y", gps_Y);
+		
+		return variables;
 	}
 
 	@Override
@@ -341,7 +358,7 @@ public class Source_csv implements IDateSource {
 			String[]data = text.split(this.split);
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Long date = dateFormat.parse(data[headersDirectory.get("clock")]).getTime();
+			Long date = dateFormat.parse(data[systemDirectory.get("clock")]).getTime();
 			
 			if (text != null && !text.equals("")) {
 				
@@ -349,7 +366,7 @@ public class Source_csv implements IDateSource {
 					text = br.readLine();
 					if(text!=null && text!="") {
 						data = text.split(this.split);
-						date = dateFormat.parse(data[headersDirectory.get("clock")]).getTime();
+						date = dateFormat.parse(data[systemDirectory.get("clock")]).getTime();
 					}else {
 						break;
 					}
@@ -358,9 +375,9 @@ public class Source_csv implements IDateSource {
 				while (initialDate.getTime()<= date && date <=lastDate.getTime()) {
 					
 					Long opertravelID = System.currentTimeMillis();
-					Long busID = Long.parseLong(data[headersDirectory.get("busID")]);
-					String gPS_X = data[headersDirectory.get("GPS_X")];
-					String gPS_Y = data[headersDirectory.get("GPS_Y")];
+					Long busID = Long.parseLong(data[systemDirectory.get("busID")]);
+					String gPS_X = data[systemDirectory.get("GPS_X")];
+					String gPS_Y = data[systemDirectory.get("GPS_Y")];
 					Date eventDate = new Date(date);
 					
 					if(data[7].equals(lineID+"")) {
@@ -373,12 +390,13 @@ public class Source_csv implements IDateSource {
 					
 					if(text!=null && text!="") {
 						data = text.split(this.split);
-						date = dateFormat.parse(data[headersDirectory.get("clock")]).getTime();
+						date = dateFormat.parse(data[systemDirectory.get("clock")]).getTime();
 					}else {
 						break;
 					}
 					
-				}
+				}		
+				this.lastRow = text;	
 			}
 
 			br.close();

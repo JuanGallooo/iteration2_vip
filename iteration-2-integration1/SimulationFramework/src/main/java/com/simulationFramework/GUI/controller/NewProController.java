@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import com.jfoenix.controls.JFXTimePicker;
 import com.simulationFramework.SystemState.SITMFactory.SITMCalendar;
@@ -296,7 +297,22 @@ public class NewProController {
 				list.add(i);
 			}
 		}
+		
+		//Data Source CSV configuration
 		guiController.getSimController().setColumnNumberForSimulationVariables(0, 4, 5, 1, 7);
+		HashMap<String, Integer> headers = new HashMap<String, Integer>();
+		headers.put("datagramDate", 0);
+		headers.put("busId", 1);
+		headers.put("stopId", 2);
+		headers.put("odometer", 3);
+		headers.put("longitude", 4);
+		headers.put("latitude", 5);
+		headers.put("taskId", 6);
+		headers.put("lineId", 7);
+		headers.put("tripId", 7);
+		guiController.getSimController().setHeaders(headers);
+		//Data Source CSV configuration
+		
 		guiController.finishNewProject(pAttributes, list);
 		stage.close();
 	}
