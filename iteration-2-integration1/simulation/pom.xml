@@ -63,6 +63,14 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+            <plugin> <!-- to run with: mvn exec:java -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                  <mainClass>com.vip.simulation.simulation.SimulationApplication</mainClass>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
