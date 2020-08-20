@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="359.0" prefWidth="576.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulationFramework.GUI.controller.NewProController">
+   <children>
+      <Label layoutX="23.0" layoutY="14.0" prefHeight="27.0" prefWidth="331.0" text="Variables of system">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="189.0" layoutY="80.0" prefHeight="27.0" prefWidth="85.0" text="busID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="189.0" layoutY="116.0" prefHeight="27.0" prefWidth="93.0" text="lineID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="189.0" layoutY="158.0" prefHeight="27.0" prefWidth="93.0" text="GPS_X">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="189.0" layoutY="198.0" prefHeight="27.0" prefWidth="85.0" text="GPS_Y">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="189.0" layoutY="238.0" prefHeight="27.0" prefWidth="93.0" text="Clock">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <MenuButton fx:id="nameBusID" layoutX="274.0" layoutY="81.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
+      <MenuButton fx:id="nameLineID" layoutX="274.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="nameGPSx" layoutX="274.0" layoutY="159.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="nameGPSY" layoutX="274.0" layoutY="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="clock" layoutX="274.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+         </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

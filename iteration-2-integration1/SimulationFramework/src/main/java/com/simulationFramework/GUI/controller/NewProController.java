@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
@@ -54,6 +55,8 @@ public class NewProController {
 	private AnchorPane planversionsView;
 
 	private AnchorPane dateView;
+	
+	private AnchorPane systemVariablesView;
 
 	@FXML
 	private Button butCancel;
@@ -106,6 +109,34 @@ public class NewProController {
 
 	@FXML
 	private ListView<CheckBox> lvVariablesList;
+	
+	//---------------------------------
+    @FXML
+    private MenuButton nameBusID;
+
+    @FXML
+    private MenuButton nameLineID;
+
+    @FXML
+    private MenuButton nameGPSx;
+
+    @FXML
+    private MenuButton nameGPSY;
+
+    @FXML
+    private MenuButton clock;
+	
+    
+
+    @FXML
+    private Button butOpenAssign;
+
+    @FXML
+    private ListView<?> lvColumnValue;
+
+    @FXML
+    private ListView<?> lvColumnName;
+
 
 	public void initiaize() {
 
@@ -288,6 +319,12 @@ public class NewProController {
 
 		}
 	}
+	
+	@FXML
+	void butAssignNameColumn(ActionEvent event) {
+		
+	}
+
 
 	public void start() throws IOException {
 		containerView = (BorderPane) stage.getScene().getRoot();
@@ -315,6 +352,9 @@ public class NewProController {
 		variablesView = fmxlLoader.load();
 		newProController = fmxlLoader.getController();
 		lvVariablesList = newProController.getLvVariablesList();
+		lvColumnName = newProController.getLvColumnName();
+		lvColumnValue = newProController.getLvColumnValue();
+		butOpenAssign = newProController.getButOpenAssign();
 
 		fmxlLoader = GUIController.loadFXML("NewProView-Clock");
 		clockView = fmxlLoader.load();
@@ -334,6 +374,17 @@ public class NewProController {
 		planversionsView = fmxlLoader.load();
 		newProController = fmxlLoader.getController();
 		lvPlanversionIds = newProController.getLvPlanversionIds();
+		
+		fmxlLoader = GUIController.loadFXML("NewProView-Variables-System");
+		systemVariablesView = fmxlLoader.load();
+		newProController = fmxlLoader.getController();
+		nameBusID = newProController.getNameBusID();
+	    nameLineID = newProController.getNameLineID();
+	    nameGPSx = newProController.getNameGPSx();
+	    nameGPSY = newProController.getNameGPSY();
+	    clock = newProController.getClock();
+		
+		
 
 		containerView.setCenter(formView);
 	}
