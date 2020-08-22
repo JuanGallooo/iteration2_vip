@@ -38,31 +38,31 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <MenuButton fx:id="nameBusID" layoutX="274.0" layoutY="81.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+      <MenuButton fx:id="nameBusID" layoutX="274.0" layoutY="81.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
-      <MenuButton fx:id="nameLineID" layoutX="274.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+      <MenuButton fx:id="nameLineID" layoutX="274.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0">
          <items>
             <MenuItem mnemonicParsing="false" text="Action 1" />
             <MenuItem mnemonicParsing="false" text="Action 2" />
          </items>
       </MenuButton>
-      <MenuButton fx:id="nameGPSx" layoutX="274.0" layoutY="159.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+      <MenuButton fx:id="nameGPSx" layoutX="274.0" layoutY="159.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0">
          <items>
             <MenuItem mnemonicParsing="false" text="Action 1" />
             <MenuItem mnemonicParsing="false" text="Action 2" />
          </items>
       </MenuButton>
-      <MenuButton fx:id="nameGPSY" layoutX="274.0" layoutY="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+      <MenuButton fx:id="nameGPSY" layoutX="274.0" layoutY="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0">
          <items>
             <MenuItem mnemonicParsing="false" text="Action 1" />
             <MenuItem mnemonicParsing="false" text="Action 2" />
          </items>
       </MenuButton>
-      <MenuButton fx:id="clock" layoutX="274.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Select name">
+      <MenuButton fx:id="clock" layoutX="274.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0">
          <items>
             <MenuItem mnemonicParsing="false" text="Action 1" />
             <MenuItem mnemonicParsing="false" text="Action 2" />

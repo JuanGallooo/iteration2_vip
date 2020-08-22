@@ -111,7 +111,7 @@ public class GUIController implements Observer {
 	
 	@FXML
 	private void initialize() {
-		views = new HashMap<String, Parent>();	
+		views = new HashMap<String, Parent>();
 	}
 
 	@FXML
@@ -290,22 +290,17 @@ public class GUIController implements Observer {
 	}
 	
 
-	public void finishNewProject(String[] pAttributes, ArrayList<CheckBox> selectedVariables) throws IOException {
+	public void finishNewProject(String[] pAttributes, HashMap<String, Integer> headers) throws IOException {
 
 		miMap.fire();
 		miVariablesStatistics.fire();
 
 		ArrayList<Variable> variables = new ArrayList<>();
-		String[] headers = new String[selectedVariables.size()];
-
-		for (int i = 0; i < selectedVariables.size(); i++) {
-			variables.add(new Variable(selectedVariables.get(i).getText(), "-"));
-			headers[i] = selectedVariables.get(i).getText();
-		}
 
 		if (varStaController != null) {
-			simController.initialize_Variables(headers);
-			varStaController.loadVariables(variables);
+			simController.setHeaders(headers);
+			varStaController.loadVariables(simController.getVariables().getAllVariables());
+			;
 			varStaController.loadLines(simController.getLinesByPlanVersion());
 		}
 
@@ -330,6 +325,19 @@ public class GUIController implements Observer {
 			list.add(new CheckBox(variables[i]));
 		}
 
+		return list;
+	}
+	
+	
+	public ObservableList<String> getHeaders(){
+		
+		ObservableList<String> list = FXCollections.observableArrayList();
+		String[] variables = simController.getDataSource().getHeaders();
+		
+		for(int i=0; i<variables.length; i++) {
+			list.add(variables[i]);
+		}
+		
 		return list;
 	}
 

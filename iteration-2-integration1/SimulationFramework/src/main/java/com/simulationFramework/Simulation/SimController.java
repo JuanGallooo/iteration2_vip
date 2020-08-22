@@ -90,7 +90,6 @@ public class SimController implements SubjectOberver {
 	}
 
 	public void initialize_Variables(String[] headers) {
-		variables.addHeaders(headers);
 	}
 	
 	public void setPlanVersionID(long planVersionID) {
@@ -107,6 +106,17 @@ public class SimController implements SubjectOberver {
 	
 	public void setHeaders(HashMap<String, Integer> headers) {
 		dataSource.setHeaders(headers);
+		
+		String [] h = new String[headers.size()];
+		
+		int i = 0;
+		for( HashMap.Entry<String, Integer> entry : headers.entrySet() ) {
+			h[i] = entry.getKey();
+			i++;
+		}
+		
+		variables.addHeaders(h);
+
 	}
 	
 	public void setDates(Date initialDate,Date lastDate) {

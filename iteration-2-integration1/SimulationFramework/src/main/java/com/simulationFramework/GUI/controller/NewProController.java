@@ -20,28 +20,24 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Data;
 
 @Data
 public class NewProController {
 
-	public static final String VIEW_ADDRESS = "/com/simulationFramework/GUI/view/";
-
-	
 	private Stage stage;
 
 	private GUIController guiController;
@@ -61,7 +57,7 @@ public class NewProController {
 	private AnchorPane planversionsView;
 
 	private AnchorPane dateView;
-	
+
 	private AnchorPane systemVariablesView;
 
 	@FXML
@@ -76,6 +72,8 @@ public class NewProController {
 	@FXML
 	private Button butFinish;
 
+	@FXML
+	private Button butOpenAssign;
 	// ---------Form View---------
 
 	@FXML
@@ -103,101 +101,51 @@ public class NewProController {
 
 	@FXML
 	private DatePicker dtEndingDate;
-	
-    @FXML
-    private JFXTimePicker tpHourStartDate;
 
-    @FXML
-    private JFXTimePicker tpHourEndDate;
+	@FXML
+	private JFXTimePicker tpHourStartDate;
+
+	@FXML
+	private JFXTimePicker tpHourEndDate;
 
 	@FXML
 	private ListView<CheckBox> lvPlanversionIds;
 
 	@FXML
 	private ListView<CheckBox> lvVariablesList;
-	
-	//---------------------------------
-    @FXML
-    private MenuButton nameBusID;
 
-    @FXML
-    private MenuButton nameLineID;
+	// ---------------------------------
+	@FXML
+	private MenuButton nameBusID;
 
-    @FXML
-    private MenuButton nameGPSx;
+	@FXML
+	private MenuButton nameLineID;
 
-    @FXML
-    private MenuButton nameGPSY;
+	@FXML
+	private MenuButton nameGPSx;
 
-    @FXML
-    private MenuButton clock;
-	
-    
+	@FXML
+	private MenuButton nameGPSY;
 
-    @FXML
-    private Button butOpenAssign;
+	@FXML
+	private MenuButton clock;
 
-    @FXML
-    private ListView<?> lvColumnValue;
+	private ObservableList<String> listColumName;
 
-    @FXML
-    private ListView<?> lvColumnName;
+	@FXML
+	private ListView<String> lvColumnValue;
 
-    
-    @FXML
-    private Button butAssign;
+	@FXML
+	private ListView<HeaderPosition> lvColumnName;
 
-    @FXML
-    private TextField tfNameVariableUser;
-
-
+	@FXML
+	private TextField tfNameUser;
 
 	public void initiaize() {
 
 	}
 
-	@FXML
-	void butSelectDataResourcePathAction(ActionEvent event) {
-
-		FileChooser locationChooser = new FileChooser();
-		locationChooser.setTitle("Select Location");
-		File file = locationChooser.showOpenDialog(stage);
-
-		if (file != null) {
-			txtDataResourcePath.setText(file.getAbsolutePath());
-		}
-
-	}
-
-	@FXML
-	void butBackAction(ActionEvent event) throws IOException {
-
-		if (containerView.getCenter() == csvDataView || containerView.getCenter() == planversionsView) {
-
-			butBack.setDisable(true);
-			containerView.setCenter(formView);
-
-		} else if (containerView.getCenter() == variablesView) {
-
-			butNext.setDisable(false);
-			butFinish.setDisable(true);
-
-			containerView.setCenter(dateView);
-
-		} else if (containerView.getCenter() == dateView) {
-
-			containerView.setCenter(planversionsView);
-
-		}
-
-	}
-
-	@FXML
-	void butCancelAction(ActionEvent event) {
-
-		stage.close();
-
-	}
+	// Buttons Methods -----------------------------------------
 
 	@FXML
 	void butNextAction(ActionEvent event) throws IOException {
@@ -262,12 +210,13 @@ public class NewProController {
 
 		} else if (containerView.getCenter() == dateView) {
 
-			if (tpHourStartDate.getValue()==null || tpHourEndDate.getValue()==null || dtStartDate.getValue() == null || dtEndingDate.getValue() == null) {
+			if (tpHourStartDate.getValue() == null || tpHourEndDate.getValue() == null || dtStartDate.getValue() == null
+					|| dtEndingDate.getValue() == null) {
 				validateFieldEmpty();
 			} else {
-				
-				String starHour = tpHourStartDate.getValue()+":00";
-				String endingHour = tpHourEndDate.getValue()+":00";
+
+				String starHour = tpHourStartDate.getValue() + ":00";
+				String endingHour = tpHourEndDate.getValue() + ":00";
 
 				String startDate = dtStartDate.getValue().toString();
 				String endingDate = dtEndingDate.getValue().toString();
@@ -284,19 +233,70 @@ public class NewProController {
 					e.printStackTrace();
 				}
 
-				butNext.setDisable(true);
-				butFinish.setDisable(false);
 				lvVariablesList.setItems(guiController.getVariables());
+				lvColumnValue.setItems(guiController.getHeaders());
 				containerView.setCenter(variablesView);
 
 			}
+
+		} else if (containerView.getCenter() == variablesView) {
+
+			// Assign colum name
+			containerView.setCenter(systemVariablesView);
+			butNext.setDisable(true);
+			butFinish.setDisable(false);
+
+			MenuItem item = new MenuItem("ITEM");
+			// nameBusID = new MenuButton(" ", null, item);
+
+			nameBusID.getItems().add(item);
+
+			item.setOnAction(e -> {
+				nameBusID.setText(item.getText());
+			});
 
 		}
 
 	}
 
-	public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
-		return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+	@FXML
+	void butBackAction(ActionEvent event) throws IOException {
+
+		if (containerView.getCenter() == csvDataView || containerView.getCenter() == planversionsView) {
+
+			butBack.setDisable(true);
+			containerView.setCenter(formView);
+
+		} else if (containerView.getCenter() == variablesView) {
+
+			butNext.setDisable(false);
+			butFinish.setDisable(true);
+
+			containerView.setCenter(dateView);
+
+		} else if (containerView.getCenter() == dateView) {
+
+			containerView.setCenter(planversionsView);
+
+		} else if (containerView.getCenter() == systemVariablesView) {
+
+			containerView.setCenter(variablesView);
+
+		}
+
+	}
+
+	@FXML
+	void butSelectDataResourcePathAction(ActionEvent event) {
+
+		FileChooser locationChooser = new FileChooser();
+		locationChooser.setTitle("Select Location");
+		File file = locationChooser.showOpenDialog(stage);
+
+		if (file != null) {
+			txtDataResourcePath.setText(file.getAbsolutePath());
+		}
+
 	}
 
 	@FXML
@@ -310,78 +310,65 @@ public class NewProController {
 				list.add(i);
 			}
 		}
-		
-		//Data Source CSV configuration
+
 		guiController.getSimController().setColumnNumberForSimulationVariables(0, 4, 5, 1, 7);
-		HashMap<String, Integer> headers = new HashMap<String, Integer>();
-		headers.put("datagramDate", 0);
-		headers.put("busId", 1);
-		headers.put("stopId", 2);
-		headers.put("odometer", 3);
-		headers.put("longitude", 4);
-		headers.put("latitude", 5);
-		headers.put("taskId", 6);
-		headers.put("lineId", 7);
-		headers.put("tripId", 7);
-		guiController.getSimController().setHeaders(headers);
-		//Data Source CSV configuration
-		
-		guiController.finishNewProject(pAttributes, list);
+		HashMap<String, Integer> positionDirectory = new HashMap<>();
+
+		for (HeaderPosition hp : lvColumnName.getItems()) {
+			positionDirectory.put(hp.getNameHeader(), hp.getPositionHeader());
+		}
+		guiController.getSimController().setHeaders(positionDirectory);
+
+		guiController.finishNewProject(pAttributes, positionDirectory);
 		stage.close();
 	}
 
-	public void loadPlanVersionIds(Iterable<SITMPlanVersion> planversionIds) {
+	@FXML
+	void butCancelAction(ActionEvent event) {
 
-		for (SITMPlanVersion plan : planversionIds) {
+		stage.close();
 
-			ArrayList<SITMCalendar> calendar = guiController.getSimController()
-					.getDateByPlanVersion(plan.getPlanVersionID());
-
-			SITMCalendar initialDate = calendar.get(0);
-			SITMCalendar lastDate = calendar.get(calendar.size() - 1);
-
-			CheckBox check = new CheckBox();
-			check.setUserData(plan);
-			check.setText("ID: " + plan.getPlanVersionID() + " Dates: [" + initialDate.getOperationDay() + " - "
-					+ lastDate.getOperationDay() + "]");
-			lvPlanversionIds.getItems().add(check);
-
-		}
 	}
-	
-	public static FXMLLoader loadFXML(String fxml) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(GUIController.class.getResource(VIEW_ADDRESS + fxml + ".fxml"));
-		return fxmlLoader;
-	}
-	
+
+	// Assign Name
 	@FXML
 	void butAssignNameColumn(ActionEvent event) throws IOException {
-	    
 
-		FXMLLoader fxmlLoader = loadFXML("Popup-Name");
-		Scene scene = new Scene(fxmlLoader.load());
+		if (lvColumnValue.getSelectionModel().getSelectedItem() == null) {
 
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle("Variable name");
-		dialogStage.initModality(Modality.WINDOW_MODAL);
-		dialogStage.initOwner(stage);
-		dialogStage.setScene(scene);
-		
-		NewProController newProController = fxmlLoader.getController();
-		newProController.setGuiController(guiController);
-		newProController.setStage(dialogStage);
-		tfNameVariableUser = newProController.getTfNameVariableUser();
-		butAssign = newProController.getButAssign();
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("");
+			alert.setHeaderText(null);
+			alert.setContentText("Please select a item");
+			alert.showAndWait();
 
-		dialogStage.showAndWait();
+		} else if (tfNameUser.getText().equals("")) {
+
+			validateFieldEmpty();
+
+		} else {
+
+			String newName = tfNameUser.getText();
+
+			HeaderPosition headerPosition = new HeaderPosition(newName,
+					lvColumnValue.getSelectionModel().getSelectedIndex());
+			lvColumnName.getItems().add(headerPosition);
+
+		}
+
 	}
-	
-	//PopupWindow
-    @FXML
-    void butAssignName(ActionEvent event) {
 
-    }
+	@FXML
+	void onClickCheckCSV(ActionEvent event) {
+		chOracle.setSelected(false);
+	}
 
+	@FXML
+	void onClickOracleCheck(ActionEvent event) {
+		chCSV.setSelected(false);
+	}
+
+	// -------------------------------------------------------------------
 
 	public void start() throws IOException {
 		containerView = (BorderPane) stage.getScene().getRoot();
@@ -389,7 +376,6 @@ public class NewProController {
 		butFinish.setDisable(true);
 
 		FXMLLoader fxmlLoader = new FXMLLoader();
-
 		NewProController newProController = null;
 
 		fxmlLoader = GUIController.loadFXML("NewProView-Form");
@@ -411,6 +397,7 @@ public class NewProController {
 		lvVariablesList = newProController.getLvVariablesList();
 		lvColumnName = newProController.getLvColumnName();
 		lvColumnValue = newProController.getLvColumnValue();
+		tfNameUser = newProController.getTfNameUser();
 		butOpenAssign = newProController.getButOpenAssign();
 
 		fxmlLoader = GUIController.loadFXML("NewProView-Clock");
@@ -431,28 +418,36 @@ public class NewProController {
 		planversionsView = fxmlLoader.load();
 		newProController = fxmlLoader.getController();
 		lvPlanversionIds = newProController.getLvPlanversionIds();
-		
+
 		fxmlLoader = GUIController.loadFXML("NewProView-Variables-System");
 		systemVariablesView = fxmlLoader.load();
 		newProController = fxmlLoader.getController();
 		nameBusID = newProController.getNameBusID();
-	    nameLineID = newProController.getNameLineID();
-	    nameGPSx = newProController.getNameGPSx();
-	    nameGPSY = newProController.getNameGPSY();
-	    clock = newProController.getClock();
-	    
+		nameLineID = newProController.getNameLineID();
+		nameGPSx = newProController.getNameGPSx();
+		nameGPSY = newProController.getNameGPSY();
+		clock = newProController.getClock();
 
 		containerView.setCenter(formView);
 	}
 
-	@FXML
-	void onClickCheckCSV(ActionEvent event) {
-		chOracle.setSelected(false);
-	}
+	public void loadPlanVersionIds(Iterable<SITMPlanVersion> planversionIds) {
 
-	@FXML
-	void onClickOracleCheck(ActionEvent event) {
-		chCSV.setSelected(false);
+		for (SITMPlanVersion plan : planversionIds) {
+
+			ArrayList<SITMCalendar> calendar = guiController.getSimController()
+					.getDateByPlanVersion(plan.getPlanVersionID());
+
+			SITMCalendar initialDate = calendar.get(0);
+			SITMCalendar lastDate = calendar.get(calendar.size() - 1);
+
+			CheckBox check = new CheckBox();
+			check.setUserData(plan);
+			check.setText("ID: " + plan.getPlanVersionID() + " Dates: [" + initialDate.getOperationDay() + " - "
+					+ lastDate.getOperationDay() + "]");
+			lvPlanversionIds.getItems().add(check);
+
+		}
 	}
 
 	private void validateFieldEmpty() {
@@ -463,4 +458,7 @@ public class NewProController {
 		alert.showAndWait();
 	}
 
+	public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+		return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+	}
 }
