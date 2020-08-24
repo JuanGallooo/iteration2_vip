@@ -125,7 +125,7 @@ public class NewProController {
 	private MenuButton nameGPSx;
 
 	@FXML
-	private MenuButton nameGPSY;
+	private MenuButton nameGPSy;
 
 	@FXML
 	private MenuButton clock;
@@ -141,6 +141,8 @@ public class NewProController {
 	@FXML
 	private TextField tfNameUser;
 
+	private HashMap<String, Integer> hashPosition;
+	
 	public void initiaize() {
 
 	}
@@ -241,19 +243,45 @@ public class NewProController {
 
 		} else if (containerView.getCenter() == variablesView) {
 
-			// Assign colum name
 			containerView.setCenter(systemVariablesView);
 			butNext.setDisable(true);
 			butFinish.setDisable(false);
+			
+			for (int i = 0; i < lvColumnName.getItems().size(); i++) {
 
-			MenuItem item = new MenuItem("ITEM");
-			// nameBusID = new MenuButton(" ", null, item);
+				MenuItem item1 = new MenuItem(lvColumnName.getItems().get(i).getNameHeader());
+				MenuItem item2 = new MenuItem(lvColumnName.getItems().get(i).getNameHeader());
+				MenuItem item3 = new MenuItem(lvColumnName.getItems().get(i).getNameHeader());
+				MenuItem item4 = new MenuItem(lvColumnName.getItems().get(i).getNameHeader());
+				MenuItem item5 = new MenuItem(lvColumnName.getItems().get(i).getNameHeader());
 
-			nameBusID.getItems().add(item);
+				nameBusID.getItems().add(item1);
+				nameLineID.getItems().add(item2);
+				nameGPSx.getItems().add(item3);
+				nameGPSy.getItems().add(item4);
+				clock.getItems().add(item5);
 
-			item.setOnAction(e -> {
-				nameBusID.setText(item.getText());
-			});
+				item1.setOnAction(e -> {
+					nameBusID.setText(item1.getText());
+				});
+
+				item2.setOnAction(e -> {
+					nameLineID.setText(item2.getText());
+				});
+
+				item3.setOnAction(e -> {
+					nameGPSx.setText(item3.getText());
+				});
+
+				item4.setOnAction(e -> {
+					nameGPSy.setText(item4.getText());
+				});
+
+				item5.setOnAction(e -> {
+					clock.setText(item5.getText());
+				});
+
+			}
 
 		}
 
@@ -269,7 +297,6 @@ public class NewProController {
 
 		} else if (containerView.getCenter() == variablesView) {
 
-			butNext.setDisable(false);
 			butFinish.setDisable(true);
 
 			containerView.setCenter(dateView);
@@ -280,6 +307,7 @@ public class NewProController {
 
 		} else if (containerView.getCenter() == systemVariablesView) {
 
+			butNext.setDisable(false);
 			containerView.setCenter(variablesView);
 
 		}
@@ -311,14 +339,21 @@ public class NewProController {
 			}
 		}
 
-		guiController.getSimController().setColumnNumberForSimulationVariables(0, 4, 5, 1, 7);
 		HashMap<String, Integer> positionDirectory = new HashMap<>();
 
 		for (HeaderPosition hp : lvColumnName.getItems()) {
 			positionDirectory.put(hp.getNameHeader(), hp.getPositionHeader());
 		}
+		
+		int tClock = positionDirectory.get(clock.getText());
+		int tBus = positionDirectory.get(nameBusID.getText());
+		int tLine = positionDirectory.get(nameLineID.getText());
+		int tgpsx = positionDirectory.get(nameGPSx.getText());
+		int tgpsy = positionDirectory.get(nameGPSy.getText());
+		
+		guiController.getSimController().setColumnNumberForSimulationVariables(tClock, tgpsx, tgpsy, tBus, tLine);
+		
 		guiController.getSimController().setHeaders(positionDirectory);
-
 		guiController.finishNewProject(pAttributes, positionDirectory);
 		stage.close();
 	}
@@ -353,6 +388,14 @@ public class NewProController {
 			HeaderPosition headerPosition = new HeaderPosition(newName,
 					lvColumnValue.getSelectionModel().getSelectedIndex());
 			lvColumnName.getItems().add(headerPosition);
+
+			tfNameUser.setText("");
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("");
+			alert.setHeaderText(null);
+			alert.setContentText("The name has been assigned correctly");
+			alert.showAndWait();
 
 		}
 
@@ -425,7 +468,7 @@ public class NewProController {
 		nameBusID = newProController.getNameBusID();
 		nameLineID = newProController.getNameLineID();
 		nameGPSx = newProController.getNameGPSx();
-		nameGPSY = newProController.getNameGPSY();
+		nameGPSy = newProController.getNameGPSy();
 		clock = newProController.getClock();
 
 		containerView.setCenter(formView);
